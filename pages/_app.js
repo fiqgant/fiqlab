@@ -70,7 +70,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
           </ThemeProvider>
         </Provider>
       </SessionProvider>
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-F6V2QTJ628" />
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-ZEYZTLH0MZ" />
       <Script
         id="gtag"
         dangerouslySetInnerHTML={{
@@ -78,7 +78,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', 'G-F6V2QTJ628', {
+                  gtag('config', 'G-ZEYZTLH0MZ', {
                     page_path: window.location.pathname,
                   });
                 `,

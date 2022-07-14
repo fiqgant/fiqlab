@@ -10,7 +10,6 @@ import {
   Pencil1Icon,
   DiscIcon,
   HamburgerMenuIcon,
-  Cross1Icon,
   FrameIcon,
   LaptopIcon,
   BarChartIcon,
