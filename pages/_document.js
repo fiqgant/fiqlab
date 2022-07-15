@@ -117,7 +117,7 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
           <meta
             name="google-site-verification"
-            content="QG0t2MVYgcEmqX5yGsB4Nq29wHez94tmy1AP7hW5F5k"
+            content="_Ba0lKk4Dl9XMvABJ9gZEtoMPITT5Vr5TGx2M-34Z_I"
           />
         </Head>
         <body className="bg-white text-black antialiased dark:bg-background-color dark:text-white">

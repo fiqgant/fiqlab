@@ -1,16 +1,16 @@
 const experienceData = [
   {
-    title: 'Data Analyst',
+    title: 'Tech Lead',
     company: 'PT. Marjinal Cipta Media',
     location: 'Medan, Indonesia',
     range: '2021 - Now',
     url: 'https://marjinal.id',
     text1:
-      'Helped with the digital transformation of BOAT by working on their platform called ByteETL.',
+      'Managing technical aspects of software development flow in a specific context',
     text2:
-      'Built the encryption component for the platform using Scala and Spark which included 2 encoding functionalities : ENCRYPT and HASH.',
+      'Provide Architectural and Design direction',
     text3:
-      'Created JSON wrappers for the encryption components and automated and triggered the pipelines to run at specific intervals using CronJob.',
+      'Ensure Code Review Healthiness',
   },
   {
     title: 'IT Support ',
@@ -19,11 +19,11 @@ const experienceData = [
     range: '2019 – 2021',
     url: 'https://puskom.unimal.ac.id/',
     text1:
-      'Worked on creating a web app for graduation',
+      'Worked on creating a web app for warehouse',
     text2:
-      'Worked on creating a web app for main website.',
+      'Worked on creating a cctv hub.',
     text3:
-      'Participated in the sbmptn committee.',
+      'IT Support.',
   },
   {
     title: 'System Development Engineer',
@@ -36,7 +36,7 @@ const experienceData = [
     text2:
       'Worked on creating a web app for main website.',
     text3:
-      'Participated in the sbmptn committee.',
+      'Participated in the SBMPTN committee.',
   },
   {
     title: 'Internship Trainee',

@@ -140,7 +140,7 @@ input:-webkit-autofill:focus {
   display: block;
   margin-top: 5px;
   right: 0;
-  background: linear-gradient(transparent, transparent), linear-gradient(to right, #82c7fc, #45ADFF);
+  background: linear-gradient(transparent, transparent), linear-gradient(to right, #a8d8fd, #45ADFF);
   transition: width 0.25s ease;
   -webkit-transition: width 0.25s ease;
 }
@@ -148,7 +148,7 @@ input:-webkit-autofill:focus {
 .link-underline:hover:after {
   width: 100%;
   left: 0;
-  background: linear-gradient(transparent, transparent), linear-gradient(to right, #82c7fc, #45ADFF);
+  background: linear-gradient(transparent, transparent), linear-gradient(to right, #a8d8fd, #45ADFF);
 }
 
 .pushable {

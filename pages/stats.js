@@ -55,7 +55,7 @@ export default function Stats() {
           </p>
           <a
             className="text-md mt-4 rounded-full border px-8 py-2 text-center font-normal text-gray-800 transition-colors hover:border-green-600 hover:bg-green-600 hover:text-white dark:text-gray-200"
-            href="https://api.whatsapp.com/send?phone=6285275772376&text=hi"
+            href="https://api.whatsapp.com/send?phone=6285275772376&text=Fiq,%20you%20should%20listen%20to..."
             data-screen-name="Taufiqurrahman"
             target="_blank"
             rel="noreferrer noopener"

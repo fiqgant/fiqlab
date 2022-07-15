@@ -4,7 +4,15 @@ import Tweet from '@/components/Tweet'
 import { getTweets } from '@/lib/twitter'
 
 export async function getStaticProps() {
-  const tweets = await getTweets(['1002104154737684480'])
+  const tweets = await getTweets([
+    '1507008244014755857',
+    '1507223367123812358',
+    '1510141929782222850',
+    '1506772765654884354',
+    '1501721174425939968',
+    '1498812064772489216',
+    '1497284684144857092',
+  ])
 
   return { props: { tweets } }
 }
@@ -22,8 +30,8 @@ export default function Tweets({ tweets }) {
             Tweets
           </h1>
           <p className="text-md leading-7 text-gray-500 dark:text-gray-400">
-            This is a collection of tweets I've enjoyed. so I wanted a place to publicly share what
-            makes me laugh and makes me think.
+            This is a collection of tweets I've enjoyed. I use Twitter quite a bit, so I wanted a
+            place to publicly share what inspires me, makes me laugh, and makes me think.
           </p>
         </div>
         {tweets.map((tweet) => (

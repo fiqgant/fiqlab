@@ -13,7 +13,7 @@ const siteMetadata = {
   socialBanner: '/static/images/twitter-card.png',
   email: 'fiqgant@gmail.com',
   github: 'https://github.com/fiqgant',
-  // twitter: 'https://twitter.com/',
+  twitter: 'https://twitter.com/fiqgant',
   linkedin: 'https://www.linkedin.com/in/fiqgant/',
   website: 'https://fiqlab.dev',
   locale: 'en-US',
