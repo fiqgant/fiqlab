@@ -1,0 +1,23 @@
+---
+title: Calculator Without if-else
+date: '2022-07-11'
+tags: [python]
+draft: false
+summary: The following snippet shows how you can write a simple calculator without the need to use if-else conditions.
+images: []
+layout: PostSimple
+---
+
+The following methods flatten a potentially deep list using recursion.
+
+``` Python showLineNumbers
+import operator
+action = {
+    "+": operator.add,
+    "-": operator.sub,
+    "/": operator.truediv,
+    "*": operator.mul,
+    "**": pow
+}
+print(action['-'](50, 25)) # 25
+```
