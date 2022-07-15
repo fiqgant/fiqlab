@@ -1,0 +1,19 @@
+---
+title: Anagrams With Python
+date: '2022-07-11'
+tags: [python, opencv]
+draft: false
+summary: This method can be used to check if two strings are anagrams. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+images: []
+layout: PostSimple
+---
+
+This method can be used to check if two strings are anagrams. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+``` Python showLineNumbers
+from collections import Counter
+
+def anagram(first, second):
+    return Counter(first) == Counter(second)
+
+anagram("abcd1233", "123acdb") # True
+```
