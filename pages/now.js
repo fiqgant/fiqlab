@@ -10,7 +10,11 @@ export async function getStaticProps() {
 
   return { props: { currentlyReading } }
 }
-export default function Now() {
+
+export default function Now(currentlyReading) {
+  const { data } = useSWR('/api/now-playing', fetcher)
+  let currentlyReadingData = currentlyReading['currentlyReading']
+
   var year = new Date().getFullYear()
   var month = new Date().getMonth()
   var date = new Date().getDate()
@@ -19,22 +23,63 @@ export default function Now() {
   var minute = new Date().getMinutes()
   var second = new Date().getSeconds()
 
-  var ParthBirthDate = '1997-03-07'
-  var birthDate = new Date(ParthBirthDate)
-  var ParthAge = year - birthDate.getFullYear()
-  var ParthMonth = Math.abs(birthDate.getMonth() - month)
-  var ParthDay = Math.abs(birthDate.getDate() - date)
+  var FiqBirthDate = '2000-04-16'
+  var birthDate = new Date(FiqBirthDate)
+
+  var FiqAge = year - birthDate.getFullYear()
+
+  var FiqMonth = 0
+  if (month >= birthDate.getMonth()) FiqMonth = month - birthDate.getMonth()
+  else {
+    FiqAge--
+    FiqMonth = 12 + month - birthDate.getMonth()
+  }
+
+  var FiqDay = 0
+  if (date >= birthDate.getDate()) FiqDay = date - birthDate.getDate()
+  else {
+    FiqMonth--
+    FiqDay = 31 + date - birthDate.getDate()
+    if (FiqMonth < 0) {
+      FiqMonth = 11
+      FiqAge--
+    }
+  }
+
+  var age = {}
+  age = {
+    years: FiqAge,
+    months: FiqMonth,
+    days: FiqDay,
+  }
+
+  var ageString = ''
+  if (age.years > 0 && age.months > 0 && age.days > 0)
+    ageString = age.years + ' years, ' + age.months + ' months, and ' + age.days + ' days old.'
+  else if (age.years == 0 && age.months == 0 && age.days > 0)
+    ageString = 'Only ' + age.days + ' days old!'
+  else if (age.years > 0 && age.months == 0 && age.days == 0)
+    ageString = age.years + ' years old. Happy Birthday!!'
+  else if (age.years > 0 && age.months > 0 && age.days == 0)
+    ageString = age.years + ' years and ' + age.months + ' months old.'
+  else if (age.years == 0 && age.months > 0 && age.days > 0)
+    ageString = age.months + ' months and ' + age.days + ' days old.'
+  else if (age.years > 0 && age.months == 0 && age.days > 0)
+    ageString = age.years + ' years, and' + age.days + ' days old.'
+  else if (age.years == 0 && age.months > 0 && age.days == 0)
+    ageString = age.months + ' months old.'
+  else ageString = "Welcome to Earth! <br> It's first day on Earth!"
 
   return (
     <>
       <PageSEO
         title={`Now - ${siteMetadata.author}`}
-        description="Publication"
+        description="My publication"
         url={siteMetadata.url}
       />
       <div>
         <div className="my-2">
-          <h3>Publication</h3>
+          <h3>This is a few of my publication</h3>
           <div className=" mt-4 mb-8 text-xs text-neutral-700 dark:text-neutral-400">
             This page was automatically updated @ {date}-{month}-{year} {hour}:{minute}:{second}
           </div>
@@ -49,16 +94,35 @@ export default function Now() {
 
           <div className="mt-2 mb-10 w-2/5 rounded-md border border-gray-600 p-1 text-sm dark:border-gray-200">
             <span className="ml-2 font-semibold">Reading:</span>{' '}
-            <span>Moby Dick - Herman Melville</span>
+            <a
+              href={currentlyReadingData[0].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              <span>{currentlyReadingData[0].title}</span> by{' '}
+              <span>{currentlyReadingData[0].author}</span>
+            </a>
             <br />
-            <span className="ml-2 font-semibold">Age:</span>{' '}
-            <span>
-              {ParthAge} years, {ParthMonth} months and {ParthDay} days
-            </span>
+            <span className="ml-2 font-semibold">Age:</span> <span>{ageString}</span>
           </div>
 
           <div className="mt-2 mb-10 w-1/4 rounded-md border border-gray-600 p-1 text-sm dark:border-gray-200">
-            <span className="ml-2 font-semibold">Eating:</span> <span>N/A</span>
+            <span className="ml-2 font-semibold">Listening:</span>{' '}
+            <span>
+              {data?.songUrl ? (
+                <a
+                  href={data.songUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  <span>{data.title}</span>
+                </a>
+              ) : (
+                <span>Not Playing</span>
+              )}
+            </span>
             <br />
             <span className="ml-2 font-semibold">Drinking:</span> <span>Coffee</span>
           </div>

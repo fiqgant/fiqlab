@@ -1,0 +1,119 @@
+---
+title: Linear Discriminant Analysis With Python
+date: '2022-07-15'
+tags: ['python, ml, tutorial']
+draft: false
+summary: Linear Discriminant Analysis, or LDA for short, is a classification machine learning algorithm.
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://wallpapercave.com/wp/wp4850110.png"
+    alt="I❤️Python"
+    width="700"
+    height="700"
+  />
+</div>
+
+# Linear Discriminant Analysis
+Linear Discriminant Analysis, or LDA for short, is a classification machine learning algorithm.
+
+It works by calculating summary statistics for the input features by class label, such as the mean and standard deviation. These statistics represent the model learned from the training data. In practice, linear algebra operations are used to calculate the required quantities efficiently via matrix decomposition.
+
+Predictions are made by estimating the probability that a new example belongs to each class label based on the values of each input feature. The class that results in the largest probability is then assigned to the example. As such, LDA may be considered a simple application of Bayes Theorem for classification.
+
+# Linear Discriminant Analysis With scikit-learn
+The Linear Discriminant Analysis is available in the scikit-learn Python machine learning library via the LinearDiscriminantAnalysis class.
+
+The method can be used directly without configuration, although the implementation does offer arguments for customization, such as the choice of solver and the use of a penalty.
+
+```Python
+# create the lda model
+model = LinearDiscriminantAnalysis()
+```
+
+We can demonstrate the Linear Discriminant Analysis method with a worked example.
+
+First, let’s define a synthetic classification dataset.
+
+We will use the make_classification() function to create a dataset with 1,000 examples, each with 10 input variables.
+
+The example creates and summarizes the dataset.
+
+```Python
+# test classification dataset
+from sklearn.datasets import make_classification
+# define dataset
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=10, n_redundant=0, random_state=1)
+# summarize the dataset
+print(X.shape, y.shape)
+```
+
+Running the example creates the dataset and confirms the number of rows and columns of the dataset.
+```PowerShell
+(1000, 10) (1000,)
+```
+
+We can fit and evaluate a Linear Discriminant Analysis model using repeated stratified k-fold cross-validation via the RepeatedStratifiedKFold class. We will use 10 folds and three repeats in the test harness.
+
+The complete example of evaluating the Linear Discriminant Analysis model for the synthetic binary classification task is listed below.
+
+```Python
+from numpy import mean
+from numpy import std
+from sklearn.datasets import make_classification
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+# define dataset
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=10, n_redundant=0, random_state=1)
+# define model
+model = LinearDiscriminantAnalysis()
+# define model evaluation method
+cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
+# evaluate model
+scores = cross_val_score(model, X, y, scoring='accuracy', cv=cv, n_jobs=-1)
+# summarize result
+print('Mean Accuracy: %.3f (%.3f)' % (mean(scores), std(scores)))
+```
+
+Running the example evaluates the Linear Discriminant Analysis algorithm on the synthetic dataset and reports the average accuracy across the three repeats of 10-fold cross-validation.
+
+Your specific results may vary given the stochastic nature of the learning algorithm. Consider running the example a few times.
+
+In this case, we can see that the model achieved a mean accuracy of about 89.3 percent.
+
+```PowerShell
+Mean Accuracy: 0.893 (0.033)
+```
+
+We may decide to use the Linear Discriminant Analysis as our final model and make predictions on new data.
+
+This can be achieved by fitting the model on all available data and calling the predict() function passing in a new row of data.
+
+We can demonstrate this with a complete example listed below.
+
+```Python
+# make a prediction with a lda model on the dataset
+from sklearn.datasets import make_classification
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+# define dataset
+X, y = make_classification(n_samples=1000, n_features=10, n_informative=10, n_redundant=0, random_state=1)
+# define model
+model = LinearDiscriminantAnalysis()
+# fit model
+model.fit(X, y)
+# define new data
+row = [0.12777556,-3.64400522,-2.23268854,-1.82114386,1.75466361,0.1243966,1.03397657,2.35822076,1.01001752,0.56768485]
+# make a prediction
+yhat = model.predict([row])
+# summarize prediction
+print('Predicted Class: %d' % yhat)
+```
+
+Running the example fits the model and makes a class label prediction for a new row of data.
+
+```PowerShell
+Predicted Class: 1
+```
