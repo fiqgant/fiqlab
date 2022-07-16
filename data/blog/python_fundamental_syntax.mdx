@@ -1,0 +1,122 @@
+---
+title: 🐍Python Fundamentals-Syntax
+date: '2022-07-16'
+tags: ['python', 'tutorial']
+draft: false
+summary: You’ll learn about the basic Python syntax so that you can get started with the Python language quickly.
+---
+
+You’ll learn about the basic Python syntax so that you can get started with the Python language quickly.
+
+# Whitespace and indentation
+If you've worked with other programming languages like Java, C#, or C/C++, you're aware that the statements in such languages are separated by semicolons (;).
+
+Python, on the other hand, builds the code structure using whitespace and indentation.
+
+The following Python code sample demonstrates:
+
+```Python
+def main():
+    i = 1
+    max = 100
+    while (i < max):
+        print(i)
+        i = i + 1
+
+# call function main 
+main()
+```
+
+You don't need to know the code's meaning right now. Please focus on the organization of the code.
+
+There is no semicolon to mark the conclusion of the sentence at the end of each line. Additionally, the code is formatted using indentation.
+
+The following benefits of organizing Python code with indentation and whitespace:
+- Unlike in other programming languages like Java or C#, you won't ever miss the starting or ending code of a block.
+- The coding style is also largely consistent. The code of one developer is identical to yours if you have to maintain it.
+- compared to other programming languages, the code is easier to read and understand.
+
+# Comments
+Because they explain why a piece of code was produced, the comments are just as crucial as the code itself.
+
+The comments are ignored by the Python interpreter when it runs the code.
+
+A single line comment in Python starts with the hash symbol (#), which is followed by the comment. For instance:
+
+```python
+# This is a single line comment in Python
+```
+
+And Python also support other kinds of comments.
+
+# Continuation of statements
+Statements in Python are separated by a newline character. Each statement is given its own line.
+
+However, by utilizing the backslash () character, a lengthy statement might span numerous lines.
+
+The backslash () character is used to continue a sentence in the second line, as shown in the example below:
+
+```python
+if (a == True) and (b == False) and \
+   (c == True):
+    print("Continuation of statements")
+```
+
+# Identifiers
+Identifiers are names that identify variables, functions, modules, classes, and other objects in Python.
+
+An identifier's name must begin with a letter or an underscore (_). After that, only underscores or alphanumeric characters are allowed.
+
+Identifiers in Python are case-sensitive. For instance, the IDs the counter and Counter are distinct.
+
+Additionally, you cannot name identifiers in Python using keywords.
+
+# Keywords
+In Python, several terms have unique definitions. They're known as keywords.
+
+The list of Python keywords is as follows:
+
+```Python
+False      class      finally    is         return
+None       continue   for        lambda     try
+True       def        from       nonlocal   while
+and        del        global     not        with
+as         elif       if         or         yield
+assert     else       import     pass
+break      except     in         raise
+```
+
+Python is a growing and evolving language. So its keywords will keep increasing and changing.
+
+Python provides a special module for listing its keywords called keyword. 
+
+To find the current keyword list, you use the following code:
+
+```python
+import keyword
+
+print(keyword.kwlist) 
+```
+
+# String literals
+To indicate a string literal in Python, you can use single quotes ('), double quotes ("), triple single quotes ("'), and triple double quotes (""").
+
+The string literal must have the same kind of quotations all around it. For instance, if you begin a string literal with a single quote, you must also end it with a single quote.
+
+Examples of string literals are shown below:
+
+```python
+s = 'This is a string'
+print(s)
+s = "Another string using double quotes"
+print(s)
+s = ''' string can span multiple line '''
+print(s)
+```
+
+# Summary
+- A Python statement ends with a newline character.
+- Python's code structure is organized using spaces and identation.
+- In Python, identifiers are names used to designate variables, functions, modules, classes, etc.
+- Commentary explains how the code functions. The Python interpreter understands them.
+- To indicate something, enclose it in a single quote, double-quotes, tripple-quotes, or tripple double-quotes.
