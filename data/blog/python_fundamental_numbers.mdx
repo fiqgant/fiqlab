@@ -24,7 +24,7 @@ The integers are numbers such as `-1, 0, 1, 2, 3, ..` and they have type `int`.
 You can use Math operators like `+, -, *,` and `/` to form expressions that include integers. For example:
 
 
-```console
+```bash
 >>> 20 + 10
 30
 >>> 20 - 10
@@ -37,14 +37,14 @@ You can use Math operators like `+, -, *,` and `/` to form expressions that incl
 
 To calculate exponents, you use two multiplication symbols (`**`). For example:
 
-```console
+```bash
 >>> 3**3
 27
 ```
 
 To modify the order of operations, you use the parentheses `()`. For example:
 
-```console
+```bash
 >>> 20 / (10 + 10)
 1.0
 ```
@@ -54,7 +54,7 @@ Any number with a decimal point is a floating-point number. The term float means
 
 In general, you can use floats like integers. For example:
 
-```console
+```bash
 >>> 0.5 + 0.5
 1.0
 >>> 0.5 - 0.5
@@ -67,21 +67,21 @@ In general, you can use floats like integers. For example:
 
 The division of two integers always returns a float:
 
-```console
+```bash
 >>> 20 / 10
 2.0
 ```
 
 If you mix an integer and a float in any arithmetic operation, the result is a float:
 
-```console
+```bash
 >>> 1 + 2.0
 3.0
 ```
 
 Due to the internal representation of floats, Python will try to represent the result as precisely as possible. However, you may get the result that you would not expect. For example:
 
-```console
+```bash
 >>> 0.1 + 0.2
 0.30000000000000004
 ```
@@ -92,26 +92,26 @@ Just keep this in mind when you perform calculations with floats. And you’ll l
 
 When a number is large, it’ll become difficult to read. For example:
 
-```console
+```bash
 count = 10000000000
 ```
 
 To make the long numbers more readable, you can group digits using underscores, like this:
 
-```console
+```bash
 count = 10_000_000_000
 ```
 
 When storing these values, Python just ignores the underscores. It does so when displaying the numbers with underscores on screen:
 
-```console
+```bash
 count = 10_000_000_000
 print(count)
 ```
 
 Output:
 
-```console
+```bash
 10000000000
 ```
 
