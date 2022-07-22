@@ -166,7 +166,7 @@ The easiest way to deploy the template is to use the [Vercel Platform](https://v
 3. Push
 
    ```sh
-   git push -u origin 'main'
+   git push -f origin 'main'
    ```
 
 
