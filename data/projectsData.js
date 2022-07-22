@@ -1,6 +1,6 @@
 const projectsData = [
   {
-    title: '🎨 fiqart',
+    title: '🧑‍🎨 fiqart',
     description: `fiqart is a place where I show my art that I make in my spare time, mostly I use a C4D and blender to create 3D art.`,
     imgSrc: '',
     href: 'https://fiqart.vercel.app/',
