@@ -1,5 +1,15 @@
 const projectsData = [
   {
+    title: '🎨 fiqart',
+    description: `fiqart is a place where I show my art that I make in my spare time, mostly I use a C4D and blender to create 3D art.`,
+    imgSrc: '',
+    href: 'https://fiqart.vercel.app/',
+    github: 'https://github.com/fiqgant/fiqart',
+    tech1: 'Three.js',
+    tech2: 'Blender',
+    tech2: '3D'
+  },
+  {
     title: '🐟 Fish freshness detection system',
     description: `Fish freshness detection system using Support Vector Machine web based.`,
     imgSrc: '',
@@ -78,7 +88,7 @@ const projectsData = [
     tech3: 'OpenCV'
   },
   {
-    title: '🎨 Bob_Ross',
+    title: '🖌️ Bob_Ross',
     description: `Python program that will repaint your image in Microsoft Paint.`,
     imgSrc: '',
     href: '/blog/Bob_Ross',
