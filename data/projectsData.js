@@ -7,7 +7,7 @@ const projectsData = [
     github: 'https://github.com/fiqgant/fiqart',
     tech1: 'Three.js',
     tech2: 'Blender',
-    tech2: '3D'
+    tech3: '3D'
   },
   {
     title: '🐟 Fish freshness detection system',
@@ -17,7 +17,7 @@ const projectsData = [
     github: 'https://github.com/fiqgant/Fish-Freshness-Detection',
     tech1: 'Python',
     tech2: 'Streamlit',
-    tech2: 'Support Vector Machine'
+    tech3: 'Support Vector Machine'
   },
   {
     title: '😎 DAAF',
@@ -27,7 +27,7 @@ const projectsData = [
     github: 'https://github.com/fiqgant/DAAF',
     tech1: 'Python',
     tech2: 'Streamlit',
-    tech2: 'DeepFace'
+    tech3: 'DeepFace'
   },
   {
     title: '💵 F-CURR',
@@ -37,7 +37,7 @@ const projectsData = [
     github: 'https://github.com/fiqgant/F-CURR',
     tech1: 'Python',
     tech2: 'Streamlit',
-    tech2: 'Fbprophet'
+    tech3: 'Fbprophet'
   },
   {
     title: '₿ F-CRYP',
@@ -47,7 +47,7 @@ const projectsData = [
     github: 'https://github.com/fiqgant/F-CRYP',
     tech1: 'Python',
     tech2: 'Streamlit',
-    tech2: 'Fbprophet'
+    tech3: 'Fbprophet'
   },
   {
     title: '✌ CKHFIQ',
