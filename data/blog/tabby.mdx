@@ -1,0 +1,218 @@
+---
+title: 🚀 Tabby - A terminal for a more modern age
+date: '2022-07-15'
+tags: ['Terminal']
+draft: false
+summary: Tabby (formerly Terminus) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux.
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://github.com/Eugeny/tabby/raw/master/docs/readme.png"
+    alt="Tabby"
+    width="700"
+    height="700"
+  />
+</div>
+
+# 🚀 Tabby - A terminal for a more modern age
+
+[Tabby](https://github.com/Eugeny/tabby) (formerly Terminus) is a highly configurable terminal emulator, SSH and serial client for Windows, macOS and Linux
+
+For the past few days I've been using [Euginy's](https://github.com/Eugeny/) terminal, [Tabby](https://tabby.sh/).
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/fiqlab/main/public/static/images/blog/tabby1.png"
+    alt="MyTabby1"
+    width="800"
+    height="800"
+  />
+</div>
+
+There are many advantages in this tabby and I have listed some of the advantages of tabby that I took from their [Github](https://github.com/Eugeny/tabby) and [Website](https://tabby.sh/).
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/fiqlab/main/public/static/images/blog/tabby2.png"
+    alt="MyTabby2"
+    width="800"
+    height="800"
+  />
+</div>
+
+
+## Things you can do with Tabby
+### General
+- Text editing: In most shells and editors, you can use `Ctrl-Arrows` (`⌥-Arrows`) and `Home`/`End` (`⌘-Left`/`⌘-Right`) to move the cursor around in the prompt. missing in the main font only.
+- Intelligent Ctrl-C: When text is selected, Ctrl-C will copy it on the first press, and issue an actual abort on the second press. You can disable this by unassigning the Intelligent Ctrl-C hotkey.
+- Quake mode / docking: you can make the main terminal window show up / hide with a hotkey and have it stick to the top part of screen by enabling docking in Settings -> Window.
+- Fallback fonts: Your favourite font has no icons or Powerline symbols? You can set a Powerline-enabled font as the fallback font in `Settings -> Appearance` and Tabby will use it for the symbols
+
+### Split panes
+- Type into all panes at once (also known as "broadcast"): You can type into all panes by pressing `Ctrl-Shift-I` (`⌘-Shift-i`). Click any pane to cancel focus.
+- Pane rearrange hotkey: hold `Ctrl-Shift` (`⌘-Shift`) and pane drag handles will appear. You can rearrange panes or drag them out as new tabs:
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://user-images.githubusercontent.com/161476/147154268-8d98b429-d6bb-4594-a280-4c24818b491f.png"
+    alt="Tabby-Work"
+    width="700"
+    height="700"
+  />
+</div>
+
+- Maximizing panes: `Ctrl-Alt-Enter` (`⌘-⌥-Enter`) to make the current pane temporarily full-size, press again to cancel.
+- Keyboard navigation around panes: you can navigate around the splits with `Ctrl-Alt-Arrows` (`⌘-⌥-Arrows`)
+- Saving pane layouts: with multiple panes present, right-click a tab and select Save layout as profile. You can even combine different pane types (local/SSH/serial) by opening multiple tabs first and then dragging them one into another to combine, or by using the Switch pane profile context menu item or shortcut.
+- Exploding and combining tabs: `Ctrl-Shift-.` (`⌘-Shift-.`) to turn all split panes in the current tab into their own tabs / `Ctrl-Shift-`, (`⌘-Shift-,`) to combine all tabs back into the current one as panes. Combine this with broadcast (`Ctrl-Shift-i` / `⌘-Shift-i`) to quickly send commands to all tabs! 1.0.173+
+
+### Networking
+- Debugging socket servers: you can use the `Raw socket connectio`n` profile template to debug various servers, `nc` style. Combine with `Hexadecimal` input and output modes in the profile settings to work with binary protocols:
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://user-images.githubusercontent.com/161476/147154145-50746f87-7a01-483f-9fd7-624a0806a31c.png"
+    alt="Tabby-Net"
+    width="300"
+    height="300"
+  />
+</div>
+
+- SOCKS proxy support for SSH: You can connect to an SSH host via a proxy without having to set up a ProxyCommand:
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://user-images.githubusercontent.com/161476/147154145-50746f87-7a01-483f-9fd7-624a0806a31c.png"
+    alt="Tabby-Net"
+    width="300"
+    height="300"
+  />
+</div>
+
+### Profiles
+- Changing defaults for all profiles: You can edit the profile defaults for each profile type (local/SSH/serial) in `Settings -> Profiles -> Advanced`.
+- Separate profile selectors: you can assign a hotkey to show a profile selector just for SSH profiles / serial profiles etc - see the `profile-selectors.*` hotkeys (not assigned by default).
+
+### Other
+- Docker: there is an official Docker plugin that lets you spawn shells inside new or existing containers.
+- Working with buggy serial adapters: the `Slow feed` option in the profile's advanced settings will slow down output to the serial driver by sending content byte by byte.
+- Activity notification: select `Notify on activity` in a tab's context menu to get a notification when there's new output.
+- Process completion notification: select `Notify when done` in a tab's context menu to get a notification when a child process completes in the tab (only works for local shells):
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://user-images.githubusercontent.com/161476/147154434-0262c60e-d0f5-4e7d-818d-a4b66cd73db4.png"
+    alt="Tabby-Other"
+    width="300"
+    height="300"
+  />
+</div>
+
+## The important stuff
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://tabby.sh/af40d0002d27979f81ad.png"
+    alt="Tabby1"
+    width="500"
+    height="500"
+  />
+</div>
+- Runs on Windows, Mac and Linux
+- Integrated SSH client with a connection manager
+- Integrated serial terminal
+- PowerShell, PS Core, WSL, Git-Bash, Cygwin, Cmder and CMD support
+- Full Unicode support including double-width characters
+- File transfer from/to SSH sessions via SFTP and Zmodem
+- Theming and color schemes
+- Fully configurable shortcuts and multi-chord shortcuts
+- Remembers your tabs and split panes
+- Proper shell experience on Windows including tab completion
+- Integrated encrypted container for SSH secrets and configuration
+
+## Terminal features
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://tabby.sh/af40d0002d27979f81ad.png"
+    alt="Tabby2"
+    width="500"
+    height="500"
+  />
+</div>
+- Multiple nested panes
+- Progress bars and activity notifications for tabs
+- Tabby remembers open tabs and panes where you left off
+- Tabs on any side of the window
+- Optional quake mode (terminal docked to a side of the screen)
+- Optional global hotkey to focus/hide the terminal
+- Bracketed paste
+
+## SSH Client
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://tabby.sh/49aed555b6d285a9ab34.png"
+    alt="Tabby3"
+    width="500"
+    height="500"
+  />
+</div>
+- SSH2 client with a connection manager
+- SFTP and Zmodem file transfers
+- X11 and port forwarding
+- Jump hosts
+- Agent forwarding - including Pageant and Windows native OpenSSH Agent
+- Login scripts
+- Optional built-in password manager with a master passphrase
+- Proxy command support
+
+## Windows, but nice
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://tabby.sh/8d1b26d6e15f46b4bae4.png"
+    alt="Tabby4"
+    width="500"
+    height="500"
+  />
+</div>
+- Support for different shells in the same window
+- Better tab completion cmd.exe thanks to Clink.
+- Explorer menu integration
+- Optional portable mode
+- Current directory detection that works
+
+## Serial Terminal
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://tabby.sh/4b1633967fd77e981095.png"
+    alt="Tabby5"
+    width="500"
+    height="500"
+  />
+</div>
+- Multiple connection profiles
+- Newline conversion
+- Text, readline and byte-by-byte input modes
+- Text and hexdump output modes
+- Zmodem
+- Non-standard baud rates
+
+## And just too much stuff to mention here:
+- Themes customizable with CSS
+- Extensible via plugins (in JS)
+- A bunch of color schemes already included
+- Telnet client
+- Font ligatures and font fallback
+- Clickable URLs, IPs and paths
+- WinSCP integration
+- Shell profiles
+- Simultaneous multi-pane input
+- Optional PuTTY style right-click paste and copy on select
+- macOS vibrancy and Win 10 fluent background support

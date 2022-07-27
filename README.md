@@ -149,7 +149,7 @@ The easiest way to deploy the template is to use the [Vercel Platform](https://v
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/timlrx/tailwind-nextjs-starter-blog)
 
-## ✍️ Git add commit push master
+## ✍️ Git add commit push
 
 1. add
 
