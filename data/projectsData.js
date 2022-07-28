@@ -1,4 +1,14 @@
 const projectsData = [
+    {
+    title: '✂️ fiqremovebg',
+    description: `Remove any background of image.`,
+    imgSrc: '',
+    href: 'https://fiqremovebg.herokuapp.com/',
+    github: 'https://github.com/fiqgant/fiqremovebg/',
+    tech1: 'Python',
+    tech2: 'Computer Vision',
+    tech3: 'rembg'
+  },
   {
     title: '🧑‍🎨 fiqart',
     description: `fiqart is a place where I show my art that I make in my spare time, mostly I use a C4D and blender to create 3D art.`,
@@ -56,7 +66,8 @@ const projectsData = [
     href: '',
     github: 'https://github.com/fiqgant/CKHFIQ',
     tech1: 'Python',
-    tech2: 'OpenCV'
+    tech2: 'OpenCV',
+    tech3: 'Computer Vision'
   },
   {
     title: '👀 CKEFIQ',
@@ -75,7 +86,8 @@ const projectsData = [
     href: '',
     github: 'https://github.com/fiqgant/Anti-Ngantuk',
     tech1: 'Python',
-    tech2: 'OpenCV'
+    tech2: 'OpenCV',
+    tech3: 'Computer Vision'
   },
   {
     title: '📷 Odafiq',
@@ -94,7 +106,8 @@ const projectsData = [
     href: '/blog/Bob_Ross',
     github: 'https://github.com/fiqgant/Bob_Ross',
     tech1: 'Python',
-    tech2: 'OpenCV'
+    tech2: 'OpenCV',
+    tech3: 'Computer Vision'
   },
   {
     title: '😷 Mask Detection',
@@ -103,7 +116,8 @@ const projectsData = [
     href: 'https://fiqgant.github.io/facemaskwithjs/',
     github: 'https://github.com/fiqgant/facemaskwithjs',
     tech1: 'Javascript',
-    tech2: 'Teachablemachine'
+    tech2: 'Teachablemachine',
+    tech3: 'Computer Vision'
   },
   {
     title: '📷 ODTFJS',
