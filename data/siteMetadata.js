@@ -16,7 +16,7 @@ const siteMetadata = {
   twitter: 'https://twitter.com/fiqgant',
   linkedin: 'https://www.linkedin.com/in/fiqgant/',
   website: 'https://fiqlab.dev',
-  locale: 'en-US',
+  locale: 'id-ID',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.
