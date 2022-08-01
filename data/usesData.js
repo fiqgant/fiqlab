@@ -15,9 +15,9 @@ const usesData = [
     href: 'https://www.alfredapp.com/',
   },
   {
-    title: 'Superhuman',
-    description: `Email client with keybindings`,
-    href: 'https://superhuman.com',
+    title: 'Neovim',
+    description: `Click here to find my neovim config`,
+    href: 'https://github.com/fiqgant/My-Neovim-Config',
   },
   {
     title: 'Powershell',
@@ -25,9 +25,9 @@ const usesData = [
     href: 'https://github.com/fiqgant/My-PowerShell-Config',
   },
   {
-    title: 'warp',
-    description: `Trying out the beta version of this shell, looks promising`,
-    href: 'https://www.warp.dev/',
+    title: 'Tabby',
+    description: `a terminal for a more modern age`,
+    href: 'https://tabby.sh/',
   },
   {
     title: 'iTerm2',
@@ -93,6 +93,16 @@ const usesData = [
     title: 'Notion',
     description: `Permanent docs, organizing my life.`,
     href: 'https://www.notion.so/',
+  },
+  {
+    title: 'Blender',
+    description: `Blender is a free and open source 3D creation suite.`,
+    href: 'https://www.blender.org/',
+  },
+  {
+    title: 'Cinema 4D',
+    description: `Cinema 4D is a professional 3D modeling, animation, simulation and rendering software solution.`,
+    href: 'https://www.maxon.net/en/cinema-4d',
   },
 ]
 
