@@ -9,8 +9,8 @@ summary: When executed, it automatically sends messages over WhatsApp Web withou
 <div className="grid place-items-center">
   <img
     className="inline rounded-lg"
-    src="https://wallpapercave.com/wp/wp4850110.png"
-    alt="I❤️Python"
+    src="https://img.youtube.com/vi/fYcD7B9hlJ8/maxresdefault.jpg"
+    alt="Whatsapp Bulk"
     width="700"
     height="700"
   />
@@ -51,36 +51,69 @@ When executed, it automatically sends messages over WhatsApp Web without utilizi
 ## Source
 ### Sound
 Musik
-[BlockBuster 🎥 No Copyright Lofi Hip Hop & Chillhop Mix 2022 | Chill lofi beats to study / relax to](https://www.youtube.com/watch?v=BEXL80LS0-I&ab_channel=Stomp%27sPlaylist)
-<div href = "https://www.youtube.com/watch?v=BEXL80LS0-I&ab_channel=Stomp%27sPlaylist" className="grid place-items-center">
-  <img
-    className="inline rounded-lg"
-    src="https://img.youtube.com/vi/BEXL80LS0-I/maxresdefault.jpg"
-    alt="Stomps Playlist"
-    width="700"
-    height="700"
-  />
-</div>
+- [BlockBuster 🎥 No Copyright Lofi Hip Hop & Chillhop Mix 2022 | Chill lofi beats to study / relax to](https://www.youtube.com/watch?v=BEXL80LS0-I&ab_channel=Stomp%27sPlaylist)
+[![Stomp's Playlist](https://img.youtube.com/vi/BEXL80LS0-I/maxresdefault.jpg)](https://www.youtube.com/watch?v=BEXL80LS0-I)
 
 ### Video Background
 Nature
-[Amazing Nature | Drone | Waterfalls | Aerial View | No Copyright Videos](https://youtu.be/F_7ZoAQ3aJM)
-[![IMAGE_ALT](https://img.youtube.com/vi/UmX4kyB2wfg/0.jpg)](https://www.youtube.com/watch?v=UmX4kyB2wfg)
-<div className="grid place-items-center">
-  <img
-    className="inline rounded-lg"
-    src="https://img.youtube.com/vi/F_7ZoAQ3aJM/maxresdefault.jpg"
-    alt="Free Copyright"
-    width="700"
-    height="700"
-  />
-</div>
+- [Amazing Nature | Drone | Waterfalls | Aerial View | No Copyright Videos](https://youtu.be/F_7ZoAQ3aJM)
+[![No Copyright Videos](https://img.youtube.com/vi/F_7ZoAQ3aJM/maxresdefault.jpg)](https://www.youtube.com/watch?v=F_7ZoAQ3aJM)
+
 
 # Production
 ## Depedencies
-- pip install pandas
-- pip install xlrd
-- pip install selenium
-- pip install webdriver_manager
-- pip install openpyxl
+- [ChromeDriver](https://chromedriver.chromium.org/)
+- Pandas
+- Xlrd
+- Selenium
+- Webdriver_manager
+- Openpyxl
 
+## Code
+```Python
+import pandas
+from time import sleep
+
+from selenium import webdriver
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+excel_data = pandas.read_excel('data.xlsx', sheet_name='data')
+
+count = 0
+
+driver = webdriver.Chrome(r'chromedriver.exe')
+driver.get('https://web.whatsapp.com')
+input('Scan QR Code Kemudian Tekan Enter.')
+for column in excel_data['Kontak'].tolist():
+    try:
+        url = 'https://web.whatsapp.com/send?phone=' + str(excel_data['Kontak'][count]) + '&text=' + excel_data['Pesan'][0]
+        sent = False
+        driver.get(url)
+        xpath_val = '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div[1]/p'
+        wait = WebDriverWait(driver, 10)
+        sleep(2)
+        wait.until(EC.presence_of_element_located((By.XPATH, xpath_val))).send_keys(Keys.ENTER)
+        sent = True
+        sleep(5)
+        print('Pesan Terkirim: ' + str(excel_data['Kontak'][count]))
+        count = count + 1
+    except Exception as e:
+        print('Pesan Tidak Terkirim: ' + str(excel_data['Kontak'][count]) + str(e))
+driver.quit()
+print('Sampai Jumpa Kembali.')
+```
+
+## Final Video
+[Kirim Chat Whatsapp Ke Banyak Nomor Menggunakan Python](https://youtu.be/fYcD7B9hlJ8)
+[![Stomp's Playlist](https://img.youtube.com/vi/fYcD7B9hlJ8/maxresdefault.jpg)](https://youtu.be/fYcD7B9hlJ8)
+
+
+# Download
+- [app.py](https://github.com/fiqgant/Whatsapp_Automation/raw/main/app.py)
+- [data.xlsx](https://github.com/fiqgant/Whatsapp_Automation/raw/main/data.xlsx)
+- [ChromeDriver](https://chromedriver.chromium.org/)
