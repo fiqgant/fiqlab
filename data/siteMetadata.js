@@ -14,8 +14,8 @@ const siteMetadata = {
   email: 'fiqgant@gmail.com',
   github: 'https://github.com/fiqgant',
   twitter: 'https://twitter.com/fiqgant',
-  instagram: 'https://www.instagram.com/tfqrrhmn/',
-  linkedin: 'https://www.linkedin.com/in/fiqgant/',
+  instagram: 'https://www.instagram.com/tfqrrhmn',
+  linkedin: 'https://www.linkedin.com/in/fiqgant',
   website: 'https://fiqlab.dev',
   locale: 'id-ID',
   analytics: {
