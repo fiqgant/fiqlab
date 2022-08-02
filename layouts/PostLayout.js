@@ -99,7 +99,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                               href={author.instagram}
                               className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                             >
-                              {author.instagram.replace('https://instagram.com/', '@')}
+                              {author.instagram.replace('@tfqrrhmn')}
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
