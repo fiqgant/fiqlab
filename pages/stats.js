@@ -7,6 +7,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { PageSEO } from '@/components/SEO'
 import TopTracks from '@/components/TopTracks'
 import NowPlaying from '@/components/NowPlaying'
+import { AiOutlineInstagram } from 'react-icons/ai'
 
 export default function Stats() {
   return (
