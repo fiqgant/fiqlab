@@ -3,7 +3,7 @@ title: 🧮 K-Nearest Neighbors (KNN)
 date: '2022-08-03'
 tags: ['Algorithm', 'KNN', ML]
 draft: false
-summary: This is a preview of my github profile.
+summary: The k-nearest neighbors algorithm, also known as KNN or k-NN, is a non-parametric, supervised learning classifier.
 ---
 
 <div className="grid place-items-center">
@@ -17,6 +17,9 @@ summary: This is a preview of my github profile.
 </div>
 
 # Introduction
+The k-nearest neighbors algorithm, also known as KNN or k-NN, is a non-parametric, supervised learning classifier, which uses proximity to make classifications or predictions about the grouping of an individual data point. While it can be used for either regression or classification problems, it is typically used as a classification algorithm, working off the assumption that similar points can be found near one another.
+
+## K-Nearest Neighbors (KNN)
 Assume we are given a dataset where  $X$  is a matrix of features from an observation and  $Y$  is a class label. We will use this notation throughout this article.  $k$ -nearest neighbors then, is a method of classification that estimates the conditional distribution of $Y$ given $X$ and classifies an observation to the class with the highest probability. Given a positive integer $k$, $k$-nearest neighbors looks at the $k$ observations closest to a test observation  $x_0$  and estimates the conditional probability that it belongs to class $j$ using the formula :
 
 $$
