@@ -51,16 +51,17 @@ export default function Stats() {
         <TopTracks />
         <div className="flex flex-col pl-4 pt-10">
           <p className="text-md text-gray-600 dark:text-gray-400">
-            Do you know a good song I should listen to?
+            Do you know a good song I should listen to? just DM me
           </p>
           <a
             className="text-md mt-4 rounded-full border px-8 py-2 text-center font-normal text-gray-800 transition-colors hover:border-green-600 hover:bg-green-600 hover:text-white dark:text-gray-200"
-            href="https://api.whatsapp.com/send?phone=6285275772376&text=Fiq,%20you%20should%20listen%20to..."
+            href="https://www.instagram.com/tfqrrhmn"
             data-screen-name="Taufiqurrahman"
             target="_blank"
             rel="noreferrer noopener"
           >
-            Fiq you should listen to...
+            <AiOutlineInstagram className="mr-2 mb-0.5 inline h-5 w-5" />
+            tfqrrhmn on Instagram
           </a>
         </div>
       </div>
