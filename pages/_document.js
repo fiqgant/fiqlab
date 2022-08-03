@@ -123,6 +123,13 @@ class MyDocument extends Document {
         <body className="bg-white text-black antialiased dark:bg-background-color dark:text-white">
           <Main />
           <NextScript />
+          <script src="https://unpkg.com/typebot-js@2.2"></script>
+          <script>
+            var typebotCommands = Typebot.initBubble({
+              url: "https://viewer.typebot.io/lead-generation-copy-fotpjiv",
+              button: { color: "#0042DA" },
+            });
+          </script>
         </body>
       </Html>
     )
