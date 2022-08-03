@@ -13,7 +13,7 @@ import {
   TwitterShareButton,
   EmailShareButton,
   LinkedinShareButton,
-  RedditShareButton,
+  TelegramShareButton,
   WhatsappShareButton,
 } from 'react-share'
 import { SocialIcon } from 'react-social-icons'
@@ -179,18 +179,18 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                       bgColor="#0072b1"
                     />
                   </LinkedinShareButton>
-                  <RedditShareButton
+                  <TelegramShareButton
                     title={title}
                     url={postUrl}
-                    className="flex items-center overflow-hidden rounded-full !bg-[#ff4500] hover:scale-110"
+                    className="flex items-center overflow-hidden rounded-full !bg-[#329DD6] hover:scale-110"
                   >
                     <SocialIcon
-                      network="reddit"
+                      network="telegram"
                       style={{ height: 35, width: 35 }}
                       fgColor="#fff"
-                      bgColor="#ff4500"
+                      bgColor="#329DD6"
                     />
-                  </RedditShareButton>
+                  </TelegramShareButton>
                   <WhatsappShareButton
                     title={title}
                     separator={' : '}
