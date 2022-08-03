@@ -19,18 +19,18 @@ import {
 import { SocialIcon } from 'react-social-icons'
 import { HiOutlinePencil, HiOutlineClock, HiOutlineEye } from 'react-icons/hi'
 import { BsCalendarDate } from 'react-icons/bs'
-import Typebot from "typebot-js";
+import Typebot from 'typebot-js'
 
 const Component = () => {
   useEffect(() => {
     var typebotCommands = Typebot.initBubble({
-      url: "https://viewer.typebot.io/lead-generation-copy-fotpjiv",
-      button: { color: "#0042DA" },
-    });
-  }, []);
+      url: 'https://viewer.typebot.io/lead-generation-copy-fotpjiv',
+      button: { color: '#0042DA' },
+    })
+  }, [])
 
-  return <></>;
-};
+  return <></>
+}
 
 const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 
