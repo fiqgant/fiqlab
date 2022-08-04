@@ -56,13 +56,18 @@
    SPOTIFY_REFRESH_TOKEN =
    ```
    
-   ## 👨‍🎨️ Customization
+## 👨‍🎨️ Customization
 1. Personalize `siteMetadata.js` (site related information)
+   
 2. Modify the content security policy in `next.config.js` if you want to use any analytics provider or a commenting solution other than giscus.
+   
 3. Personalize `authors/default.md` (main author)
+   
 4. Modify `projectsData.js`
+   
 5. Modify `headerNavLinks.js` to customize navigation links
-6. Add blog posts
+   
+6.  Add blog posts
 
 ## 📝 Files to customize
 
