@@ -131,6 +131,7 @@ export default function Now(currentlyReading) {
         <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
           🎓 Master's Thesis
         </h1>
+        <br></br>
         <div className="pb-4">
           <span>
             <b>
@@ -148,9 +149,12 @@ export default function Now(currentlyReading) {
             <br />
           </span>
         </div>
+        <br></br>
+        <br></br>
         <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
           ✒️ Journal
         </h1>
+        <br></br>
         <div className="pb-4">
           <span>
             <b>📖 Analysis of Model-Free Reinforcement Learning Algorithm for Target Tracking. </b>
