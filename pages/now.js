@@ -128,6 +128,29 @@ export default function Now(currentlyReading) {
           </div>
         </div>
         {/* Work */}
+        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+          Master's Thesis
+        </h1>
+        <div className="pb-4">
+          <span>
+            <b>
+              📖 Linear Discriminant Analysis (LDA) On K-Nearest Neighbour (KNN) Algorithm For 
+              Attribute Reduction.
+            </b>{' '}
+            <Link
+              href={
+                'https://repositori.usu.ac.id/bitstream/handle/123456789/47191/187038052.pdf?sequence=1&isAllowed=y'
+              }
+              className="special-underline no-underline dark:text-gray-100 hover:dark:text-gray-100"
+            >
+              Pdf in Indonesian{' '}
+            </Link>
+            <br />
+          </span>
+        </div>
+        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14">
+          Journal
+        </h1>
         <div className="pb-4">
           <span>
             <b>📖 Analysis of Model-Free Reinforcement Learning Algorithm for Target Tracking. </b>
