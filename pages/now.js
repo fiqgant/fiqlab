@@ -23,7 +23,7 @@ export default function Now(currentlyReading) {
   var minute = new Date().getMinutes()
   var second = new Date().getSeconds()
 
-  var FiqBirthDate = '2000-04-16'
+  var FiqBirthDate = '1997-03-07'
   var birthDate = new Date(FiqBirthDate)
 
   var FiqAge = year - birthDate.getFullYear()
