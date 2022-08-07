@@ -5,7 +5,7 @@
   "author": {
     "name": "Taufiqurrahman",
     "email": "fiqgant@gmail.com",
-    "url": "https://fiqlab.vercel.app"
+    "url": "https://fiqlab.dev"
   },
   "scripts": {
     "start": "cross-env SOCKET=true node ./scripts/next-remote-watch.js ./data",

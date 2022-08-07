@@ -1,0 +1,234 @@
+---
+title: 💳 Creating a NPX Introduction Card
+date: '2022-08-08'
+tags: ['Node JS','NPM,'Tutorial']
+draft: false
+summary: I was browsing GitHub the other day when I came across Anmol Singh's brilliant idea of designing a npx card.
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/npx-tfqrrhmn/master/Images/ss2.png"
+    alt="npx1"
+    width="700"
+    height="700"
+  />
+</div>
+
+# Introduction
+I was browsing GitHub the other day when I came across [Anmol Singh](https://github.com/anmol098/npx_card)'s brilliant idea of designing a npx card to identify themselves. I thought it was a great idea, so I created one for myself as well!
+You can discover more about me right now by typing `npx tfqrrhmn` into your terminal.
+
+## Result
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/npx-tfqrrhmn/master/Images/ss.gif"
+    alt="npx2"
+    width="700"
+    height="700"
+  />
+</div>
+
+## Lets Go
+Let's create a new project
+
+```bash
+mkdir npx-card
+cd npx-card
+npm init -y
+```
+
+Now let's install some needed NPM modules
+
+```bash
+npm i boxen chalk clear cli-spinners inquirer open ora standard
+```
+
+To make things easy, let's also include nodemon for reloading on save.
+
+```bash
+npm i nodemon --save-dev
+```
+
+Let's navigate to our scripts section in our package.json and setup nodemon
+
+```json
+  "scripts": {
+    "dev": "nodemon card.js"
+  },
+```
+
+...and let's start making our own npx-card!
+
+```bash
+npm run dev
+```
+
+in our card.js file, let's import the NPM modules
+
+```javascript
+const fs = require("fs");
+const boxen = require("boxen");
+const chalk = require("chalk");
+const inquirer = require("inquirer");
+const clear = require("clear");
+const open = require("open");
+
+clear()
+```
+
+Now, let's create a new prompt. We can do this using inquirer.
+
+```javascript
+const prompt = inquirer.createPromptModule();
+```
+
+Let's create a new JavaScript object with our prompt questions. This is a sample from my `card.js` you can add or edit whatever you want
+
+```javascript
+const questions = [
+  {
+    type: "list",
+    name: "action",
+    message: "What you want to do?",
+    choices: [
+      {
+        name: `Send me an ${chalk.green.bold("email")}?`,
+        value: () => {
+          open("mailto:fiqgant@gmail.com");
+          console.log("\nDone, see you soon at inbox.\n");
+        },
+      },
+      {
+        name: `Visit my ${chalk.blue.bold("Website")}?`,
+        value: () => {
+          open("https://fiqlab.dev");
+          console.log("\n See you at fiqlab \n");
+        },
+      },
+      {
+        name: "Just quit.",
+        value: () => {
+          console.log("Bye bye. Have a nice day.\n");
+        },
+      },
+    ],
+  },
+];
+```
+
+Let's construct a new JavaScript object once more, but this time with information about us.
+You should experiment with this for a while to get the spacing appropriate once you've properly centered the fields.
+I'll just show you mine as an example.
+
+```javascript
+const data = {
+  name: chalk.bold.blue("             Taufiqurrahman"),
+  handle: chalk.white("@fiqgant"),
+  work: `${chalk.white(" A Geek maybe?")} ${chalk
+    .hex("#2b82b2")
+    .bold("https://fiqlab.dev")}`,
+  github: chalk.white("https://github.com/") + chalk.cyan("fiqgant"),
+  linkedin: chalk.white("https://linkedin.com/in/") + chalk.cyan("fiqgant"),
+  instagram: chalk.white("https://instagram.com/") + chalk.cyan("tfqrrhmn"),
+  web: chalk.blue("https://fiqlab.dev"),
+  npx: chalk.blue("npx") + " " + chalk.cyan("tfqrrhmn"),
+
+  labelWork: chalk.white.bold("       Bio:"),
+  labelInstagram: chalk.white.bold("  Instagram:"),
+  labelGitHub: chalk.white.bold("     GitHub:"),
+  labelLinkedIn: chalk.white.bold("   LinkedIn:"),
+  labelProject: chalk.white.bold("    Project:"),
+  labelWeb: chalk.white.bold("        Web:"),
+  labelCard: chalk.white.bold("       Card:"),
+};
+```
+
+Now, let's create a our card using box. We'll utilize the data from above and plug them in.
+
+```javascript
+const me = boxen(
+  [
+    `${data.name}`,
+    "",
+    `${data.labelWork}  ${data.work}`,
+    "",
+    `${data.labelGitHub}  ${data.github}`,
+    `${data.labelLinkedIn}  ${data.linkedin}`,
+    `${data.labelInstagram}  ${data.instagram}`,
+    `${data.labelWeb}  ${data.web}`,
+    "",
+    `${data.labelCard}  ${data.npx}`,
+    "",
+    `${chalk.italic("I am currently looking for new opportunities,")}`,
+    `${chalk.italic("my inbox is always open. Whether you have a")}`,
+    `${chalk.italic("question or just want to say hi, I will try ")}`,
+    `${chalk.italic("my best to get back to you!")}`,
+  ].join("\n"),
+  {
+    margin: 1,
+    float: "center",
+    padding: 1,
+    borderStyle: "single",
+    borderColor: "cyan",
+  }
+);
+
+console.log(me);
+```
+
+Here I make some tips to make people cmd/ctrl + click on the links
+
+```javascript
+const tip = [
+  `Tip: Try ${chalk.cyanBright.bold("cmd/ctrl + click")} on the links above`,
+  "",
+].join("\n");
+console.log(tip);
+```
+
+We're almost finished! Let's make sure that we handle the prompt properly.
+
+```javascript
+prompt(questions).then((answer) => answer.action());
+```
+
+Now, let's publish our card so the people can see our `npx card`
+
+Create an account on [npmjs](https://npmjs.com/)
+
+Make sure you're logged in to npm. If you aren't, you should do
+
+```bash
+npm adduser
+```
+
+and, patch the version
+
+```bash
+# Make sure your git working directory is clean!
+git commit -m "💳 made my npx card"
+
+npm version patch 
+```
+
+Let's publish to [npmjs](https://npmjs.com/)!
+
+```bash
+npm publish
+```
+
+If everything is published, try running the script using npx.
+
+```bash
+# Try out mines using npx tfqrrhmn
+npx yourname
+```
+
+If you have any questions, please leave a comment below!
+
+# Credits
+- [Anmol Singh](https://github.com/anmol098)
