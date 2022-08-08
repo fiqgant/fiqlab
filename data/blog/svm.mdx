@@ -57,3 +57,10 @@ Our goal is to maximize the minimum distance for all observations to that hyperp
 $$
 \begin{aligned} &\underset{w,b}{\text{maximize}} & & \text{min} \{\frac{|w^Tx_i+b|}{||w||}\}\\ & \text{s.t.} & & y_i(w^Tx_i+b) > 0,i = 1, \ldots, n. \end{aligned}
 $$
+
+
+Then we define margin $M = \text{min}\{\frac{|w^Tx_i+b|}{||w||}\}$ and for the mathematics convenience, we scale $w$ such that satisfy $||w|| = 1$
+
+$$
+\begin{aligned} &\underset{w,||w|| = 1,b}{\text{maximize}} & & M\\ & \text{ s.t.} & & y_i(w^Tx_i+b) \geq M, i = 1, \ldots, n. \end{aligned}
+$$
