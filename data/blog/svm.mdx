@@ -215,3 +215,11 @@ and
 $$
 \begin{aligned} b = \frac{min_{i:y_i = 1}\sum_{j=1}^{n}\alpha_iy_iK(x_i,x_j) - max_{i:y_i = -1}\sum_{j=1}^{n}\alpha_iy_iK(x_i,x_j)}{2} \end{aligned}
 $$
+
+So after using kernel, our decision rule becomes:
+
+$$
+\begin{aligned} & y_i = {\begin{cases} 1, & \text{for } \sum_{i=1}^{n}\alpha_iy_i<\phi(x_i),\phi(x)> + b \geq 1\\ -1, & \text{for } \sum_{i=1}^{n}\alpha_iy_i<\phi(x_i),\phi(x)> + b \leq 1\\ \end{cases}} \end{aligned}
+$$
+
+There are some commonly used kernel: Polynomial Kernel and Gaussian Kernel. Polynomial kernel with degree n is defined as $K(x_i,x_j) = (x_i^Tx_j)^d$ and Gaussian kernel with $\sigma$ as $K(x_i,x_j) = \text{exp}{-\frac{||x_i-x_j||^2}{2\sigma^2}}$
