@@ -158,3 +158,60 @@ Finally, the decision rule will show as follows:
 1. If $\alpha_{i} = 0$ and $\varepsilon_{i} = 0$, the testing observation $x_{i}$ has been classified on the right side.
 2. If $0 < \alpha_{i} < C$,  we can conclude that $\varepsilon_{i} = 0$ and $y_{i}={w}^T\cdot\vec{x}_{i} + b$, which means the testing observation $x_{i}$ is a support vector.
 3. If $\alpha_{i} = 0$, $\varepsilon_{i} >0$ and $x_i$ is a support vector, we can conclude that $x_i$ is correctly classified when $0 \leq \varepsilon_{i} < 1$, and $x_1$ is misclassified when $\varepsilon_{i} > 1$.
+
+## Kernel Method
+Since we calculate $w=\sum_{i=1}^{n}\alpha_iy_ix_i$, so our hyperplane can be rewrite as
+
+$$
+g(x) = (\sum_{i=1}^{n}\alpha_iy_ix_i)^{T}x + b = \sum_{i=1}^{n}\alpha_iy_i<x_i,x> + b
+$$
+
+where $<x_i,x>$ represents the inner product of $x_i$ and $x$ What we discussed above is about linear separable. What if our data set is not linear separable? One common way here is define a map as:
+
+$$
+\phi:\mathbb{R}^p\to\mathbb{R}^m
+$$
+
+A feature mapping $\phi$, for instance, could be 
+
+$$
+\begin{aligned} & \phi(x) = \begin{bmatrix}x \\x^2 \\ x^3 \end{bmatrix}. \end{aligned}
+$$
+
+The idea is that if the observations are inseparable in current feature space, we can use a feature mapping function $\phi$ and try to separate the observations after being mapped.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/svm3.png"
+    alt="SVM3"
+    width="400"
+    height="400"
+  />
+</div>
+
+Here is a plot shows how the mapping function $\phi$ works.
+
+Hence, in order to solve the hyperplane to separate the observations after being mapped, we simply replace $x$ with $\phi(x)$ everywhere in the previous optimization problem and get:
+
+$$
+\begin{aligned} &\underset{w,b}{\text{maximize}} & & \frac{1}{2}w^Tw\\ & \text{s.t.} & & y_i(w^T\phi(x_i)+b) \geq 1, i = 1, \ldots, n. \end{aligned}
+$$
+
+From the previous part, we know that for each observations, we only need their pairwise inner products to solve the problem. But since computing the inner product in high dimensional space is expensive or even impossible, we need another way to computing the inner product.So here, given a feature mapping $\phi(x)$ we define the corresponding Kernel function $K$ as:
+
+$$
+\begin{aligned} K(x_i,x_j) = \phi(x_i)^T\phi(x_j) = <\phi(x_i),\phi(x_j)> \end{aligned}
+$$
+
+So now, instead of actually computing the inner product of pairwise observations, we use the kernel function to help us in computation. And using the same methods as before, we can get our hyperplane as:
+
+$$
+\begin{aligned} w = \sum_{i=1}^{n}\alpha_iy_i\phi(x_i), \end{aligned}
+$$
+
+and
+
+$$
+\begin{aligned} b = \frac{min_{i:y_i = 1}\sum_{j=1}^{n}\alpha_iy_iK(x_i,x_j) - max_{i:y_i = -1}\sum_{j=1}^{n}\alpha_iy_iK(x_i,x_j)}{2} \end{aligned}
+$$
