@@ -78,7 +78,7 @@ $$
 \begin{aligned} &\underset{w,b}{\text{minimize}} & & \frac{1}{2}w^Tw\\ & \text{s.t.} & & y_i(w^Tx_i+b) \geq 1, i = 1, \ldots, n. \end{aligned}
 $$
 
-We want to use the Method of Lagrange Multipliers to solve the optimization problem. We can write our constrained as $g_i(w) = y_i(w^T x_i+b) - 1 \geq 0$. Lets define $L(w,b,\alpha \geq 0) = \frac{1}{2}w^Tw - \sum_{i=1}^{n}\alpha_i[y_i(w^Twx_i+b) -1]$. We observe that the maximum of the function $L$ with respect to $\alpha$ equals \frac{1}{2}w^Tw. So we change our original optimization problem to the new one :
+We want to use the Method of Lagrange Multipliers to solve the optimization problem. We can write our constrained as $g_i(w) = y_i(w^T x_i+b) - 1 \geq 0$. Lets define $L(w,b,\alpha \geq 0) = \frac{1}{2}w^Tw - \sum_{i=1}^{n}\alpha_i[y_i(w^Twx_i+b) -1]$. We observe that the maximum of the function $L$ with respect to $\alpha$ equals $\frac{1}{2}w^Tw$. So we change our original optimization problem to the new one :
 
 $$
 \begin{aligned} &\underset{w,b}{\text{min }} \underset{\alpha \geq 0}{\text{max }}L(w,b,\alpha) = \frac{1}{2}w^Tw - \sum_{i=1}^{n}\alpha_i[y_i(w^Twx_i+b) -1] \end{aligned}
