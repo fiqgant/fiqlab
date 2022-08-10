@@ -1,0 +1,110 @@
+---
+title: ♾️ What exactly is MLOps?
+date: '2022-08-11'
+tags: ['MLOps', 'ML']
+draft: false
+summary: Support Vectors are simply the coordinates of individual observation. The SVM classifier is a frontier that best segregates the two classes (hyper-plane/ line).
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/nvidia_mlops.jpg"
+    alt="SVM3"
+    width="800"
+    height="800"
+  />
+</div>
+
+# What exactly is MLOps?
+The discipline of MLOps is a relatively new one, as you can see by searching for it on Google Trends. Once more, it has happened because more businesses are attempting to integrate ML systems into their platforms and products.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/google_trends_mlops.jpg"
+    alt="google trends mlops"
+    width="800"
+    height="800"
+  />
+</div>
+
+## Here's how I'd define MLOps:
+MLOps is an engineering discipline that aims to standardize and streamline the continuous delivery of high-performing models in production by unifying ML system development (dev) and ML system deployment (ops).
+
+## Why MLOps?
+We used to work on tiny scales with manageable amounts of data and a relatively small number of models.
+
+Now that the tide has turned, we are integrating decision automation into a variety of applications. This leads to a lot of technical difficulties while developing and implementing ML-based solutions.
+
+The lifespan of ML systems must first be understood in order to comprehend MLOps. A data-driven organization's lifecycle involves multiple different teams.
+
+The following teams contribute from top to bottom:
+
+- Business development or Product team - defining business objective(s) with KPIs (Key Performance Indicator) (Key Performance Indicator)
+- Data Engineering - the collecting and preparation of data.
+- Data Science - architecting ML solutions and developing models.
+- IT or DevOps — complete deployment setup and monitoring in collaboration with scientists.
+
+The ML lifespan is depicted here in a very simple form.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://www.freecodecamp.org/news/content/images/size/w1000/2021/03/Screenshot-2021-03-23-at-6.02.55-AM.png"
+    alt="machine learning lifecycle"
+    width="800"
+    height="800"
+  />
+</div>
+
+Google teams have been conducting extensive study on the technical issues associated with developing ML-based solutions. A NeurIPS research on [hidden technical debt in ML](https://papers.nips.cc/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf) systems demonstrates that constructing models is only a minor part of the overall effort. Many other procedures, setups, and tools will be integrated into the system.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://www.freecodecamp.org/news/content/images/size/w1600/2021/03/Screenshot-2021-03-23-at-7.06.03-AM.png"
+    alt="machine learning lifecycle"
+    width="800"
+    height="800"
+  />
+</div>
+
+We have a new Machine learning engineering culture to help streamline the entire system. The system includes everyone from upper management with little technical knowledge to Data Scientists, DevOps, and ML Engineers.
+
+# Benefits of MLOps
+MLOps can assist organizations in many ways:
+- **Scaling**. MLOps is crucial for increasing the number of machine learning-driven apps in a business.
+- **Trust**. MLOps also establishes confidence for managing machine learning in dynamic situations by automating, testing, and validating the process. MLOps improves the dependability, trustworthiness, and productivity of machine learning development.
+- **Seamless integration**. MLOps, like DevOps, follows a set of principles that aims to seamlessly connect the development cycle with the operations process. Typically, the data science team is well-versed in data, whereas the operations team is well-versed in business. MLOps improves ML efficiency by merging each team's knowledge and leveraging both skill sets. MLOps' improved communication and more suitable division of competence for data and operations teams alleviates the bottleneck caused by non-intuitive, sophisticated algorithms. MLOps systems build adaptable, dynamic machine learning production pipelines that can react to KPI-driven models.
+- **Better use of data**. MLOps have the potential to transform how businesses handle and capitalize on big data. MLOps shortens production life cycles by enhancing products with each iteration, resulting in more trustworthy insights that can be deployed more quickly. MLOps also allows more focused feedback by assisting in determining what is simply noise and which anomalies require attention.
+- **Compliance**. The regulatory and compliance component of operations is becoming increasingly crucial, especially as machine learning becomes more ubiquitous. Restrictions such as New York City's Algorithmic Accountability Bill and the EU's GDPR demonstrate the increasing stringency of machine learning regulations. MLOps keeps your team on top of best practices and changing laws. MLOps technologies can replicate models in accordance with original standards, ensuring that your system remains compliant even as subsequent models and machine learning pipelines improve. Because the operations team is in charge of regulatory processes, your data team may concentrate on developing and deploying models.
+- **Reduced risk and bias**. BUnreliable, inaccurate models can put a company's reputation at danger by undermining or losing consumer trust. Unfortunately, training data and the volatile, complex data of real-world settings may differ significantly, causing models to produce poor quality predictions. This turns them into liabilities rather than assets; MLOps mitigates this danger. Furthermore, MLOps can aid in the prevention of some development biases, such as those that can result in missed opportunities, underrepresented audiences, or legal danger.
+
+Many, if not most, of today's machine learning deployment processes are complex, laborious, and cross-disciplinary, involving business, data science, and information technology. This makes detecting and resolving model performance issues difficult.
+
+The purpose of MLOps is to deploy the model and achieve ML model lifecycle management across the company while decreasing technical friction and getting into production with as little risk and as quickly as feasible. A model has no ROI unless it is put into use.
+
+## What Problems Does MLOps Solve?
+- Data scientists with expertise in creating and deploying scalable web applications are in limited supply. These days, a new ML Engineer profile on the market tries to fill this void. It is a sweet spot where Data Science and DevOps converge.
+- The model's shifting business goals are dependent on numerous factors, including sustaining the model's performance requirements and guaranteeing AI governance. Keeping up with the ongoing model training and changing company objectives is challenging.
+- Communication gaps and a lack of a difficult-to-find common language between the technical and business departments. This gap is frequently the cause of major initiatives' failure.
+- Risk assessment – There is a lot of discussion about the black-box nature of these ML/DL systems. Models frequently deviate from what they were originally intended to do. Assessing the risk/cost of such failures is a critical and time-consuming step. For example, the cost of an incorrect YouTube video suggestion is far smaller than the cost of alerting an innocent individual for fraud, blocking their account, and denying their loan applications.
+
+
+# Who can do MLOps?
+There is no definitive answer to this. MLOps can be performed by a DevOps Engineer, an ML Engineer, or a Data Scientist.
+
+To make MLOps effortless, multiple talents should collaborate closely and adopt a methodical strategy. A full-stack Data Scientist, on the other hand, can perform MLOps, which reduce interdependence among diverse abilities.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://github.com/aws-samples/mlops-amazon-sagemaker/raw/master/images/mlops-manual.png"
+    alt="who?"
+    width="800"
+    height="800"
+  />
+</div>
+
+Multiple talents are tightly integrated to make MLOps possible, as seen in the above figure of the Machine Learning Application Development Life Cycle. As I previously stated, MLOps is the behavior that may be adopted by talents who work across multiple components to make MLOps efficient and smooth.
