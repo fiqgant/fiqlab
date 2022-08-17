@@ -1,0 +1,359 @@
+---
+title: 🐍 SVM and Kernel SVM with Python's Scikit-Learn
+date: '2022-08-17'
+tags: ['Python','SVM','Tutorial']
+draft: false
+summary: In this post, we'll look at what support vector machines are, the theory behind them, and how they're implemented in Python's Scikit-Learn module. We will next go on to a more complex SVM idea called as Kernel SVM, which we will also implement using Scikit-Learn
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://machinelearningjourney.com/wp-content/uploads/2020/01/Linear3D.gif"
+    alt="SVM"
+    width="432"
+    height="288"
+  />
+</div>
+
+In this post, we'll look at what support vector machines are, the theory behind them, and how they're implemented in Python's Scikit-Learn module. We will next go on to a more complex SVM idea called as Kernel SVM, which we will also implement using Scikit-Learn. You can see more abut svm [here](https://www.fiqlab.dev/blog/svm).
+
+
+# Simple SVM
+A typical machine learning algorithm seeks to create a boundary that separates the data in such a way that the misclassification error can be minimized in the case of linearly separable data in two dimensions, as shown in the graphic below. If you look attentively at Fig. 1, you will notice that there may be numerous boundaries that accurately separate the data points. The data is accurately classified by the two dashed lines and one solid line.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://s3.amazonaws.com/stackabuse/media/implementing-svm-kernel-svm-python-scikit-learn-1.jpg"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+SVM differs from previous classification methods in that it selects the decision boundary that optimizes the distance between all classes' nearest data points. An SVM not only finds a decision boundary, but the most optimal decision boundary.
+
+The best decision boundary is the one with the greatest margin from the nearest points in all classes. Support vectors are the nearest points from the decision border that maximize the distance between the decision boundary and the points, as seen in the graphic below. In the case of support vector machines, the decision boundary is known as the maximum margin classifier or the maximum margin hyperplane.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://s3.amazonaws.com/stackabuse/media/implementing-svm-kernel-svm-python-scikit-learn-2.jpg"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+Finding the support vectors, calculating the margin between the decision border and the support vectors, and maximizing this margin all require complicated mathematics. We will not go into detail about the mathematics in this lesson, but rather how SVM and Kernel SVM are implemented using the Python Scikit-Learn module.
+
+
+## Implementing SVM with Scikit-Learn
+The dataset that we are going to use in this section is [Banknote Authentication Data Set](https://archive.ics.uci.edu/ml/datasets/banknote+authentication)
+
+Our task is to predict whether a bank currency note is authentic or not based upon four attributes of the note i.e. skewness of the wavelet transformed image, variance of the image, entropy of the image, and curtosis of the image. This is a binary classification problem and we will use SVM algorithm to solve this problem. The rest of the section consists of standard machine learning steps.
+
+
+#### Importing libraries
+The following script imports required libraries:
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+### Importing the Dataset
+The data is available for download at the following link:
+
+[Google Drive](https://drive.google.com/file/d/13nw-uRXPY8XIZQxKRNZ3yYlho-CYm_Qt/view)
+
+The detailed information about the data is available at the following link:
+
+[UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/banknote+authentication)
+
+Download the dataset from the Google drive link and store it locally on your machine. For this example the CSV file for the dataset is stored in the "Datasets" folder. The script reads the file from this path. You can change the file path for your computer accordingly.
+
+To read data from CSV file, the simplest way is to use read_csv method of the pandas library. The following code reads bank currency note data into pandas dataframe:
+```python
+data = pd.read_csv('Datasets/bill_authentication.csv')
+```
+
+### Exploratory Data Analysis
+There are virtually limitless ways to analyze datasets with a variety of Python libraries. For the sake of simplicity we will only check the dimensions of the data and see first few records. To see the rows and columns and of the data, execute the following command:
+```python
+data.shape
+```
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/simplesvm_datashape.png"
+    alt="svm"
+    width="800"
+    height="800"
+  />
+</div>
+
+In the output you will see (1372,5). This means that the bank note dataset has 1372 rows and 5 columns.
+To get a feel of how our dataset actually looks, execute the following command:
+```python
+data.head()
+```
+
+The output will look like this:
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/simplesvm_datahead.png"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+You can see that all of the attributes in the dataset are numeric. The label is also numeric i.e. 0 and 1.
+
+
+### Data Preprocessing
+Data preprocessing involves (1) Dividing the data into attributes and labels and (2) dividing the data into training and testing sets.
+
+To divide the data into attributes and labels, execute the following code:
+```python
+X = data.drop('Class', axis=1)
+y = data['Class']
+```
+
+In the first line of the script above, all the columns of the `data` dataframe are being stored in the `X` variable except the `'Class'` column, which is the label column. The `drop()` method drops this column.
+
+In the second line, only the class column is being stored in the `y` variable. At this point of time `X` variable contains attributes while `y` variable contains corresponding labels.
+
+Once the data is divided into attributes and labels, the final preprocessing step is to divide data into training and test sets. Luckily, the model_selection library of the Scikit-Learn library contains the train_test_split method that allows us to seamlessly divide data into training and test sets.
+
+Execute the following script to do so:
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state=73)
+```
+
+
+### Training the Algorithm
+We have divided the data into training and testing sets. Now is the time to train our SVM on the training data. Scikit-Learn contains the `svm` library, which contains built-in classes for different SVM algorithms. Since we are going to perform a classification task, we will use the support vector classifier class, which is written as `SVC` in the Scikit-Learn's `svm` library. This class takes one parameter, which is the kernel type. This is very important. In the case of a simple SVM we simply set this parameter as "linear" since simple SVMs can only classify linearly separable data. We will see non-linear kernels in the next section.
+
+The `fit` method of SVC class is called to train the algorithm on the training data, which is passed as a parameter to the `fit` method. Execute the following code to train the algorithm:
+```python
+from sklearn.svm import SVC
+svclassifier = SVC(kernel='linear')
+svclassifier.fit(X_train, y_train)
+```
+
+
+### Making Predictions
+To make predictions, the `predict` method of the `SVC` class is used. Take a look at the following code:
+```python
+y_pred = svclassifier.predict(X_test)
+```
+
+
+### Evaluating the Algorithm
+Confusion matrix, precision, recall, and F1 measures are the most commonly used metrics for classification tasks. Scikit-Learn's `metrics` library contains the `classification_report` and `confusion_matrix methods`, which can be readily used to find out the values for these important metrics.
+
+Here is the code for finding these metrics:
+```python
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test,y_pred))
+print(classification_report(y_test,y_pred))
+```
+
+
+### Results
+The evaluation results are as follows:
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/simplesvm_result.png"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+
+# Kernel SVM
+In the previous section we saw how the simple SVM algorithm can be used to find decision boundary for linearly separable data. However, in the case of non-linearly separable data, such as the one shown in graphic below, a straight line cannot be used as a decision boundary.
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://s3.amazonaws.com/stackabuse/media/implementing-svm-kernel-svm-python-scikit-learn-3.jpg"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+In case of non-linearly separable data, the simple SVM algorithm cannot be used. Rather, a modified version of SVM, called Kernel SVM, is used.
+
+Basically, the kernel SVM projects the non-linearly separable data lower dimensions to linearly separable data in higher dimensions in such a way that data points belonging to different classes are allocated to different dimensions. Again, there is complex mathematics involved in this, but you do not have to worry about it in order to use SVM. Rather we can simply use Python's Scikit-Learn library that to implement and use the kernel SVM.
+
+## Implementing Kernel SVM with Scikit-Learn
+Implementing Kernel SVM with Scikit-Learn is similar to the simple SVM. In this section, we will use the famous [iris dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set) to predict the category to which a plant belongs based on four attributes: sepal-width, sepal-length, petal-width and petal-length.
+
+The dataset can be downloaded from the following link:
+
+[UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris)
+
+The rest of the steps are typical machine learning steps and need very little explanation until we reach the part where we train our Kernel SVM.
+
+
+### Importing Libraries
+``` python
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+```
+
+
+### Importing the Dataset
+``` python
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+
+# Assign colum names to the dataset
+colnames = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'Class']
+
+# Read dataset to pandas dataframe
+irisdata = pd.read_csv(url, names=colnames)
+```
+
+
+### Preprocessing
+``` python
+X = irisdata.drop('Class', axis=1)
+y = irisdata['Class']
+```
+
+
+### Train Test Split
+``` python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state=73)
+```
+
+
+### Training the Algorithm
+To train the kernel SVM, we use the same `SVC` class of the Scikit-Learn's `svm` library. The difference lies in the value for the kernel parameter of the `SVC` class. In the case of the simple SVM we used "linear" as the value for the kernel parameter. However, for kernel SVM you can use Gaussian, polynomial, sigmoid, or computable kernel. We will implement polynomial, Gaussian, and sigmoid kernels to see which one works better for our problem.
+
+
+#### 1. Polynomial Kernel
+In the case of [polynomial kernel](https://en.wikipedia.org/wiki/Polynomial_kernel), you also have to pass a value for the `degree` parameter of the `SVC` class. This basically is the degree of the polynomial. Take a look at how we can use a polynomial kernel to implement kernel SVM:
+``` python
+from sklearn.svm import SVC
+svclassifier = SVC(kernel='poly', degree=8)
+svclassifier.fit(X_train, y_train)
+```
+
+##### Making Predictions 
+Now once we have trained the algorithm, the next step is to make predictions on the test data.
+
+Execute the following script to do so:
+``` python
+y_pred = svclassifier.predict(X_test)
+```
+
+##### Evaluating the Algorithm
+As usual, the final step of any machine learning algorithm is to make evaluations for polynomial kernel. Execute the following script:
+``` python
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+```
+
+The output for the kernel SVM using polynomial kernel looks like this:
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/result_polynomialkernel.png"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+Now let's repeat the same steps for Gaussian and sigmoid kernels.
+
+
+#### 2. Gaussian Kernel
+Take a look at how we can use polynomial kernel to implement kernel SVM:
+``` python
+from sklearn.svm import SVC
+svclassifier = SVC(kernel='rbf')
+svclassifier.fit(X_train, y_train)
+```
+
+To use Gaussian kernel, you have to specify 'rbf' as value for the Kernel parameter of the SVC class.
+
+
+##### Prediction and Evaluation
+``` python
+y_pred = svclassifier.predict(X_test)
+```
+
+``` python
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+```
+
+The output of the Kernel SVM with Gaussian kernel looks like this:
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/result_gaussiankernel.png"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+
+#### 3. Sigmoid Kernel
+Finally, let's use a sigmoid kernel for implementing Kernel SVM. Take a look at the following script:
+``` python
+from sklearn.svm import SVC
+svclassifier = SVC(kernel='sigmoid')
+svclassifier.fit(X_train, y_train)
+```
+
+To use the sigmoid kernel, you have to specify `'sigmoid'` as value for the `kernel` parameter of the `SVC` class.
+
+##### Prediction and Evaluation
+``` python
+y_pred = svclassifier.predict(X_test)
+```
+
+``` python
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+```
+
+The output of the Kernel SVM with Sigmoid kernel looks like this:
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="/static/images/blog/result_sigmoidkernel.png"
+    alt="SVM"
+    width="800"
+    height="600"
+  />
+</div>
+
+### Comparison of Kernel Performance
+If we compare the performance of the different types of kernels we can clearly see that the sigmoid kernel performs the worst. This is due to the reason that sigmoid function returns two values, 0 and 1, therefore it is more suitable for binary classification problems. However, in our case we had three output classes.
+
+Amongst the Gaussian kernel and polynomial kernel, we can see that Gaussian kernel achieved a perfect 100% prediction rate while polynomial kernel misclassified one instance. Therefore the Gaussian kernel performed slightly better. However, there is no hard and fast rule as to which kernel performs best in every scenario. It is all about testing all the kernels and selecting the one with the best results on your test dataset.
+
+
+# Conclusion
+In this article we studied both simple and kernel SVMs. We studied the intuition behind the SVM algorithm and how it can be implemented with Python's Scikit-Learn library. We also studied different types of kernels that can be used to implement kernel SVM. I would suggest you try to implement these algorithms on real-world datasets available at places like [Kaggle](https://www.kaggle.com/).
+
+I would also suggest that you explore the actual mathematics behind the SVM. Although you are not necessarily going to need it in order to use the SVM algorithm, it is still very handy to know what is actually going on behind the scene while your algorithm is finding decision boundaries.
