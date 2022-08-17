@@ -1,0 +1,313 @@
+---
+title: ♾️ Modeling Swiss Farmer's Attitudes About Climate Change
+date: '2022-08-18'
+tags: ['Python','MLOps','ML','Tutorial']
+draft: false
+summary: In this tutorial, we'll compare ML models across two different Git branches of a project- and we'll do it in a continuous integration system (GitHub Actions) for automation superpowers
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://c4.wallpaperflare.com/wallpaper/584/373/210/swiss-alps-landscape-switzerland-wallpaper-preview.jpg"
+    alt="mlops-farmer"
+    width="728"
+    height="410"
+  />
+</div>
+
+In this tutorial, we'll compare ML models across two different Git branches of a project- and we'll do it in a continuous integration system (GitHub Actions) for automation superpowers!
+
+# 🏷 Repository : [fiqgant/MLOps-Farmer](https://github.com/fiqgant/MLOps-Farmer)
+
+# Get Dataset
+Get dataset from journal **Data on farmers’ adoption of climate change mitigation measures, individual characteristics, risk attitudes and social influences in a region of Switzerland** 
+
+[Dataset](https://www.sciencedirect.com/science/article/pii/S2352340920303048) with python
+
+Source code
+``` python
+import wget
+import os
+
+# data from https://www.sciencedirect.com/science/article/pii/S2352340920303048
+# Download the zipped dataset
+url = 'https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/yshdbyj6zy-1.zip'
+zip_name = "data.zip"
+wget.download(url, zip_name)
+
+# Unzip it and standardize the .csv filename
+import zipfile
+with zipfile.ZipFile(zip_name,"r") as zip_ref:
+    zip_ref.filelist[0].filename = 'data_raw.csv'
+    zip_ref.extract(zip_ref.filelist[0])
+
+os.remove(zip_name)
+```
+
+Run in terminal
+``` bash
+python get_data.py
+```
+    
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/MLOps-Farmer/main/Images/get_data.png"
+    alt="mlops-farmer"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+
+# Process Data
+Process data with python
+
+Source code
+``` python
+import pandas as pd
+
+df = pd.read_csv("data_raw.csv")
+
+all_features = df.columns
+
+# Let's drop some features
+names = [feat for feat in all_features if "net_name" in feat] # excluded for privacy reasons
+useless = ["info_gew","info_resul","interviewtime","id","date"] # features that we expect are uninformative
+drop_list = names + useless 
+
+# Remove the questionnaire about agricultural practices until I can better understand it
+practice_list = ["legum","conc","add","lact","breed","covman","comp","drag","cov","plow","solar","biog","ecodr"]
+for feat in all_features:
+    if any(x in feat for x in practice_list):
+        drop_list.append(feat)
+
+
+df = df.drop(columns=drop_list)
+
+# Convert non-numeric features to numeric
+non_numeric = list(df.select_dtypes(include=['O']).columns)
+for col in non_numeric:
+    codes,uniques=pd.factorize(df[col])
+    df[col] = codes
+
+df.to_csv("data_processed.csv")
+```
+
+``` bash
+python process_data.py
+```
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/MLOps-Farmer/main/Images/process_data.png"
+    alt="mlops-farmer"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+
+# Train
+Source code
+``` python
+import json
+import numpy as np
+import pandas as pd 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from sklearn import preprocessing
+from sklearn.metrics import roc_curve
+from sklearn.impute import SimpleImputer
+from sklearn.metrics import confusion_matrix
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_predict
+
+
+df = pd.read_csv("data_processed.csv")
+
+#### Get features ready to model! 
+y = df.pop("cons_general").to_numpy()
+y[y< 4] = 0
+y[y>= 4] = 1
+
+X = df.to_numpy()
+X = preprocessing.scale(X) # Is standard
+# Impute NaNs
+
+imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+imp.fit(X)
+X = imp.transform(X)
+
+
+# Linear model
+clf = LogisticRegression()
+yhat = cross_val_predict(clf, X, y, cv=5)
+
+acc = np.mean(yhat==y)
+tn, fp, fn, tp = confusion_matrix(y, yhat).ravel()
+specificity = tn / (tn+fp)
+sensitivity = tp / (tp + fn)
+
+# Now print to file
+with open("metrics.json", 'w') as outfile:
+        json.dump({ "accuracy": acc, "specificity": specificity, "sensitivity":sensitivity}, outfile)
+
+# Let's visualize within several slices of the dataset
+score = yhat == y
+score_int = [int(s) for s in score]
+df['pred_accuracy'] = score_int
+
+# Bar plot by region
+
+sns.set_color_codes("dark")
+ax = sns.barplot(x="region", y="pred_accuracy", data=df, palette = "Greens_d")
+ax.set(xlabel="Region", ylabel = "Model accuracy")
+plt.savefig("by_region.png",dpi=80)
+```
+
+``` bash
+python train.py
+```
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/MLOps-Farmer/main/Images/train_result.png"
+    alt="mlops-farmer"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+# Build Pipeline
+``` bash
+dvc init
+dvc run -n get_data -d get_data.py -o data_raw.csv --no-exec python get_data.py
+```
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/MLOps-Farmer/main/Images/dvc_run.png"
+    alt="mlops-farmer"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+Edit `dvc.yaml`
+``` yaml
+stages:
+    get_data:
+        cmd: python get_data.py
+        deps:
+        - get_data.py
+        outs:
+        - data_raw.csv
+
+    process:
+        cmd: python process_data.py
+        deps:
+        - process_data.py
+        - data_raw.csv
+        outs:
+        - data_processed.csv
+
+    train:
+        cmd: python train.py
+        deps:
+        - train.py
+        - data_processed.csv
+        outs:
+        - by_region.png
+        metrics:
+        - metrics.json:
+            cache: false
+```
+
+dvc repro
+``` bash
+dvc repro
+```
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/MLOps-Farmer/main/Images/dvc_repro.png"
+    alt="mlops-farmer"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+git add, commit & push
+```bash
+git add .
+git commit -m "setup dvc pipelines"
+git push
+```
+
+# Create .github/workflows/train.yaml
+```yaml
+name: farmer
+on: [push]
+jobs:
+run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: cml_run
+        env:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+        pip install -r requirements.txt
+        dvc repro 
+        git fetch --prune
+        dvc metrics diff --show-md main > report.md
+        
+        # Add figure to the report
+        echo "## Validating results by region"
+        cml-publish by_region.png --md >> report.md
+        cml-send-comment report.md
+```
+
+git add, commit & push
+```bash
+git add .
+git commit -m "Make CML workflow"
+git push
+```
+
+# Result 
+You can see [here](https://github.com/fiqgant/MLOps-Farmer/commit/e217475ec059857fbad059f81d8d62b1d5353739#commitcomment-81294769)
+| Path         | Metrics     | LogisticRegression | QuadraticDiscriminantAnalysis | Change   |
+|--------------|-------------|--------------------|-------------------------------|----------|
+| metrics.json | accuracy    | 0.86667            | 0.70476                       | -0.1619  |
+| metrics.json | sensitivity | 0.95506            | 0.78652                       | -0.16854 |
+| metrics.json | specificity | 0.375              | 0.25                          | -0.125   |
+
+# Plot
+### LogisticRegression
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/MLOps-Farmer/main/by_region_lr.png"
+    alt="mlops-farmer"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+
+### QuadraticDiscriminantAnalysis
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/MLOps-Farmer/main/by_region_qda.png"
+    alt="mlops-farmer"
+    width="1920"
+    height="1080"
+  />
+</div>
