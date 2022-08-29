@@ -72,18 +72,7 @@ export default function AuthorLayout({ children, frontMatter }) {
                 >
                   Politeknik Wilmar Bisnis Indonesia
                 </Link>
-              </RoughNotation>
-            </p>
-            <p>
-              <RoughNotation
-                type="bracket"
-                brackets={['left', 'right']}
-                show={true}
-                color="#FF0000"
-                animationDelay={300}
-                animationDuration={3000}
-              >
-                {text1} and Tech Lead at{' '}
+                {text2} and Tech Lead at{' '}
                 <Link
                   href={'https://marjinal.id'}
                   className="special-underline no-underline hover:text-gray-100 dark:text-gray-100 hover:dark:text-gray-100"
