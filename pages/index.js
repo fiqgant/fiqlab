@@ -8,7 +8,7 @@ import { RoughNotation } from 'react-rough-notation'
 import NewsletterForm from '@/components/NewsletterForm'
 import ViewCounter from '@/components/ViewCounter'
 
-const MAX_DISPLAY = 3
+const MAX_DISPLAY = 7
 
 export async function getStaticProps() {
   const posts = await getAllFilesFrontMatter('blog')
