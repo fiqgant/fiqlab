@@ -1,7 +1,7 @@
 const usesData = [
   {
     title: 'Macbook Pro 13"',
-    description: `M1 - 8 core CPU, 8 core GPU, 16 GB RAM`,
+    description: `M2 - 8 core CPU, 10 core GPU, 8 GB RAM`,
     href: '',
   },
   {
