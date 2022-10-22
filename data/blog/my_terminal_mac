@@ -1,0 +1,140 @@
+---
+title: How do I set up Terminal on my MacBook Pro (M2)
+date: '2022-10-23'
+tags: ['Terminal', 'Config', 'Tutorial']
+draft: false
+summary: I just got my Macbook Pro (m2) two days ago. So today I will transform my terminals into a wonderful, colorful, supportive terminal.
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/fiqlab/main/public/static/images/blog/mac.png"
+    alt="term"
+    width="1920"
+    height="1920"
+  />
+</div>
+
+I just got my Macbook Pro (M2) two days ago. So today I will transform my terminals into a wonderful, colorful, supportive terminal that offers suggestions and has a memory, we'll do it by [Oh My Zsh](https://ohmyz.sh/) and design it by [PowerLevel10k](https://github.com/romkatv/powerlevel10k).
+
+# Install [Oh My Zsh](https://ohmyz.sh/)
+in the command line type
+
+```console
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+
+# [PowerLevel10k](https://github.com/romkatv/powerlevel10k)
+Install Powerlevel10k using the following command
+
+```console
+git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+```
+
+Then you need to enable it, change the value of ZSH_THEME to following in `~/.zshrc` file :
+
+```console
+ZSH_THEME="powerlevel10k/powerlevel10k"
+```
+
+## Configure Powerlevel10k Theme
+I use [iTerm2](https://iterm2.com/) as my terminal and make sure your terminal font is [Hack NF](https://www.nerdfonts.com/)
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://iterm2.com/img/logo2x.jpg"
+    alt="term"
+    width="1920"
+    height="1920"
+  />
+</div>
+
+### p10k configure
+type
+
+```console
+p10k configure
+```
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://res.cloudinary.com/practicaldev/image/fetch/s--71QSuVWr--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/xf9fk2sgux1niog4vhpy.gif"
+    alt="term"
+    width="1920"
+    height="1920"
+  />
+</div>
+
+you can choose your style...
+
+## Plugins (Optional, Good to have!)
+### Clone plugins
+#### zsh-syntax-highlighting
+It enables highlighting of commands whilst they are typed at a zsh prompt into an interactive terminal. This helps in reviewing commands before running them, particularly in catching syntax errors.
+
+```console
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+#### zsh-autosuggestions
+It suggests commands as you type based on history and completions.
+
+```console
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+#### ls tools
+colorls: A Ruby script that colorizes the ls output with color and icons
+colorls
+
+```console
+sudo gem install colorls
+```
+
+### Activate the plugins
+In `~/.zshrc` file replace the line starting with plugins=() to below line.
+
+```console
+plugins=( git zsh-syntax-highlighting zsh-autosuggestions )
+```
+
+```console
+if [ -x "$(command -v colorls)" ]; then
+    alias ls="colorls"
+    alias la="colorls -al"
+fi
+```
+
+Some more official plugins - [ohmyzsh plugins](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins)
+
+after all these steps type
+
+```console
+source ~/.zshrc
+```
+
+Finally it should be like this 👇
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/fiqlab/main/public/static/images/blog/my_terminal.gif"
+    alt="term"
+    width="1920"
+    height="1920"
+  />
+</div>
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/fiqlab/main/public/static/images/blog/my_terminal.png"
+    alt="term"
+    width="1920"
+    height="1920"
+  />
+</div>
+
