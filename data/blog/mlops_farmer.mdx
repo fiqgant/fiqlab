@@ -26,7 +26,7 @@ Get dataset from journal **Data on farmers’ adoption of climate change mitigat
 [Dataset](https://www.sciencedirect.com/science/article/pii/S2352340920303048) with python
 
 Source code
-``` python
+```Python:get_data.py
 import wget
 import os
 
@@ -46,7 +46,7 @@ os.remove(zip_name)
 ```
 
 Run in terminal
-``` bash
+```shell:Terminal
 python get_data.py
 ```
     
@@ -65,7 +65,7 @@ python get_data.py
 Process data with python
 
 Source code
-``` python
+```Python:process_data.py
 import pandas as pd
 
 df = pd.read_csv("data_raw.csv")
@@ -95,7 +95,7 @@ for col in non_numeric:
 df.to_csv("data_processed.csv")
 ```
 
-``` bash
+```shell:Terminal
 python process_data.py
 ```
 <div className="grid place-items-center">
@@ -111,7 +111,7 @@ python process_data.py
 
 # Train
 Source code
-``` python
+```python:train.py
 import json
 import numpy as np
 import pandas as pd 
@@ -169,7 +169,7 @@ ax.set(xlabel="Region", ylabel = "Model accuracy")
 plt.savefig("by_region.png",dpi=80)
 ```
 
-``` bash
+```shell:Terminal
 python train.py
 ```
 <div className="grid place-items-center">
@@ -183,7 +183,7 @@ python train.py
 </div>
 
 # Build Pipeline
-``` bash
+```Shell:Terminal
 dvc init
 dvc run -n get_data -d get_data.py -o data_raw.csv --no-exec python get_data.py
 ```
@@ -198,7 +198,7 @@ dvc run -n get_data -d get_data.py -o data_raw.csv --no-exec python get_data.py
 </div>
 
 Edit `dvc.yaml`
-``` yaml
+```yaml:dvc.yaml
 stages:
     get_data:
         cmd: python get_data.py
@@ -228,7 +228,7 @@ stages:
 ```
 
 dvc repro
-``` bash
+```shell:Terminal
 dvc repro
 ```
 <div className="grid place-items-center">
@@ -242,14 +242,14 @@ dvc repro
 </div>
 
 git add, commit & push
-```bash
+```shell:Terminal
 git add .
 git commit -m "setup dvc pipelines"
 git push
 ```
 
 # Create .github/workflows/train.yaml
-```yaml
+```yaml:train.yaml
 name: farmer
 on: [push]
 jobs:
@@ -274,7 +274,7 @@ run:
 ```
 
 git add, commit & push
-```bash
+```shell:Terminal
 git add .
 git commit -m "Make CML workflow"
 git push
