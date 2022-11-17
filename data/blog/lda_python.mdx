@@ -28,7 +28,7 @@ The Linear Discriminant Analysis is available in the scikit-learn Python machine
 
 The method can be used directly without configuration, although the implementation does offer arguments for customization, such as the choice of solver and the use of a penalty.
 
-```Python:knn.py
+```Python:lda.py
 # create the lda model
 model = LinearDiscriminantAnalysis()
 ```
@@ -41,7 +41,7 @@ We will use the make_classification() function to create a dataset with 1,000 ex
 
 The example creates and summarizes the dataset.
 
-```Python:knn.py
+```Python:lda.py
 # test classification dataset
 from sklearn.datasets import make_classification
 # define dataset
@@ -59,7 +59,7 @@ We can fit and evaluate a Linear Discriminant Analysis model using repeated stra
 
 The complete example of evaluating the Linear Discriminant Analysis model for the synthetic binary classification task is listed below.
 
-```Python:knn.py
+```Python:lda.py
 from numpy import mean
 from numpy import std
 from sklearn.datasets import make_classification
@@ -94,7 +94,7 @@ This can be achieved by fitting the model on all available data and calling the 
 
 We can demonstrate this with a complete example listed below.
 
-```Python:knn.py
+```Python:lda.py
 # make a prediction with a lda model on the dataset
 from sklearn.datasets import make_classification
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
