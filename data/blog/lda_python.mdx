@@ -28,7 +28,7 @@ The Linear Discriminant Analysis is available in the scikit-learn Python machine
 
 The method can be used directly without configuration, although the implementation does offer arguments for customization, such as the choice of solver and the use of a penalty.
 
-```Python
+```Python:knn.py
 # create the lda model
 model = LinearDiscriminantAnalysis()
 ```
@@ -41,7 +41,7 @@ We will use the make_classification() function to create a dataset with 1,000 ex
 
 The example creates and summarizes the dataset.
 
-```Python
+```Python:knn.py
 # test classification dataset
 from sklearn.datasets import make_classification
 # define dataset
@@ -51,7 +51,7 @@ print(X.shape, y.shape)
 ```
 
 Running the example creates the dataset and confirms the number of rows and columns of the dataset.
-```bash
+```shell:Terminal
 (1000, 10) (1000,)
 ```
 
@@ -59,7 +59,7 @@ We can fit and evaluate a Linear Discriminant Analysis model using repeated stra
 
 The complete example of evaluating the Linear Discriminant Analysis model for the synthetic binary classification task is listed below.
 
-```Python
+```Python:knn.py
 from numpy import mean
 from numpy import std
 from sklearn.datasets import make_classification
@@ -84,7 +84,7 @@ Your specific results may vary given the stochastic nature of the learning algor
 
 In this case, we can see that the model achieved a mean accuracy of about 89.3 percent.
 
-```bash
+```shell:Terminal
 Mean Accuracy: 0.893 (0.033)
 ```
 
@@ -94,7 +94,7 @@ This can be achieved by fitting the model on all available data and calling the 
 
 We can demonstrate this with a complete example listed below.
 
-```Python
+```Python:knn.py
 # make a prediction with a lda model on the dataset
 from sklearn.datasets import make_classification
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -114,6 +114,6 @@ print('Predicted Class: %d' % yhat)
 
 Running the example fits the model and makes a class label prediction for a new row of data.
 
-```bash
+```shell:Terminal
 Predicted Class: 1
 ```
