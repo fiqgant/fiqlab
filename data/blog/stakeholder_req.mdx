@@ -1,0 +1,94 @@
+---
+title: 📝 Business Requirements VS Stakeholder Requirements
+date: '2022-11-21'
+tags: ['DEV']
+draft: false
+summary: Many analysts struggle with understanding the differences between business requirements and stakeholder requirements. Some people even think they are the same, but I want to assure you that they are not.
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://miro.medium.com/max/1400/0*XgcHXYbxqqlqi75k.webp"
+    alt="dev"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+Many analysts struggle with understanding the differences between business requirements and stakeholder requirements. Some people even think they are the same, but I want to assure you that they are not. In this blog, I explain the differences. To be clear, in defining requirements, there are actually four types of requirements that should be defined: business requirements, stakeholder requirements, solution requirements, and transition requirements. There are also two types of solution requirements: functional and nonfunctional.
+
+# Business Requirement
+Business Requirements describe why the organization is undertaking the project. They state some of the benefits that the organization or its customers expect to receive from undertaking the project. Business requirements may be documented in several ways such as a project charter, business case, or in a project vision and scope statement. Business requirements help get the project owner, stakeholders and project team on the same song sheet. But you can’t build software from such high-level information. In this post, we consider the following business requirements:
+
+- Problem Statement
+- Project Vision
+- Project Constraints (Budget, Schedule, and Resource)
+- Business Objectives
+- Project Scope Statements (Features)
+- Business Process Analysis
+- Stakeholder Analysis
+- IT Service Impact Analysis
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://miro.medium.com/max/1400/1*nm5lBMxVC3LzqulhjGGj9Q.webp"
+    alt="dev"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+The results from the business process analysis, stakeholder analysis, and IT service impact analysis are also considered business requirements. The purpose of the business process analysis is to determine how the business process will work.
+
+It is often necessary to resolve deficiencies in the business process before trying to automate it. Not dealing with the business processes first is like trying to pave a cow path; it might get you there, but it certainly won’t be the straightest most direct path. Stakeholder analysis is needed to determine who will be impacted by the system and how best to engage the impacted people to obtain user requirements. The IT Service Impact Analysis identifies what IT services will be impacted by the new solution.
+
+Business requirements also define the scope of the solution. Solution scope is generally defined using features. Features are prioritized based on business value and implementation complexity, and are later used for eliciting stakeholder requirements and defining solutions requirements. Not properly defining solution scope generally results in scope creep and solutions that are not aligned with business needs. Business requirements are generally documented in a Business Requirements Document (BRD).
+
+# Stakeholder Requirement
+Stakeholder Requirements, often referred to as user needs or user requirements, describe what users do with the system, such as the activities that users must be able to perform. User requirements are generally documented using narrative text, use cases, scenarios, user stories, or event-response tables. User requirements are generally documented in a User Requirements Document (URD). User requirements are generally signed off by the user community and employed as the primary input for creating system requirements.
+
+An important and difficult step of designing a software product is determining what the user actually wants it to do. This is because users often are unable to communicate the entirety of their needs and wants, and the information they provide may also be incomplete, inaccurate and self-conflicting. The responsibility of completely understanding what the customer wants falls on the business analyst. This is why user requirements are generally considered separate from the solution or system requirements. The business analyst carefully analyzes the user requirements and carefully constructs high quality system requirements ensuring that that the requirements meet certain quality characteristics.
+
+Not properly defining stakeholder requirements often results in building functionality that is not helpful and consequently never used by users. Lack of user input is the number one cause of project failure, according to Standish Group research.
+
+# Solution (System) Requirement
+Solution (System) Requirements are what the developers use to build the system. These are the traditional “shall” statements that describe what the system “shall do.” System requirements are classified as either functional or nonfunctional requirements.
+
+# Functional requirement
+Functional requirements specifies something that the developer needs to build to deliver the solution. For example, a system may be required to enter and print cost estimates; this is a functional requirement.
+
+# Nonfunctional requirement
+Nonfunctional requirements specify all the remaining requirements not covered by functional requirements. Nonfunctional requirements are sometimes called supplemental requirements, quality of service requirements, or service level requirements. There are many types of nonfunctional requirements. Below is a list of some of the common nonfunctional requirement types:
+
+- Availability
+- Business continuity
+- Compliance
+- Interoperability
+- Maintainability
+- Performance
+- Usability
+
+The plan for implementing functional requirements is detailed in the system design. The plan for implementing supplemental requirements is detailed in the system architecture.
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://miro.medium.com/max/1400/1*rNs4C9wJdf_2c4m0VTTN0w.webp"
+    alt="dev"
+    width="1920"
+    height="1080"
+  />
+</div>
+
+# Requirement Management
+Traditionally, functional and supplemental requirements for software were documented in a software requirements specification (SRS). The SRS is the principal deliverable that analysts use to communicate detailed requirements information to developers, testers, and other project stakeholders. Many modern systems, placing requirements into requirement bundles to support iterative development and to break requirements into various components required by teams to develop the solution (e.g., software, hardware, organizational change, etc.). Requirement bundles provide much more flexibility than do the URD and SRS documents. Requirement bundles may be developed iteratively and incrementally with both stakeholders and project team members being able to validate and review the requirements as they evolve. User needs are always mapped to system requirements so that the developer sees not only the requirement but also the source from where it originated.
+
+In selecting a requirements management tool, it is very important to select a tool that supports all of the types of requirements defined above. Some vendors say they support all of the requirement types, but many vendors do not even understand the difference between the types. The vast majority of requirements management tools only allow definition of functional and nonfunctional requirements.
+
+# Conclusion
+Business requirements are essential to ensure that the solutions deliver business value and meet business needs.
+
+Stakeholder requirements are needed to ensure that the solution is helpful to users in performing their activities.
+
