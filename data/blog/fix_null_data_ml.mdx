@@ -1,0 +1,67 @@
+---
+title: 📘Effective Strategies For Dealing With Null Data in Machine Learning
+date: '2022-12-21'
+tags: ['python', 'ml', 'tutorial']
+draft: false
+summary: Handling null or missing data is an important task in machine learning, as it can affect the performance and accuracy of your models.
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://i.stack.imgur.com/s2wo8.jpg"
+    alt="null"
+    width="700"
+    height="700"
+  />
+</div>
+
+Handling null or missing data is an important task in machine learning, as it can affect the performance and accuracy of your models. There are several different approaches you can take to fix null data, each with its own pros and cons. In this article, we will explore four different ways to fix null data in machine learning, and provide example Python code for each approach.
+
+1. Drop rows or columns with null values: One simple way to fix null data is to simply drop any rows or columns that contain null values. This can be done using pandas' dropna() function.
+Here's an example of how to drop rows with null values in a pandas DataFrame:
+
+```Python
+import pandas as pd
+
+# Load data into a pandas DataFrame
+df = pd.read_csv("data.csv")
+
+# Drop rows with any null values
+df_clean = df.dropna()
+```
+
+You can also specify which axis to drop null values from (either rows or columns) by setting the axis parameter to 0 (for rows) or 1 (for columns).
+
+```Python
+# Drop columns with any null values
+df_clean = df.dropna(axis=1)
+```
+
+2. Impute missing values: Another option is to impute missing values, which involves replacing null values with a substitute value, such as the mean or median of the rest of the data. This can be done using scikit-learn's Imputer class.
+Here's an example of how to use Imputer to replace null values with the mean in a pandas DataFrame:
+
+```Python
+from sklearn.impute import SimpleImputer
+import pandas as pd
+
+# Load data into a pandas DataFrame
+df = pd.read_csv("data.csv")
+
+# Create an Imputer object with strategy set to "mean"
+imputer = SimpleImputer(strategy="mean")
+
+# Use the fit_transform method to replace null values with the mean
+df_imputed = imputer.fit_transform(df)
+
+# The result is a numpy array, so you can convert it back to a DataFrame if needed
+df_imputed = pd.DataFrame(df_imputed, columns=df.columns)
+```
+
+You can also specify different strategies for imputing values, such as "median" or "most_frequent".
+
+3. Use a machine learning algorithm that can handle null values: Some machine learning algorithms, such as decision trees, are able to handle null values without preprocessing. This can be a good option if you have a lot of null data and don't want to drop rows or impute values.
+
+4. Use data imputation techniques: Data imputation involves using advanced techniques to fill in null values in a way that is more accurate than simple imputation methods like mean or median. One popular technique is multiple imputation, which involves fitting multiple models to the data and using the resulting predictions to fill in the null values.
+
+I hope this helps! Let me know if you have any questions.
