@@ -68,6 +68,7 @@ module.exports = withBundleAnalyzer({
       'dwgyu36up6iuz.cloudfront.net',
       'cdn.hashnode.com',
       'res.craft.do',
+      'youtube.com',
       'res.cloudinary.com', // Twitter Profile Picture
     ],
   },
