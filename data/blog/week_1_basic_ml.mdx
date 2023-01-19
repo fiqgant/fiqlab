@@ -234,10 +234,12 @@ plt.show()
     F       30.0
     M       30.0
 
+:::
 ![](vertopal_09eecfe5721b47039a82b485e7b8a0dc/1c214c167b629fec7f2592ee610e014d97ff8a7e.png)
 :::
 
 # Libraries and Frameworks
+
 ## Tensorflow
 ``` python
 import tensorflow as tf
@@ -277,17 +279,16 @@ model.fit(train_images, train_labels, epochs=5)
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print('Test accuracy:', test_acc)
 ```
-
 :::
     2023-01-18 15:56:38.817179: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:306] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
-    2023-01-18 15:56:38.817672: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:272] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)
-
+    2023-01-18 15:56:38.817672: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:272] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: undefined)
+:::
     Metal device set to: Apple M2
     Epoch 1/5
-
+:::
     2023-01-18 15:56:39.197117: W tensorflow/core/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz
     2023-01-18 15:56:39.324355: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.
-
+:::
     1875/1875 [==============================] - 7s 3ms/step - loss: 0.2600 - accuracy: 0.9260
     Epoch 2/5
     1875/1875 [==============================] - 6s 3ms/step - loss: 0.1149 - accuracy: 0.9661
@@ -299,7 +300,7 @@ print('Test accuracy:', test_acc)
     1875/1875 [==============================] - 6s 3ms/step - loss: 0.0445 - accuracy: 0.9863
      32/313 [==>...........................] - ETA: 0s - loss: 0.0791 - accuracy: 0.9756
     2023-01-18 15:57:11.265766: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:114] Plugin optimizer for device_type GPU is enabled.
-
+:::
     313/313 [==============================] - 1s 3ms/step - loss: 0.0859 - accuracy: 0.9741
     Test accuracy: 0.9741000533103943
 :::
