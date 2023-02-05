@@ -56,13 +56,23 @@ Consider a dataset of 2 classes: `A` and `B`. Class `A` has 3 points $(1, 2), (2
 
 Let's calculate the mean of each class:
 $$
-\left x_1[
-\begin{array}{cc}
-a&b\\
-c&d
-\end{array}
-\right]
+x_1 = \begin{bmatrix}
+1 & 2 \\
+2 & 3 \\
+3 & 4 
+\end{bmatrix}
 $$
+
+$$
+x_2 = \begin{bmatrix}
+5 & 4 \\
+6 & 5 
+\end{bmatrix}
+$$
+
+Class `A` mean: $[(1+2+3)/3, (2+3+4)/3] = [2, 3]$
+
+Class `B` mean: $[(5+6)/2, (4+5)/2] = [5.5, 4.5]$
 
 ## Conclusion
 Linear Discriminant Analysis is a powerful tool for solving classification problems in machine learning. It works by finding the axis in the feature space that maximizes the separation between the classes and reducing the number of features in a dataset. With its simple implementation, LDA has a wide range of applications in various fields such as biology, finance, and marketing. In this article, we have covered the basics of LDA and how to implement it in solving real-world problems. I hope this article has helped you in understanding LDA and its applications.
