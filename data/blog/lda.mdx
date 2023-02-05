@@ -1,0 +1,56 @@
+---
+title: 📘 Understanding Linear Discriminant Analysis
+date: '2023-02-06'
+tags: ['algorithm', 'ml', 'tutorial']
+draft: false
+summary: I am always looking for ways to streamline my work processes and make my life easier. That's why I was so excited when I stumbled upon Oh My Posh
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://github.com/fiqgant/fiqlab/blob/main/public/static/images/blog/lda.gif"
+    alt="iterm2"
+    width="1000"
+    height="1000"
+  />
+</div>
+
+Linear Discriminant Analysis (LDA) is a supervised machine learning algorithm that is used for dimensionality reduction and classification. In simple terms, it helps in reducing the number of features in a dataset and also helps in classifying the data into different categories. In this article, we will dive into LDA, understand how it works and learn how to implement it in solving real-world problems.
+
+## What is Linear Discriminant Analysis?
+LDA is a linear approach to finding the best boundary between the classes in a dataset. It is a classification algorithm that uses statistical methods to find the best boundary that separates the different categories in the data. Unlike other dimensionality reduction techniques such as Principal Component Analysis (PCA), LDA is not an unsupervised learning algorithm, but a supervised one. This means that it uses class labels to find the best boundary between the classes.
+
+## How does Linear Discriminant Analysis work?
+LDA works by finding the axis in the feature space that maximizes the separation between the classes. The algorithm starts by finding the mean vector for each class in the dataset. The mean vector represents the center of the class, and it is calculated by taking the average of all the points in the class. Once the mean vectors are found, the algorithm then calculates the scatter matrix for each class. The scatter matrix is a measure of the spread of the points in the class around its mean.
+
+Next, the algorithm calculates the between-class scatter matrix by subtracting the mean vector of each class from the mean vector of the whole dataset. This matrix represents the scatter of the classes in the feature space. Finally, the algorithm finds the linear combination of the features that maximizes the ratio of between-class scatter to the within-class scatter. This linear combination is called the Linear Discriminant and it represents the axis that maximizes the separation between the classes.
+
+The final step is to project the data onto this axis to obtain the new feature space, where the classes are well separated. The new feature space is represented by a new set of features, which are linear combinations of the original features. These new features are used to classify the data into different categories.
+
+## How to implement Linear Discriminant Analysis
+The implementation of LDA involves the following steps:
+
+1. Preprocessing the data. This involves cleaning and transforming the data to make it ready for the analysis.
+2. Finding the mean vectors for each class in the dataset.
+3. Calculating the scatter matrix for each class.
+4. Calculating the between-class scatter matrix.
+5. Finding the linear combination of features that maximizes the separation between the classes.
+6. Projecting the data onto the linear discriminant to obtain the new feature space.
+7. Using the new features to classify the data into different categories.
+
+## Manual Calculation
+Let's consider a simple example to understand the concept of Linear Discriminant Analysis (LDA) and manual calculation of classifying and reduction.
+
+Consider a dataset of 2 classes: A and B. Class A has 3 points (1, 2), (2, 3), (3, 4) and Class B has 2 points (5, 4), (6, 5). The goal is to find a linear boundary that separates the two classes.
+
+| X | Y | Class |
+|---|---|-------|
+| 1 | 2 | A     |
+| 2 | 3 | A     |
+| 3 | 4 | A     |
+| 5 | 4 | B     |
+| 6 | 5 | B     |
+
+## Conclusion
+Linear Discriminant Analysis is a powerful tool for solving classification problems in machine learning. It works by finding the axis in the feature space that maximizes the separation between the classes and reducing the number of features in a dataset. With its simple implementation, LDA has a wide range of applications in various fields such as biology, finance, and marketing. In this article, we have covered the basics of LDA and how to implement it in solving real-world problems. I hope this article has helped you in understanding LDA and its applications.
