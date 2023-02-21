@@ -1,0 +1,216 @@
+---
+title: 🐍 Implementing a Simple Generative Adversarial Network (GAN) in Python with TensorFlow 2.0
+date: '2023-02-21'
+tags: ['ML', 'AI', 'python', 'tutorial']
+draft: false
+summary: Generative Adversarial Networks (GANs) are a type of neural network architecture used in unsupervised learning tasks such as image generation, style transfer, and data augmentation. In this tutorial, we'll implement a simple GAN in Python using TensorFlow 2.0. Our GAN will generate fake images of hand-written digits that look like they were drawn from the MNIST dataset.
+---
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://cdn.activestate.com/wp-content/uploads/2020/05/GAN_inAction.gif"
+    alt="gans"
+    width="700"
+    height="700"
+  />
+</div>
+
+# Introduction
+Generative Adversarial Networks (GANs) are a type of neural network architecture used in unsupervised learning tasks such as image generation, style transfer, and data augmentation. In this tutorial, we'll implement a simple GAN in Python using TensorFlow 2.0. Our GAN will generate fake images of hand-written digits that look like they were drawn from the MNIST dataset.
+
+# Full code
+If you're interested in the full code implementation, you can check it out on my [GitHub repository](https://github.com/fiqgant/Simple_GANs). Feel free to fork the repository, experiment with the code, and share your results!
+
+## Import libraries
+First, we need to import the necessary libraries. We'll use TensorFlow 2.0, as well as some additional libraries for data processing, visualization, and file I/O.
+
+```python
+import tensorflow as tf
+from tensorflow.keras import layers
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices=false'
+```
+
+## Define the generator network
+This network takes a random noise vector as input and generates a new data sample. In this example, we will use a simple fully connected network with two hidden layers.
+
+```python
+def make_generator_model():
+    model = tf.keras.Sequential()
+    model.add(layers.Dense(256, input_shape=(100,), use_bias=False))
+    model.add(layers.BatchNormalization())
+    model.add(layers.LeakyReLU())
+
+    model.add(layers.Dense(512, use_bias=False))
+    model.add(layers.BatchNormalization())
+    model.add(layers.LeakyReLU())
+
+    model.add(layers.Dense(784, activation='tanh', use_bias=False))
+    model.add(layers.Reshape((28, 28, 1)))
+
+    return model
+```
+
+## DDefine the discriminator network
+We'll define two models: the generator and the discriminator. The generator takes random noise as input and generates a fake image. The discriminator takes an image as input and outputs a binary classification (real or fake).
+
+## Define Loss Functions and Optimizers
+This network takes a data sample as input and attempts to classify it as real or fake. In this example, we will use a simple fully connected network with two hidden layers.
+
+```python
+def make_discriminator_model():
+    model = tf.keras.Sequential()
+    model.add(layers.Flatten(input_shape=(28, 28, 1)))
+    model.add(layers.Dense(512))
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dense(256))
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dense(1, activation='sigmoid'))
+
+    return model
+```
+
+## Define the loss functions for the generator and discriminator networks
+The generator loss function is based on how well the generator is able to fool the discriminator, while the discriminator loss function is based on how well it is able to distinguish between real and fake data samples.
+
+```python
+cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True)
+
+def discriminator_loss(real_output, fake_output):
+    real_loss = cross_entropy(tf.ones_like(real_output), real_output)
+    fake_loss = cross_entropy(tf.zeros_like(fake_output), fake_output)
+    total_loss = real_loss + fake_loss
+    return total_loss
+
+def generator_loss(fake_output):
+    return cross_entropy(tf.ones_like(fake_output), fake_output)
+```
+
+## Define the optimizers for the generator and discriminator networks
+
+```python
+generator_optimizer = tf.keras.optimizers.legacy.Adam(1e-4)
+discriminator_optimizer = tf.keras.optimizers.legacy.Adam(1e-4)
+```
+
+## Define a function to generate random noise vectors
+
+```python
+def generate_noise(batch_size, noise_dim):
+    return tf.random.normal([batch_size, noise_dim])
+```
+
+## Define a function to generate fake data samples using the generator network
+
+```python
+def generate_fake_samples(generator, batch_size, noise_dim):
+    noise = generate_noise(batch_size, noise_dim)
+    fake_samples = generator(noise)
+    return fake_samples
+```
+
+## Define the training loop
+In each iteration of the loop, we generate a batch of fake data samples using the generator network, and a batch of real data samples from the training dataset. We then train the discriminator network on both batches of samples, and the generator network on a batch of noise vectors. We repeat this process for a given number of epochs.
+
+```python
+oss}, Discriminator Loss: {d_loss}')@tf.function
+def train_step(images, generator, discriminator, generator_optimizer, discriminator_optimizer, noise_dim):
+    noise = tf.random.normal([batch_size, noise_dim])
+
+    with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
+        generated_images = generator(noise, training=True)
+
+        real_output = discriminator(images, training=True)
+        fake_output = discriminator(generated_images, training=True)
+
+        gen_loss = generator_loss(fake_output)
+        disc_loss = discriminator_loss(real_output, fake_output)
+
+    gradients_of_generator = gen_tape.gradient(gen_loss, generator.trainable_variables)
+    gradients_of_discriminator = disc_tape.gradient(disc_loss, discriminator.trainable_variables)
+
+    generator_optimizer.build(gradients_of_generator)
+    discriminator_optimizer.build(gradients_of_discriminator)
+
+    generator_optimizer.apply_gradients(zip(gradients_of_generator, generator.trainable_variables))
+    discriminator_optimizer.apply_gradients(zip(gradients_of_discriminator, discriminator.trainable_variables))
+```
+
+## Load the MNIST dataset and normalize the pixel values to the range `[-1, 1]`
+
+```python
+(train_images, train_labels), (_, _) = tf.keras.datasets.mnist.load_data()
+train_images = train_images.reshape(train_images.shape[0], 28, 28, 1).astype('float32')
+train_images = (train_images - 127.5) / 127.5  # Normalize the pixel values to the range [-1, 1]
+```
+
+## Train the GAN
+
+```python
+generator = make_generator_model()
+discriminator = make_discriminator_model()
+
+epochs = 100
+batch_size = 128
+noise_dim = 100
+
+train_gan(generator, discriminator, epochs, batch_size, noise_dim)
+```
+
+outputs :
+
+```bash
+Epoch 0, Generator Loss: 4.287422180175781, Discriminator Loss: 0.15370841324329376
+Epoch 10, Generator Loss: 3.083446741104126, Discriminator Loss: 0.4589003622531891
+Epoch 20, Generator Loss: 3.2899668216705322, Discriminator Loss: 0.44366225600242615
+Epoch 30, Generator Loss: 2.2490386962890625, Discriminator Loss: 0.8107759952545166
+Epoch 40, Generator Loss: 1.2677932977676392, Discriminator Loss: 1.0651637315750122
+Epoch 50, Generator Loss: 1.7831768989562988, Discriminator Loss: 0.9591208696365356
+Epoch 60, Generator Loss: 1.599095344543457, Discriminator Loss: 0.9014538526535034
+Epoch 70, Generator Loss: 1.2353744506835938, Discriminator Loss: 1.215086579322815
+Epoch 80, Generator Loss: 1.191125750541687, Discriminator Loss: 1.1990487575531006
+Epoch 90, Generator Loss: 1.6821964979171753, Discriminator Loss: 1.107940912246704
+```
+
+## Generates 25 fake images
+This code generates 25 fake images using the trained generator and plots them in a `5x5` grid. The generate_samples function takes as input the trained generator and the number of fake images to generate. It generates random noise vectors, passes them through the generator to generate fake images, and rescales the pixel values to `[0, 1]`. The resulting fake images are returned as a numpy array.
+
+The generated fake images can be visualized using matplotlib's imshow function, which takes as input the image data, the colormap to use (in this case, grayscale), and whether to show the axis labels. The resulting images are plotted in a `5x5` grid using matplotlib's subplot function.
+
+```python
+def generate_samples(generator, n_samples):
+    # Generate n_samples random noise vectors
+    noise = tf.random.normal([n_samples, 100])
+    # Generate fake images using the generator
+    fake_images = generator(noise, training=False)
+    # Rescale pixel values from [-1, 1] to [0, 1]
+    fake_images = (fake_images + 1) / 2
+    return fake_images.numpy()
+
+# Generate 25 fake images using the trained generator
+fake_images = generate_samples(generator, 25)
+
+# Plot the generated images
+fig = plt.figure(figsize=(5, 5))
+for i in range(fake_images.shape[0]):
+    plt.subplot(5, 5, i+1)
+    plt.imshow(fake_images[i, :, :, 0], cmap='gray')
+    plt.axis('off')
+plt.show()
+```
+
+<div className="grid place-items-center">
+  <img
+    className="inline rounded-lg"
+    src="https://raw.githubusercontent.com/fiqgant/Simple_GANs/main/simple_gan.png"
+    alt="gans"
+    width="1920"
+    height="1920"
+  />
+</div>
+
+# Conclusion
+In this tutorial, we learned how to implement a simple Generative Adversarial Network (GAN) using TensorFlow 2.0. We trained the GAN on the MNIST dataset to generate handwritten digits. We defined the generator and discriminator models, the loss functions and optimizers, and the training loop. We also defined a function to generate some fake images using the trained generator and save them to disk. Finally, we trained the GAN and generated some fake images for visualization.
