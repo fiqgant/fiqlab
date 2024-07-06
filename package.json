@@ -71,8 +71,7 @@
     "tsx": "^4.15.2",
     "turbo": "^2.0.3",
     "typescript": "5.5.1-rc",
-    "vitest": "^1.6.0",
-    "next":"^14"
+    "vitest": "^1.6.0"
   },
   "engines": {
     "node": ">=20.11.0",
