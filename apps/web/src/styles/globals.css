@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .h-content {
+    min-height: calc(100vh - 416px - 96px - 96px - 64px - 24px);
+  }
+
+  @media (max-width: 640px) {
+    .h-content {
+      min-height: calc(100vh - 600px - 96px - 96px - 64px - 24px);
+    }
+  }
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  @apply text-muted-foreground;
+}
+
+[id^='comment-'].highlighted-comment {
+  @apply bg-accent;
+}

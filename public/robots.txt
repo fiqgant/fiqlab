@@ -1,5 +1,0 @@
-Sitemap: https://musing.vercel.app/sitemap.xml
-
-User-agent: *
-Allow: /
-Disallow: /api/*

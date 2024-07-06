@@ -1,0 +1,24 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
+  "access": "public",
+  "baseBranch": "main",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "tszhong0411/honghong.me"
+    }
+  ],
+  "commit": false,
+  "fixed": [],
+  "ignore": [
+    "@tszhong0411/db",
+    "@tszhong0411/docs",
+    "@tszhong0411/emails",
+    "@tszhong0411/env",
+    "@tszhong0411/mdx",
+    "@tszhong0411/shared",
+    "@tszhong0411/web"
+  ],
+  "linked": [],
+  "updateInternalDependencies": "patch"
+}
