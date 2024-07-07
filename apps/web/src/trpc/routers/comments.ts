@@ -189,7 +189,7 @@ export const commentsRouter = createTRPCRouter({
             date: new Date().toDateString(),
             post: {
               title,
-              url: `https://honghong.me/blog/${input.slug}`
+              url: `https://fiqlab.vercel.app/blog/${input.slug}`
             },
             type
           })

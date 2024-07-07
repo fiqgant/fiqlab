@@ -48,7 +48,7 @@ const CommentNotification = (props: CommentNotificationProps) => {
       </Head>
       <Preview>
         New {type === 'comment' ? 'comment' : 'reply'} on the post &quot; {post.title} &quot; on
-        honghong.me
+        fiqlab.vercel.app
       </Preview>
       <Body
         style={{
@@ -72,7 +72,7 @@ const CommentNotification = (props: CommentNotificationProps) => {
             }}
           >
             <Img
-              src='https://honghong.me/images/email/logo.png'
+              src='https://fiqlab.vercel.app/images/email/logo.png'
               alt="Hong's logo"
               width='50'
               height='50'
@@ -81,7 +81,7 @@ const CommentNotification = (props: CommentNotificationProps) => {
           <Section>
             <Text>
               A new {type === 'comment' ? 'comment' : 'reply'} has been posted on the post &quot;
-              {post.title}&quot; on honghong.me
+              {post.title}&quot; on fiqlab.vercel.app
             </Text>
           </Section>
           <Hr
@@ -149,7 +149,7 @@ const CommentNotification = (props: CommentNotificationProps) => {
                 color: '#fff'
               }}
             >
-              View {type === 'comment' ? 'comment' : 'reply'} on honghong.me
+              View {type === 'comment' ? 'comment' : 'reply'} on fiqlab.vercel.app
             </Link>
           </Section>
         </Container>
