@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 const middleware = () => {
   const csp = `
     default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' *.fiqlab.vercel.app vercel.live;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' *.fiqlab.vercel.app vercel.live https://cloud.umami.is;
     style-src 'self' 'unsafe-inline' vercel.live;
     img-src * blob: data:;
     font-src 'self' assets.vercel.com fonts.gstatic.com vercel.live;
