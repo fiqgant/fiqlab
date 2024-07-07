@@ -19,7 +19,7 @@ const config = {
       },
       {
         protocol: 'https',
-        hostname: 'honghong.me'
+        hostname: 'fiqlab.vercel.app'
       }
     ]
   },
