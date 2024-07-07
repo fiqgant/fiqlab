@@ -1,0 +1,134 @@
+---
+title: Face Counting using Haarcascade and YOLOv3
+date: '2024-07-07T00:00:00Z'
+modifiedTime: '2024-07-07T00:00:00Z'
+summary: Implementing a face counting system by combining Haarcascade and YOLOv3 in Python.
+---
+
+## Preface
+
+This blog will guide you through creating a face counting system using Haarcascade and YOLOv3. The system reads a video file, detects faces using both methods, and counts the faces only when the bounding boxes of both algorithms intersect.
+
+The repository for this tutorial:
+
+https://github.com/fiqgant/face_counting_haarcascade_yolov3
+
+## Project Structure
+
+<Files>
+  <Folder name='models' defaultOpen>
+    <File name='haarcascade_frontalface_default.xml' />
+    <File name='yolov3.onnx' />
+  </Folder>
+  <Folder name='scripts' defaultOpen>
+    <File name='face_counting.py' />
+  </Folder>
+  <Folder name='videos' defaultOpen>
+    <File name='video.mp4' />
+  </Folder>
+</Files>
+
+## How to Create the Face Counting System
+
+First, ensure you have the necessary libraries installed:
+
+```bash title='Terminal'
+pip install numpy opencv-python opencv-python-headless onnxruntime
+```
+
+Next, we will create a Python script to implement the face counting system.
+
+### Importing Libraries and Loading Models
+
+We begin by importing the required libraries and loading the Haarcascade and YOLOv3 models.
+
+```python title='face_counting.py'
+import cv2
+import numpy as np
+import onnxruntime as ort
+
+# Load the Haarcascade model
+haarcascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+# Load the YOLOv3 model
+ort_session = ort.InferenceSession('yolov3.onnx')
+input_name = ort_session.get_inputs()[0].name
+```
+
+### Processing the Video
+
+Read the video file and initialize variables for counting faces.
+
+```python title='face_counting.py'
+# Read the video file
+cap = cv2.VideoCapture('video.mp4')
+
+# Initialize the face count
+face_count = 0
+```
+
+### Detecting Faces
+
+Create functions to detect faces using Haarcascade and YOLOv3.
+
+```python title='face_counting.py'
+def detect_faces_haarcascade(frame):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = haarcascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+    return faces
+
+def detect_faces_yolo(frame):
+    blob = cv2.dnn.blobFromImage(frame, 1/255.0, (416, 416), swapRB=True, crop=False)
+    ort_inputs = {input_name: blob}
+    detections = ort_session.run(None, ort_inputs)
+    faces = []
+    for detection in detections[0]:
+        confidence = detection[4]
+        if confidence > 0.5:
+            x, y, w, h = (detection[0:4] * np.array([frame.shape[1], frame.shape[0], frame.shape[1], frame.shape[0]])).astype(int)
+            faces.append((x, y, w, h))
+    return faces
+```
+
+### Counting Faces
+
+Process each frame of the video and count the faces only if both Haarcascade and YOLOv3 detect and intersect the same face.
+
+```python title='face_counting.py'
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    # Detect faces using both methods
+    faces_haarcascade = detect_faces_haarcascade(frame)
+    faces_yolo = detect_faces_yolo(frame)
+
+    # Count faces based on intersection of both methods
+    for (x1, y1, w1, h1) in faces_haarcascade:
+        for (x2, y2, w2, h2) in faces_yolo:
+            if (x1 < x2 + w2 and x1 + w1 > x2 and y1 < y2 + h2 and y1 + h1 > y2):
+                face_count += 1
+                cv2.rectangle(frame, (x1, y1), (x1 + w1, y1 + h1), (0, 255, 0), 2)
+                break
+
+    cv2.imshow('Face Counting', frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+print(f'Total faces counted: {face_count}')
+```
+
+### Conclusion
+
+This tutorial demonstrated how to create a face counting system by combining Haarcascade and YOLOv3. By leveraging the strengths of both methods, we can achieve more accurate face detection and counting. Feel free to explore the [GitHub repository](https://github.com/fiqgant/face_counting_haarcascade_yolov3) for more details and additional functionalities.
+
+## Useful links
+
+- [OpenCV Documentation](https://docs.opencv.org/)
+- [YOLOv3 Documentation](https://pjreddie.com/darknet/yolo/)
+- [ONNX Runtime Documentation](https://onnxruntime.ai/docs/)
+
+Feel free to reach out with any questions or comments about this tutorial!
