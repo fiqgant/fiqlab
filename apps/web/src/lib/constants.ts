@@ -5,5 +5,5 @@ export const SITE_URL = isProduction ? 'https://fiqlab.vercel.app' : 'http://loc
 export const GITHUB_USERNAME = 'fiqgant'
 
 export const SITE_NAME = 'fiq'
-export const SITE_TITLE = 'fiq - A Full Stack Developer'
-export const SITE_DESCRIPTION = 'fiq • 27 y/o • Lecturer • Full Stack Developer'
+export const SITE_TITLE = 'fiq - A Lecturer'
+export const SITE_DESCRIPTION = 'fiq • 27 y/o • Lecturer'
