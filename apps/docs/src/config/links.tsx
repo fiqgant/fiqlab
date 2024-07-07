@@ -12,7 +12,7 @@ type SidebarLinks = Array<{
 
 export const HEADER_LINKS: HeaderLinks = [
   {
-    href: 'https://github.com/tszhong0411/honghong.me',
+    href: 'https://github.com/fiqgant/fiqlab',
     text: 'GitHub'
   }
 ]

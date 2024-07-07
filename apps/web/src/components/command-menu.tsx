@@ -1,6 +1,6 @@
 'use client'
 
-import { SiFacebook, SiGithub, SiInstagram, SiX, SiYoutube } from '@icons-pack/react-simple-icons'
+import { SiFacebook, SiGithub, SiInstagram, SiYoutube } from '@icons-pack/react-simple-icons'
 import {
   Button,
   CommandDialog,
@@ -93,7 +93,7 @@ const CommandMenu = () => {
           title: 'Source code',
           icon: <CodeIcon className='mr-3 size-4' />,
           onSelect: () => {
-            openLink('https://github.com/tszhong0411/honghong.me')
+            openLink('https://github.com/fiqgant/fiqlab')
           }
         }
       ]
@@ -105,35 +105,28 @@ const CommandMenu = () => {
           title: 'GitHub',
           icon: <SiGithub className='mr-3 size-4' />,
           onSelect: () => {
-            openLink('https://github.com/tszhong0411')
+            openLink('https://github.com/fiqgant')
           }
         },
         {
           title: 'Facebook',
           icon: <SiFacebook className='mr-3 size-4' />,
           onSelect: () => {
-            openLink('https://www.facebook.com/tszhong0411/')
+            openLink('https://www.facebook.com/taufiqurrahman.mahmud?mibextid=LQQJ4d/')
           }
         },
         {
           title: 'Instagram',
           icon: <SiInstagram className='mr-3 size-4' />,
           onSelect: () => {
-            openLink('https://instagram.com/tszhong0411/')
-          }
-        },
-        {
-          title: 'X',
-          icon: <SiX className='mr-3 size-4' />,
-          onSelect: () => {
-            openLink('https://x.com/tszhong0411')
+            openLink('https://instagram.com/fiqgant/')
           }
         },
         {
           title: 'YouTube',
           icon: <SiYoutube className='mr-3 size-4' />,
           onSelect: () => {
-            openLink('https://youtube.com/@tszhong0411')
+            openLink('https://youtube.com/@fiqgant?si=ZqoMwGhidOixJKSw')
           }
         }
       ]
