@@ -75,7 +75,7 @@ Next, we updated the Wi-Fi credentials and server IP addresses in the `main.cpp`
 #define WIFI_PASSWORD "your_wifi_password"
 ```
 
-```cpp title= "IP addresses"
+```cpp title="IP addresses"
 const char *serverUploadUrl = "http://your_server_ip:3000/uploadAudio";
 const char *serverBroadcastUrl = "http://your_server_ip:3000/broadcastAudio";
 const char *broadcastPermitionUrl = "http://your_server_ip:3000/checkVariable";
@@ -100,7 +100,7 @@ npm install
 
 To enable communication with ChatGPT, we created a `config.js` file containing our OpenAI API key.
 
-```js
+```js title="config.js"
 module.exports = {
   apiKey: 'your_openai_api_key'
 }
