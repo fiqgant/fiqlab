@@ -11,8 +11,6 @@ Ever wondered what it's like to build your own voice assistant from scratch? In 
 
 For a visual guide, you can also check out the [video tutorial](https://youtu.be/1l--dVFlOA0).
 
-<Video src='https://youtu.be/1l--dVFlOA0' width={1920} height={1080} />
-
 ## The Birth of an Idea
 
 The idea was simple yet ambitious. We wanted to create a voice assistant that could understand and respond to voice commands using the ESP32, a microcontroller known for its low cost and high versatility. By integrating OpenAI’s ChatGPT, the project aimed to bring advanced AI capabilities to a DIY voice assistant.
@@ -24,7 +22,7 @@ To bring this project to life, we needed a few key components:
 ### Hardware
 
 <Image
-  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/1.png'
+  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/2.png'
   width={1920}
   height={1024}
   alt='Hardware'
@@ -41,22 +39,18 @@ To bring this project to life, we needed a few key components:
 Before jumping into the code, we meticulously planned the hardware setup. The microphone and amplifier were connected to the ESP32, and the circuit was designed to ensure seamless audio recording and playback. Here’s a glimpse of our circuit diagram:
 
 <Image
-  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/4.png'
+  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/3.png'
   width={1920}
   height={1024}
   alt='Circuit Diagram'
 />
 
 <Image
-  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/3.png'
+  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/4.png'
   width={1920}
   height={1024}
   alt='Pin Out'
 />
-
-![Circuit Diagram](images/2.png)
-
-![Pin Out](images/3.png)
 
 ## Bringing the Voice Assistant to Life
 
@@ -76,10 +70,12 @@ With the repository cloned, we opened the `chatgpt_voice` project in Arduino IDE
 
 Next, we updated the Wi-Fi credentials and server IP addresses in the `main.cpp` file. This step ensured that our ESP32 could connect to the internet and communicate with the Node.js server.
 
-```cpp
+```cpp title="Wi-Fi credentials"
 #define WIFI_SSID "your_wifi_ssid"
 #define WIFI_PASSWORD "your_wifi_password"
+```
 
+```cpp title= "IP addresses"
 const char *serverUploadUrl = "http://your_server_ip:3000/uploadAudio";
 const char *serverBroadcastUrl = "http://your_server_ip:3000/broadcastAudio";
 const char *broadcastPermitionUrl = "http://your_server_ip:3000/checkVariable";
