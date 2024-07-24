@@ -1,0 +1,133 @@
+---
+title: Building Your Own ESP32 ChatGPT Voice Assistant
+date: '2024-07-24T00:00:00Z'
+modifiedTime: '2024-07-24T00:00:00Z'
+summary: Dive into the exciting journey of creating a voice assistant using an ESP32 and ChatGPT, exploring audio recording, Wi-Fi connectivity, and seamless interaction.
+---
+
+## Introduction
+
+Ever wondered what it's like to build your own voice assistant from scratch? In this fascinating project, we embark on the journey of creating a voice assistant using the versatile ESP32 microcontroller and the powerful ChatGPT AI. Picture this: your voice assistant recording your voice, sending it off to a server for transcription, and playing back a response, all in a matter of moments. Sounds intriguing? Let’s dive right in!
+
+For a visual guide, you can also check out the [video tutorial](https://youtu.be/1l--dVFlOA0).
+
+<Video
+  src='/videos/blog/building-your-own-esp32-chatgpt-voice-assistant/chatgptvaesp32.mov'
+  width={1920}
+  height={1080}
+/>
+
+## The Birth of an Idea
+
+The idea was simple yet ambitious. We wanted to create a voice assistant that could understand and respond to voice commands using the ESP32, a microcontroller known for its low cost and high versatility. By integrating OpenAI’s ChatGPT, the project aimed to bring advanced AI capabilities to a DIY voice assistant.
+
+## Essential Components
+
+To bring this project to life, we needed a few key components:
+
+### Hardware
+
+<Image
+  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/1.png'
+  width={1920}
+  height={1024}
+  alt='Hardware'
+/>
+
+### Software
+
+- **ESP32 Arduino Core**: To program the ESP32.
+- **Node.js and Express.js**: For the backend server.
+- **OpenAI API Key**: To access ChatGPT’s capabilities.
+
+## Setting the Stage
+
+Before jumping into the code, we meticulously planned the hardware setup. The microphone and amplifier were connected to the ESP32, and the circuit was designed to ensure seamless audio recording and playback. Here’s a glimpse of our circuit diagram:
+
+<Image
+  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/4.png'
+  width={1920}
+  height={1024}
+  alt='Circuit Diagram'
+/>
+
+<Image
+  src='images/blog/building-your-own-esp32-chatgpt-voice-assistant/3.png'
+  width={1920}
+  height={1024}
+  alt='Pin Out'
+/>
+
+![Circuit Diagram](images/2.png)
+
+![Pin Out](images/3.png)
+
+## Bringing the Voice Assistant to Life
+
+### Step 1: Cloning the Repository
+
+The first step was to clone the project repository. This gave us access to all the necessary code and resources.
+
+```bash
+git clone https://github.com/fiqgant/esp32_chatgpt_voice_assistant.git
+```
+
+### Step 2: Setting Up the ESP32
+
+With the repository cloned, we opened the `chatgpt_voice` project in Arduino IDE. Ensuring all required libraries were installed was crucial for smooth functioning. Libraries such as `driver/i2s.h`, `SPIFFS.h`, `WiFi.h`, and `HTTPClient.h` were added.
+
+### Step 3: Configuring Wi-Fi and Server Details
+
+Next, we updated the Wi-Fi credentials and server IP addresses in the `main.cpp` file. This step ensured that our ESP32 could connect to the internet and communicate with the Node.js server.
+
+```cpp
+#define WIFI_SSID "your_wifi_ssid"
+#define WIFI_PASSWORD "your_wifi_password"
+
+const char *serverUploadUrl = "http://your_server_ip:3000/uploadAudio";
+const char *serverBroadcastUrl = "http://your_server_ip:3000/broadcastAudio";
+const char *broadcastPermitionUrl = "http://your_server_ip:3000/checkVariable";
+```
+
+### Step 4: Uploading the Code
+
+With everything set up, we uploaded the code to the ESP32, eager to see our voice assistant come to life.
+
+## Building the Backend
+
+### Step 1: Setting Up Node.js
+
+The backend was just as important as the ESP32 setup. We navigated to the `chatgpt_voice_backend` directory and installed the necessary Node.js dependencies.
+
+```bash
+cd chatgpt_voice_backend
+npm install
+```
+
+### Step 2: Configuring the OpenAI API
+
+To enable communication with ChatGPT, we created a `config.js` file containing our OpenAI API key.
+
+```js
+module.exports = {
+  apiKey: 'your_openai_api_key'
+}
+```
+
+### Step 3: Starting the Server
+
+With the configuration in place, we started the Node.js server, ready to handle audio transcriptions and generate responses.
+
+```bash
+node server.js
+```
+
+## Bringing it All Together
+
+Now came the moment of truth. We powered on the ESP32, pressed the button connected to GPIO 33, and watched as it recorded audio, sent it to the server, and played back a response. The seamless interaction between the hardware and software was a testament to the meticulous planning and execution.
+
+## Final Thoughts
+
+Creating the ESP32 ChatGPT Voice Assistant was an exhilarating journey. It showcased the incredible potential of combining microcontrollers with advanced AI. Whether you're a hobbyist or a seasoned developer, projects like these open up a world of possibilities.
+
+Feel free to explore the [GitHub repository](https://github.com/fiqgant/esp32_chatgpt_voice_assistant) for more details and dive into the code yourself. The only limit is your imagination!
