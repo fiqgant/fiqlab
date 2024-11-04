@@ -135,7 +135,7 @@ export const GET = async (_: Request, props: OGRouteProps) => {
                 fontSize: 30
               }}
             >
-              honghong.me
+              fiqlab.vercel.app
             </div>
           </div>
         </div>

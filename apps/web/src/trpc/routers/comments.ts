@@ -173,7 +173,7 @@ export const commentsRouter = createTRPCRouter({
         if (type === 'reply' && !input.parentId) return
 
         await resend.emails.send({
-          from: 'Hong from honghong.me <me@honghong.me>',
+          from: 'fiq from fiqlab.vercel.app<taufiq@wbi.ac.id',
           to,
           subject: `New ${type} posted`,
           react: CommentNotification({
