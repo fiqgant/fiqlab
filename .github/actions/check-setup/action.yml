@@ -1,1 +1,29 @@
-name: 'Check Setup'\n\ndescription: 'Check if the repository is correctly set up'\n\ninputs:\n  version:\n    description: 'The version of pnpm to install'\n    required: true\n    default: '9.4.0'\n\nruns:\n  using: 'node16'\n  steps:\n    - name: 'Set up pnpm'\n      uses: pnpm/action-setup@v9.4.0\n      with:\n        version: ${{ inputs.version }}\n        node-version: '16'
+name: Check Setup
+
+# This is a composite action that checks the setup of the project.
+
+# Inputs
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: true
+    default: '16'
+  pnpm-version:
+    description: 'pnpm version to use'
+    required: true
+    default: '7.0.0'
+
+# Steps
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install pnpm
+      run: npm install -g pnpm@${{ inputs.pnpm-version }}
+
+    - name: Verify pnpm installation
+      run: pnpm --version
