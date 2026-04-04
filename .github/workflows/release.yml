@@ -18,6 +18,9 @@ jobs:
       - name: Check setup
         uses: ./.github/actions/check-setup
 
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Create Release Pull Request or Publish to NPM
         id: changesets
         uses: changesets/action@v1
