@@ -24,6 +24,8 @@ runs:
 
     - name: Install pnpm
       run: npm install -g pnpm@${{ inputs.pnpm-version }}
+      shell: bash
 
     - name: Verify pnpm installation
       run: pnpm --version
+      shell: bash
