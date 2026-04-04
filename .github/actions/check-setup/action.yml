@@ -11,7 +11,7 @@ inputs:
   pnpm-version:
     description: 'pnpm version to use'
     required: true
-    default: '9.0.0'
+    default: '9.4.0'
 
 # Steps
 runs:
