@@ -7,18 +7,18 @@ inputs:
   node-version:
     description: 'Node.js version to use'
     required: true
-    default: '16'
+    default: '20'
   pnpm-version:
     description: 'pnpm version to use'
     required: true
-    default: '7.0.0'
+    default: '9.0.0'
 
 # Steps
 runs:
   using: "composite"
   steps:
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
 
