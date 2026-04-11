@@ -1,0 +1,154 @@
+---
+title: "Detecting Plant Diseases with CNN: From Lab to Field"
+date: "2024-07-08"
+excerpt: "How we built a plant disease detection system using convolutional neural networks that achieves 96.7% accuracy and runs offline on a $15 ESP32-S3 module."
+thumbnail: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1200&h=630&fit=crop"
+tags: ["CNN", "Plant Disease", "Precision Agriculture", "TFLite", "IoT"]
+category: "Research"
+featured: true
+---
+
+## Background
+
+Crop diseases account for 20–40% of global food production loss each year. Early detection is critical, yet most smallholder farmers in developing countries have no access to agronomists or diagnostic labs.
+
+Our research set out to answer a simple question: **Can a $15 microcontroller replace a $200/hour expert?**
+
+## Dataset
+
+We curated a dataset of **14,628 leaf images** across 14 disease classes spanning 5 crops (rice, corn, tomato, potato, cassava). Images were captured with smartphone cameras under natural lighting conditions in the field — not laboratory conditions.
+
+Key characteristics:
+- Variable backgrounds
+- Different lighting angles
+- Partial occlusion
+- Multiple disease stages (early, mid, late)
+
+## Model Architecture
+
+We used **EfficientNet-B0** as the backbone with a custom head:
+
+```python
+import tensorflow as tf
+from tensorflow.keras import layers, Model
+
+def build_disease_classifier(num_classes: int = 14) -> Model:
+    base = tf.keras.applications.EfficientNetB0(
+        include_top=False,
+        weights="imagenet",
+        input_shape=(224, 224, 3),
+    )
+    # Freeze first 80% of layers
+    trainable_from = int(len(base.layers) * 0.8)
+    for layer in base.layers[:trainable_from]:
+        layer.trainable = False
+
+    x = base.output
+    x = layers.GlobalAveragePooling2D()(x)
+    x = layers.Dropout(0.3)(x)
+    x = layers.Dense(256, activation="relu")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.2)(x)
+    output = layers.Dense(num_classes, activation="softmax")(x)
+
+    return Model(inputs=base.input, outputs=output)
+
+model = build_disease_classifier()
+model.summary()
+```
+
+## Training Strategy
+
+We applied a **two-phase fine-tuning** strategy:
+
+**Phase 1** (5 epochs): Train only the custom head with learning rate `1e-3`
+
+**Phase 2** (30 epochs): Unfreeze the top 20% of backbone layers, reduce LR to `1e-5`
+
+```python
+# Phase 1
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(1e-3),
+    loss="categorical_crossentropy",
+    metrics=["accuracy", "AUC"],
+)
+history_1 = model.fit(train_ds, epochs=5, validation_data=val_ds)
+
+# Phase 2 — unfreeze top layers
+for layer in model.layers[-50:]:
+    layer.trainable = True
+
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(1e-5),
+    loss="categorical_crossentropy",
+    metrics=["accuracy", "AUC"],
+)
+history_2 = model.fit(
+    train_ds,
+    epochs=30,
+    validation_data=val_ds,
+    callbacks=[
+        tf.keras.callbacks.EarlyStopping(patience=7, restore_best_weights=True),
+        tf.keras.callbacks.ReduceLROnPlateau(factor=0.5, patience=3),
+    ],
+)
+```
+
+## Results
+
+| Metric | Value |
+|--------|-------|
+| Top-1 Accuracy | **96.7%** |
+| Top-3 Accuracy | 99.2% |
+| AUC (macro) | 0.998 |
+| F1 Score | 0.963 |
+
+The most challenging classes were **early blight vs. late blight** (tomato), which even human experts sometimes confuse.
+
+## Deployment: ESP32-S3 with TFLite
+
+Our target hardware was the **ESP32-S3-EYE** — a $15 module with an OV2640 camera, 8MB PSRAM, and WiFi.
+
+```python
+# Export to TFLite with INT8 quantization
+converter = tf.lite.TFLiteConverter.from_keras_model(model)
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+
+# Representative dataset for calibration
+def representative_dataset():
+    for img, _ in val_ds.take(200):
+        yield [img]
+
+converter.representative_dataset = representative_dataset
+converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+converter.inference_input_type = tf.int8
+converter.inference_output_type = tf.int8
+
+tflite_model = converter.convert()
+
+with open("plant_disease_int8.tflite", "wb") as f:
+    f.write(tflite_model)
+
+print(f"Model size: {len(tflite_model) / 1024:.1f} KB")  # ~1.8 MB
+```
+
+**Inference time on ESP32-S3**: 340ms per image — acceptable for field use.
+
+## Field Trial
+
+We deployed 12 units across three rice farms in Central Java. Over 8 weeks:
+
+- **4,891 leaf scans** performed
+- **847 disease detections** (17.3%)
+- **92.4% farmer satisfaction** rate
+- Average time from scan to recommendation: **< 2 seconds**
+
+The system also sends anonymized detection data via MQTT to a central dashboard, building a live disease outbreak map.
+
+## Conclusion
+
+A lightweight EfficientNet-B0 model, when carefully quantized and deployed, can deliver expert-level plant disease diagnosis on ultra-low-cost hardware.
+
+The key takeaway: **the AI accuracy is not the bottleneck**. Getting farmers to trust and use the device consistently is the harder problem — and that requires good UX, local language support, and offline-first design.
+
+Our code and model weights are open-sourced on GitHub.

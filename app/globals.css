@@ -1,0 +1,200 @@
+@import "mapbox-gl/dist/mapbox-gl.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 10 10 10;
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.08);
+    --accent-blue: #3B82F6;
+    --accent-teal: #14B8A6;
+  }
+
+  .dark {
+    --background: 10 10 10;
+    --foreground: 250 250 250;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: rgba(0, 0, 0, 0.4);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white dark:bg-[#0A0A0A] text-[#0A0A0A] dark:text-[#FAFAFA];
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    @apply border-white/10;
+  }
+
+  ::selection {
+    @apply bg-blue-500/30 text-blue-900 dark:text-blue-100;
+  }
+}
+
+@layer components {
+  /* Glass card utility */
+  .glass {
+    @apply backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg;
+    background: var(--glass-bg);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+  }
+
+  .glass-hover {
+    @apply glass transition-all duration-300 hover:scale-[1.02] hover:shadow-xl;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-500 to-teal-500 bg-clip-text text-transparent;
+  }
+
+  /* Gradient border */
+  .gradient-border {
+    background: linear-gradient(var(--glass-bg), var(--glass-bg)) padding-box,
+      linear-gradient(135deg, #3B82F6, #14B8A6) border-box;
+    border: 1px solid transparent;
+  }
+
+  /* Glow effects */
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .glow-teal {
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+  }
+
+  .hover-glow {
+    @apply transition-shadow duration-300;
+  }
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.2), 0 0 60px rgba(20, 184, 166, 0.1);
+  }
+
+  /* Reading progress */
+  .reading-progress-bar {
+    @apply fixed top-0 left-0 z-[9999] h-[3px] bg-gradient-to-r from-blue-500 to-teal-500 transition-all duration-100;
+    background: linear-gradient(90deg, #3B82F6, #14B8A6);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/20 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/30;
+  }
+
+  /* Code blocks */
+  .shiki {
+    @apply rounded-xl overflow-auto p-4 text-sm leading-relaxed;
+    background-color: #0d1117 !important;
+    color: #e6edf3;
+  }
+
+  .shiki code {
+    @apply font-mono;
+    background: none !important;
+    color: inherit !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .shiki .line {
+    @apply block;
+  }
+
+  /* KaTeX */
+  .math-display {
+    @apply overflow-x-auto py-4;
+  }
+
+  /* Mapbox */
+  .mapboxgl-ctrl-logo,
+  .mapboxgl-ctrl-attrib {
+    display: none !important;
+  }
+
+  /* MDX prose overrides */
+  .prose-glass {
+    @apply prose-headings:font-bold;
+  }
+
+  .prose-glass h1,
+  .prose-glass h2,
+  .prose-glass h3 {
+    @apply scroll-mt-24;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hero stagger animations */
+  @keyframes heroFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-item {
+    opacity: 0;
+    animation: heroFadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .hero-delay-1 { animation-delay: 0.1s; }
+  .hero-delay-2 { animation-delay: 0.25s; }
+  .hero-delay-3 { animation-delay: 0.4s; }
+  .hero-delay-4 { animation-delay: 0.55s; }
+  .hero-delay-5 { animation-delay: 0.7s; }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* noise texture overlay for glass depth */
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: inherit;
+  }
+}

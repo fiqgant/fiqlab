@@ -1,0 +1,229 @@
+---
+title: "Neural Network Architectures Explained with Diagrams"
+date: "2024-11-15"
+excerpt: "A visual walkthrough of common deep learning architectures — from feedforward networks to CNNs, RNNs, and Transformers — using interactive diagrams."
+thumbnail: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&h=630&fit=crop"
+tags: ["Deep Learning", "Neural Networks", "Computer Vision", "Explainer"]
+category: "Research"
+featured: true
+---
+
+Understanding neural network architectures becomes much clearer when you can *see* the data flow. This post walks through the major families of deep learning architectures using diagrams, with practical notes on when to use each one.
+
+## 1. The Feedforward Network (MLP)
+
+The most fundamental architecture. Data flows in one direction — input → hidden layers → output. No cycles, no memory.
+
+```mermaid
+flowchart LR
+    subgraph Input
+        x1((x₁))
+        x2((x₂))
+        x3((x₃))
+    end
+
+    subgraph Hidden["Hidden Layer"]
+        h1((h₁))
+        h2((h₂))
+        h3((h₃))
+        h4((h₄))
+    end
+
+    subgraph Output
+        o1((ŷ))
+    end
+
+    x1 --> h1 & h2 & h3 & h4
+    x2 --> h1 & h2 & h3 & h4
+    x3 --> h1 & h2 & h3 & h4
+    h1 & h2 & h3 & h4 --> o1
+```
+
+**When to use:** Tabular data, regression, simple classification. MLPs struggle with spatial structure (images) or sequential data (text) because they treat every input feature independently.
+
+## 2. Convolutional Neural Network (CNN)
+
+CNNs exploit **spatial locality** — nearby pixels are correlated. A kernel slides over the image, sharing weights across positions. This dramatically reduces parameters compared to a fully connected approach.
+
+```mermaid
+flowchart LR
+    IMG["🖼️ Input Image\n224×224×3"]
+    C1["Conv Block 1\n112×112×64"]
+    C2["Conv Block 2\n56×56×128"]
+    C3["Conv Block 3\n28×28×256"]
+    GAP["Global Avg Pool\n256"]
+    FC["FC Layer\n1000"]
+    OUT["Softmax\nClass Probs"]
+
+    IMG -->|"3×3 Conv + ReLU + MaxPool"| C1
+    C1 -->|"3×3 Conv + ReLU + MaxPool"| C2
+    C2 -->|"3×3 Conv + ReLU + MaxPool"| C3
+    C3 --> GAP
+    GAP --> FC
+    FC --> OUT
+```
+
+**Feature hierarchy:** Early layers detect edges → mid layers detect textures → deep layers detect semantic objects. This hierarchical feature extraction is why CNNs work so well on images.
+
+## 3. Recurrent Neural Network (RNN) & LSTM
+
+For sequential data, we need **memory**. RNNs pass a hidden state `hₜ` from one time step to the next.
+
+```mermaid
+flowchart LR
+    x0["x₀\n(token 1)"]
+    x1["x₁\n(token 2)"]
+    x2["x₂\n(token 3)"]
+    x3["x₃\n(token 4)"]
+
+    rnn0["RNN Cell"]
+    rnn1["RNN Cell"]
+    rnn2["RNN Cell"]
+    rnn3["RNN Cell"]
+
+    h0["h₀"] --> rnn0
+    x0 --> rnn0 --> rnn1
+    x1 --> rnn1 --> rnn2
+    x2 --> rnn2 --> rnn3
+    x3 --> rnn3
+
+    rnn0 -->|"y₀"| out0["output"]
+    rnn3 -->|"y₃"| out3["output"]
+```
+
+The classic RNN suffers from **vanishing gradients** over long sequences. The LSTM solves this with three gates:
+
+```mermaid
+flowchart TD
+    input["xₜ + hₜ₋₁"]
+
+    input --> fg["Forget Gate\nσ(Wf · [h,x] + bf)"]
+    input --> ig["Input Gate\nσ(Wi · [h,x] + bi)"]
+    input --> cg["Cell Gate\ntanh(Wc · [h,x] + bc)"]
+    input --> og["Output Gate\nσ(Wo · [h,x] + bo)"]
+
+    fg --> cell["Cell State Cₜ\nCₜ = f⊙Cₜ₋₁ + i⊙c̃"]
+    ig --> cell
+    cg --> cell
+
+    cell --> ht["hₜ = o ⊙ tanh(Cₜ)"]
+    og --> ht
+```
+
+## 4. The Transformer Architecture
+
+Transformers replaced RNNs as the dominant architecture for sequence tasks. The key innovation is **self-attention** — every token attends to every other token in parallel.
+
+```mermaid
+flowchart TB
+    subgraph Encoder
+        EI["Input Embeddings\n+ Positional Encoding"]
+        EA["Multi-Head\nSelf-Attention"]
+        EAN["Add & Norm"]
+        EFF["Feed Forward"]
+        EFN["Add & Norm"]
+
+        EI --> EA --> EAN --> EFF --> EFN
+    end
+
+    subgraph Decoder
+        DI["Output Embeddings\n+ Positional Encoding"]
+        DA1["Masked Multi-Head\nSelf-Attention"]
+        DA1N["Add & Norm"]
+        DA2["Cross-Attention\n(queries from decoder,\nkeys/values from encoder)"]
+        DA2N["Add & Norm"]
+        DFF["Feed Forward"]
+        DFN["Add & Norm"]
+        DOUT["Linear + Softmax\nOutput Probabilities"]
+
+        DI --> DA1 --> DA1N --> DA2 --> DA2N --> DFF --> DFN --> DOUT
+    end
+
+    EFN -->|"Encoder output\n(K, V)"| DA2
+```
+
+**Attention formula:** `Attention(Q, K, V) = softmax(QKᵀ / √dₖ) · V`
+
+The `√dₖ` scaling prevents dot products from growing too large in high dimensions, which would push softmax into saturation.
+
+## 5. YOLO Detection Pipeline
+
+For real-time object detection, YOLO (You Only Look Once) processes the entire image in a single forward pass — no region proposal step.
+
+```mermaid
+flowchart LR
+    subgraph Backbone["Backbone (Feature Extraction)"]
+        B1["Stem\n640×640"]
+        B2["C2f Block\n320×320×64"]
+        B3["C2f Block\n160×160×128"]
+        B4["C2f Block\n80×80×256"]
+        B5["C2f Block\n40×40×512"]
+        B6["SPPF\n20×20×1024"]
+
+        B1 --> B2 --> B3 --> B4 --> B5 --> B6
+    end
+
+    subgraph Neck["Neck (FPN + PAN)"]
+        N1["Upsample + Concat\n40×40×512"]
+        N2["Upsample + Concat\n80×80×256"]
+        N3["Downsample + Concat\n40×40×512"]
+        N4["Downsample + Concat\n20×20×1024"]
+
+        B6 --> N1 --> N2
+        N2 --> N3 --> N4
+    end
+
+    subgraph Head["Detection Head"]
+        H1["P3 — Small\n80×80"]
+        H2["P4 — Medium\n40×40"]
+        H3["P5 — Large\n20×20"]
+    end
+
+    N2 --> H1
+    N3 --> H2
+    N4 --> H3
+
+    H1 & H2 & H3 --> OUT["NMS → Boxes + Labels"]
+```
+
+The multi-scale head is critical: **P3 detects small objects**, **P4 handles medium**, **P5 catches large objects**. The FPN (top-down) brings semantic richness to small feature maps, while PAN (bottom-up) brings spatial precision to large feature maps.
+
+## Architecture Comparison
+
+```mermaid
+quadrantChart
+    title Architecture Trade-offs
+    x-axis Low Compute --> High Compute
+    y-axis Low Accuracy --> High Accuracy
+    quadrant-1 Research / Cloud
+    quadrant-2 Powerful but Expensive
+    quadrant-3 Legacy / Baseline
+    quadrant-4 Edge Deployment
+    MLP: [0.15, 0.30]
+    LSTM: [0.35, 0.55]
+    CNN ResNet-50: [0.50, 0.72]
+    YOLOv8n: [0.25, 0.68]
+    YOLOv8x: [0.75, 0.85]
+    ViT-B/16: [0.70, 0.83]
+    GPT-4: [0.95, 0.96]
+```
+
+## Choosing the Right Architecture
+
+```mermaid
+flowchart TD
+    START([What is your data type?])
+
+    START -->|Tabular / structured| MLP["MLP / Gradient Boosting"]
+    START -->|Images / video| IMG{Need real-time?}
+    START -->|Text / sequences| SEQ{Sequence length?}
+    START -->|Multimodal| CLIP["CLIP / Flamingo\n(vision-language)"]
+
+    IMG -->|Yes, edge device| YOLO["YOLOv8n / MobileNet"]
+    IMG -->|No, cloud inference| CNN["ResNet / EfficientNet\nViT for best accuracy"]
+
+    SEQ -->|Short < 512 tokens| BERT["BERT / RoBERTa\n(encoder-only)"]
+    SEQ -->|Long or generative| GPT["GPT / LLaMA\n(decoder-only)"]
+```
+
+The right architecture depends on your **data modality**, **compute budget**, and **latency requirements**. For most research prototypes, start with a pretrained backbone and fine-tune — training from scratch is rarely necessary.

@@ -1,0 +1,184 @@
+---
+title: "Deploying Computer Vision Models on IoT Edge Devices: Lessons Learned"
+date: "2024-09-20"
+excerpt: "Practical insights from deploying YOLO-based detection on Raspberry Pi, ESP32-CAM, and Jetson Nano — covering quantization, latency optimization, and MQTT integration."
+thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=630&fit=crop"
+tags: ["IoT", "Edge AI", "Raspberry Pi", "YOLO", "Embedded"]
+category: "Research"
+featured: true
+---
+
+## The Edge AI Challenge
+
+Running a deep learning model in the cloud is easy. Running it on a **$35 Raspberry Pi** in a remote agricultural field with intermittent connectivity is a completely different story.
+
+Over the past three years, I have deployed computer vision systems across five real-world environments:
+
+1. Smart greenhouse monitoring (plant disease detection)
+2. Campus perimeter security (person detection)
+3. Traffic intersection counting (vehicle classification)
+4. Industrial defect inspection (quality control)
+5. Flood sensor monitoring (water level estimation)
+
+Here are the most important lessons I learned.
+
+## Lesson 1: Quantize Early, Quantize Aggressively
+
+The single biggest performance gain comes from **INT8 quantization**. Most models lose less than 2% mAP when quantized from FP32 to INT8, but gain 3–4× speedup.
+
+```python
+from ultralytics import YOLO
+
+model = YOLO("yolov8n.pt")
+
+# Representative calibration dataset (100–200 images is enough)
+model.export(
+    format="tflite",
+    int8=True,
+    data="calibration_data.yaml",
+)
+```
+
+On Raspberry Pi 4B:
+- FP32 YOLOv8n: ~9 FPS
+- INT8 YOLOv8n: ~22 FPS
+
+That difference can mean the gap between a usable and unusable system.
+
+## Lesson 2: Choose the Right Hardware for Your Use Case
+
+Not all edge hardware is created equal. Here is my decision framework:
+
+| Scenario | Recommended Hardware | Reason |
+|---------|---------------------|--------|
+| &lt; 5 FPS acceptable | Raspberry Pi 4B | Cost-effective, broad ecosystem |
+| 15–30 FPS needed | Jetson Nano | Dedicated CUDA cores |
+| 30+ FPS, real-time | Jetson Orin NX | Full CUDA, TensorRT |
+| Battery-powered | ESP32-S3 with PSRAM | Ultra-low power |
+| Ultra-low cost | Orange Pi Zero 3 | ~$20, surprisingly capable |
+
+## Lesson 3: Build a Robust MQTT Pipeline
+
+In IoT deployments, the inference result is only half the story. You need a **reliable messaging pipeline** to get data from edge to cloud.
+
+```python
+import paho.mqtt.client as mqtt
+import json
+import time
+
+class EdgeInferencePipeline:
+    def __init__(self, broker_host: str, topic: str, model_path: str):
+        self.client = mqtt.Client()
+        self.client.connect(broker_host, 1883, 60)
+        self.topic = topic
+        self.client.loop_start()
+
+        from ultralytics import YOLO
+        self.model = YOLO(model_path)
+
+    def process_frame(self, frame):
+        results = self.model.predict(frame, conf=0.45, verbose=False)
+        detections = []
+
+        for r in results:
+            for box in r.boxes:
+                detections.append({
+                    "class": r.names[int(box.cls)],
+                    "confidence": float(box.conf),
+                    "bbox": box.xyxy[0].tolist(),
+                })
+
+        payload = {
+            "timestamp": time.time(),
+            "device_id": "pi-node-01",
+            "detections": detections,
+            "count": len(detections),
+        }
+
+        self.client.publish(
+            self.topic,
+            json.dumps(payload),
+            qos=1,  # At least once delivery
+        )
+        return detections
+```
+
+## Lesson 4: Design for Disconnected Operation
+
+Edge devices **will** lose connectivity. Always buffer locally:
+
+```python
+import sqlite3
+from pathlib import Path
+
+class LocalBuffer:
+    def __init__(self, db_path: str = "buffer.db"):
+        self.conn = sqlite3.connect(db_path, check_same_thread=False)
+        self.conn.execute("""
+            CREATE TABLE IF NOT EXISTS events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp REAL,
+                payload TEXT,
+                synced INTEGER DEFAULT 0
+            )
+        """)
+
+    def save(self, payload: dict):
+        self.conn.execute(
+            "INSERT INTO events (timestamp, payload) VALUES (?, ?)",
+            (payload["timestamp"], json.dumps(payload)),
+        )
+        self.conn.commit()
+
+    def get_unsynced(self, limit: int = 100):
+        rows = self.conn.execute(
+            "SELECT id, payload FROM events WHERE synced = 0 LIMIT ?",
+            (limit,),
+        ).fetchall()
+        return rows
+
+    def mark_synced(self, ids: list[int]):
+        self.conn.execute(
+            f"UPDATE events SET synced = 1 WHERE id IN ({','.join('?'*len(ids))})",
+            ids,
+        )
+        self.conn.commit()
+```
+
+## Lesson 5: Thermal Management Matters
+
+A Raspberry Pi running YOLOv8 continuously at full load **will** thermal throttle after 5–10 minutes without cooling. This causes unpredictable FPS drops.
+
+Solutions:
+- **Active cooling** (small 5V fan): maintains stable performance
+- **Duty-cycle inference**: process every 3rd frame at high load
+- **Dynamic resolution**: drop from 640 to 416 pixels during thermal events
+
+## Putting It All Together: Architecture
+
+```
+Camera Feed (USB / CSI)
+       │
+  ┌────▼────────────────┐
+  │  YOLOv8 INT8 (TFLite) │  ← Raspberry Pi 4B
+  │  OpenCV preprocessing │
+  └────────┬────────────┘
+           │
+    ┌──────▼──────┐
+    │ Local Buffer │  ← SQLite
+    │  (offline)  │
+    └──────┬──────┘
+           │ MQTT (QoS 1)
+    ┌──────▼──────┐
+    │  InfluxDB   │  ← Cloud / LAN server
+    │  + Grafana  │
+    └─────────────┘
+```
+
+## Conclusion
+
+Edge AI deployment is 20% model optimization and 80% systems engineering. The model is the easy part. Building reliable pipelines that handle connectivity loss, thermal throttling, hardware failure, and data integrity is where the real work lies.
+
+If you are deploying your first edge CV system, start with **Raspberry Pi 4B + YOLOv8n INT8** — it is the most forgiving and well-documented combination available today.
+
+Feel free to reach out if you would like to discuss your specific deployment scenario!

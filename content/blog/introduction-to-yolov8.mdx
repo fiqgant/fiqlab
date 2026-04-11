@@ -1,0 +1,147 @@
+---
+title: "Getting Started with YOLOv8: Real-Time Object Detection for Everyone"
+date: "2024-11-15"
+excerpt: "A comprehensive guide to YOLOv8 — the state-of-the-art object detection framework from Ultralytics. Learn how to train, optimize, and deploy your first model."
+thumbnail: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&h=630&fit=crop"
+tags: ["YOLO", "Object Detection", "Deep Learning", "Tutorial"]
+category: "Tutorial"
+featured: true
+---
+
+## Introduction
+
+Object detection has been transformed by the YOLO (You Only Look Once) family of models. With **YOLOv8**, Ultralytics has delivered a framework that is fast, accurate, and incredibly easy to use — whether you are a researcher or an embedded systems engineer.
+
+In this post, I will walk you through training your first YOLOv8 model, from dataset preparation to deployment on edge devices.
+
+## Why YOLOv8?
+
+YOLOv8 brings several improvements over its predecessors:
+
+- **Anchor-free detection** — eliminates the need to hand-craft anchor boxes
+- **Unified CLI and Python API** — `yolo train`, `yolo val`, `yolo predict`
+- **Modular architecture** — Nano (n) to Extra-Large (x) variants for any compute budget
+- **Multi-task support** — detection, segmentation, classification, pose estimation
+
+## Installation
+
+```python
+pip install ultralytics
+```
+
+That is all. The `ultralytics` package ships with everything you need.
+
+## Training Your First Model
+
+### Dataset Structure
+
+YOLOv8 expects the following directory layout:
+
+```
+dataset/
+  images/
+    train/   # training images
+    val/     # validation images
+  labels/
+    train/   # YOLO format .txt labels
+    val/
+  data.yaml  # dataset config
+```
+
+### data.yaml
+
+```yaml
+path: /path/to/dataset
+train: images/train
+val: images/val
+
+nc: 3  # number of classes
+names: ["cat", "dog", "bird"]
+```
+
+### Start Training
+
+```python
+from ultralytics import YOLO
+
+# Load a pre-trained model
+model = YOLO("yolov8n.pt")
+
+# Train on custom dataset
+results = model.train(
+    data="data.yaml",
+    epochs=100,
+    imgsz=640,
+    batch=16,
+    device="cuda",  # or "cpu"
+    project="runs/detect",
+    name="my_model",
+)
+```
+
+## Evaluating Performance
+
+After training, evaluate on your validation set:
+
+```python
+metrics = model.val()
+print(f"mAP50: {metrics.box.map50:.4f}")
+print(f"mAP50-95: {metrics.box.map:.4f}")
+```
+
+A **mAP50 above 0.85** is generally considered production-ready for most applications.
+
+## Inference
+
+```python
+results = model.predict(
+    source="test_image.jpg",
+    conf=0.5,
+    iou=0.45,
+    save=True,
+)
+
+for r in results:
+    boxes = r.boxes.xyxy  # bounding boxes
+    confs = r.boxes.conf  # confidence scores
+    cls   = r.boxes.cls   # class indices
+    print(boxes, confs, cls)
+```
+
+## Exporting for Edge Deployment
+
+One of the most powerful features of YOLOv8 is its export pipeline:
+
+```python
+# Export to ONNX for cross-platform inference
+model.export(format="onnx", simplify=True)
+
+# Export to TensorRT for NVIDIA edge devices
+model.export(format="engine", half=True, device=0)
+
+# Export to TFLite for mobile / Raspberry Pi
+model.export(format="tflite", int8=True)
+```
+
+## Performance Benchmarks
+
+Here is a comparison of YOLOv8 variants on a Raspberry Pi 4B (ARM Cortex-A72):
+
+| Model | mAP50 | Latency (ms) | Size (MB) |
+|-------|-------|-------------|-----------|
+| YOLOv8n | 0.372 | 112 | 6.2 |
+| YOLOv8s | 0.449 | 285 | 21.5 |
+| YOLOv8m | 0.501 | 621 | 49.7 |
+
+> For real-time applications on constrained devices, **YOLOv8n** with INT8 quantization achieves approximately 18–22 FPS on Raspberry Pi 4.
+
+## Conclusion
+
+YOLOv8 is an outstanding starting point for anyone entering computer vision. Its clean API, strong community, and excellent documentation make it the de facto choice for research and production alike.
+
+In upcoming posts, I will cover:
+- Structured pruning to reduce model size by 60%
+- Deploying to Raspberry Pi with TFLite and OpenCV
+- Multi-camera IoT setups with MQTT streaming
+
+Stay tuned!

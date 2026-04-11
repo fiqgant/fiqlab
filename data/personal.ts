@@ -1,0 +1,68 @@
+export const personal = {
+  name: "Taufiqurrahman",
+  shortName: "Taufiqurrahman",
+  initials: "TF",
+  role: "Researcher",
+  institution: "Politeknik Wilmar Bisnis Indonesia",
+  department: "Information Technology",
+  location: "Deli Serdang, North Sumatra",
+  locationCoords: { lng: 98.7588, lat: 3.5672 },
+  bio: "Always learning, always building.",
+  longBio: `A researcher with a focus on computer vision, deep learning, and IoT integration on embedded devices.
+Actively publishes scientific work in national and international journals, and holds several intellectual property rights.
+Beyond research, also engaged in community service and knowledge sharing.`,
+  email: "taufiq@wbi.ac.id",
+  github: "https://github.com/fiqgant",
+  linkedin: "https://linkedin.com/in/taufiqurrahman",
+  googleScholar: "https://scholar.google.com/citations?user=h43MGCIAAAAJ",
+  sintaId: "6856638",
+  nip: "-",
+  nidn: "0107039701",
+  nuptk: "9639775676130152",
+  phone: "085275772376",
+  address: "Laut Dendang, Jl. Warakauri, Kec. Percut Sei Tuan, Kabupaten Deli Serdang, Sumatera Utara 20371",
+  researchInterests: [
+    {
+      title: "Computer Vision",
+      description: "Image recognition, object detection, and scene understanding using deep neural networks.",
+      icon: "Eye",
+      gradient: "from-blue-500 to-cyan-500",
+    },
+    {
+      title: "Intelligent System",
+      description: "Building autonomous systems with real-time decision making using deep learning.",
+      icon: "Brain",
+      gradient: "from-teal-500 to-pink-500",
+    },
+    {
+      title: "Deep Learning",
+      description: "Designing and training neural network architectures for classification, detection, and segmentation.",
+      icon: "Cpu",
+      gradient: "from-orange-500 to-red-500",
+    },
+    {
+      title: "Edge Computing",
+      description: "Deploying AI models on embedded devices — Raspberry Pi, ESP32, and microcontrollers.",
+      icon: "Box",
+      gradient: "from-green-500 to-teal-500",
+    },
+    {
+      title: "Drone",
+      description: "UAV-based systems for aerial inspection, mapping, and autonomous navigation.",
+      icon: "Plane",
+      gradient: "from-purple-500 to-pink-500",
+    },
+    {
+      title: "Robot",
+      description: "Autonomous ground robots for navigation, manipulation, and real-world applications.",
+      icon: "Bot",
+      gradient: "from-cyan-500 to-blue-500",
+    },
+  ],
+  stats: [
+    { label: "Publications", value: "14+" },
+    { label: "Books", value: "4" },
+    { label: "IP Rights", value: "10+" },
+    { label: "Community Service", value: "14+" },
+  ],
+};
