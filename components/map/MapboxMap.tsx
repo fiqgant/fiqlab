@@ -6,7 +6,11 @@ import { personal } from "@/data/personal";
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 
-export default function MapboxMap() {
+interface MapboxMapProps {
+  fullWidth?: boolean;
+}
+
+export default function MapboxMap({ fullWidth = false }: MapboxMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const rotationRef = useRef<number | null>(null);
@@ -117,7 +121,7 @@ export default function MapboxMap() {
 
   if (!MAPBOX_TOKEN) {
     return (
-      <div className="w-full h-64 rounded-2xl glass flex items-center justify-center">
+      <div className="w-full h-full rounded-2xl glass flex items-center justify-center">
         <p className="text-sm text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
           Add <code className="text-blue-500">NEXT_PUBLIC_MAPBOX_TOKEN</code> to enable 3D map
         </p>
@@ -126,7 +130,7 @@ export default function MapboxMap() {
   }
 
   return (
-    <div className="relative w-full h-72 rounded-2xl overflow-hidden shadow-xl">
+    <div className={`relative w-full overflow-hidden shadow-xl ${fullWidth ? "h-full rounded-none" : "h-72 rounded-2xl"}`}>
       <div ref={mapContainer} className="absolute inset-0" />
       {/* Glass overlay label */}
       <div className="absolute bottom-4 left-4 glass px-3 py-2 rounded-xl text-xs pointer-events-none">

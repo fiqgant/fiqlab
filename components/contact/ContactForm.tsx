@@ -31,12 +31,25 @@ export function ContactForm() {
     e.preventDefault();
     setSubmitting(true);
 
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 1200));
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    toast.success("Message sent! I'll get back to you soon.");
-    setForm({ name: "", email: "", subject: "", message: "" });
-    setSubmitting(false);
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to send message.");
+      }
+
+      toast.success("Message sent! I'll get back to you soon.");
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClass = cn(
