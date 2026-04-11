@@ -1,0 +1,56 @@
+name: Lighthouse
+
+on:
+  deployment_status:
+
+jobs:
+  lighthouse:
+    name: Lighthouse Audit
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ github.event.deployment_status.target_url }}
+            ${{ github.event.deployment_status.target_url }}/blog
+            ${{ github.event.deployment_status.target_url }}/publications
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+        id: lighthouse
+
+      - name: Format results
+        id: format
+        run: |
+          echo "results<<EOF" >> $GITHUB_OUTPUT
+          echo "${{ steps.lighthouse.outputs.manifest }}" | node -e "
+            const data = JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));
+            data.forEach(r => {
+              const s = r.summary;
+              const url = new URL(r.url).pathname || '/';
+              console.log('**' + url + '**');
+              console.log('| Metric | Score |');
+              console.log('|---|---|');
+              console.log('| Performance | ' + Math.round(s.performance * 100) + ' |');
+              console.log('| Accessibility | ' + Math.round(s.accessibility * 100) + ' |');
+              console.log('| Best Practices | ' + Math.round(s['best-practices'] * 100) + ' |');
+              console.log('| SEO | ' + Math.round(s.seo * 100) + ' |');
+              console.log('');
+            });
+          " >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Comment on commit
+        uses: peter-evans/commit-comment@v3
+        with:
+          body: |
+            ## Lighthouse Results
+
+            ${{ steps.format.outputs.results }}
+
+            > Full report: ${{ steps.lighthouse.outputs.links }}
