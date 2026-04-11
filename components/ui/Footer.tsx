@@ -30,12 +30,14 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-teal-500 flex items-center justify-center">
-                <span className="text-white font-bold text-base leading-none">T</span>
+                <span className="text-white font-bold text-base leading-none">
+                  T
+                </span>
               </div>
               <span className="font-bold gradient-text">Taufiqurrahman</span>
             </div>
             <p className="text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 leading-relaxed max-w-xs">
-              {personal.role} — pushing the frontiers of Computer Vision and IoT AI.
+              {personal.role}
             </p>
             <div className="flex items-center gap-2">
               {socialLinks.map((social) => (
