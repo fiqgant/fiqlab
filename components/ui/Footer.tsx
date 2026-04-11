@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, Linkedin, Mail, BookOpen, GraduationCap } from "lucide-react";
+import { Github, Linkedin, Mail, BookOpen } from "lucide-react";
 import { personal } from "@/data/personal";
 
 const socialLinks = [
@@ -30,7 +30,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-teal-500 flex items-center justify-center">
-                <GraduationCap className="w-4 h-4 text-white" />
+                <span className="text-white font-bold text-base leading-none">T</span>
               </div>
               <span className="font-bold gradient-text">Taufiqurrahman</span>
             </div>

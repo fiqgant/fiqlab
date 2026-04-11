@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, GraduationCap } from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 import { useSearchStore } from "@/lib/store/search";
 import { cn } from "@/lib/utils";
 
@@ -59,7 +59,7 @@ export function Navbar() {
               className="flex items-center gap-2 group"
             >
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-teal-500 flex items-center justify-center shadow-lg group-hover:shadow-blue-500/30 transition-shadow duration-300">
-                <GraduationCap className="w-4 h-4 text-white" />
+                <span className="text-white font-bold text-base leading-none">T</span>
               </div>
               <span className="font-bold text-sm hidden sm:block gradient-text">
                 Taufiqurrahman
