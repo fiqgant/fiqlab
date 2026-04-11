@@ -40,12 +40,15 @@ Real community benchmarks on Mac Mini M4 hardware:
 
 | Model | Memory Needed | Tokens/sec |
 |---|---|---|
+| Gemma 4 E4B (Q4) | 16 GB | ~85 t/s (MLX) |
+| Gemma 4 26B MoE (Q4) | 24 GB | ~75 t/s (llama.cpp) |
+| Gemma 4 31B Dense (Q4) | 48 GB | ~15 t/s |
 | Llama 3.1 8B (Q4) | 16 GB | 18–22 t/s |
 | DeepSeek R1 14B (Q4) | 24 GB | ~10 t/s |
-| Qwen2.5 32B (Q4) | 64 GB | ~11–12 t/s |
-| Llama 3 70B (Q4) | 48 GB+ | 6–8 t/s |
 
-18–22 tokens per second on an 8B model is **real-time conversational speed**. Fast enough that you forget you're talking to a local model.
+What makes Gemma 4 particularly interesting here is the **26B MoE variant** — despite having 26 billion parameters, it only activates **3.8B parameters per forward pass**. You get 26B-class reasoning quality at 4B-class inference cost. On Apple Silicon with llama.cpp, it hits ~75 tokens/second on a 24GB Mac Mini M4. That's a number that should reframe how you think about model selection entirely.
+
+85 tokens per second on the E4B model via MLX is **faster than most people can read**. That's not local AI as a compromise — that's local AI as a feature.
 
 Hardware cost comparison:
 
@@ -71,7 +74,7 @@ Let's put actual API pricing on the table. As of April 2026, OpenAI charges:
 
 That sounds cheap per token — until you run any meaningful volume. A researcher doing 500 queries a day, each with a 1,000-token prompt and 500-token response: that's roughly **500K input tokens + 250K output tokens per day**. At GPT-4o pricing, that's **$3,750/month**.
 
-Running Qwen2.5 32B locally on a Mac Mini M4 Pro: **$0 per token** after the hardware purchase. The break-even point for a $1,999 machine against $3,750/month cloud spend is less than one week.
+Running Gemma 4 26B locally on a Mac Mini M4: **$0 per token** after the hardware purchase. The break-even point for a $1,999 machine against $3,750/month cloud spend is less than one week.
 
 Even against GPT-4o mini at $0.60/M output, the same daily usage costs ~$150/month. The Mac Mini pays for itself in 13 months — and then it's free, forever.
 
@@ -105,18 +108,25 @@ brew install ollama
 ollama serve
 ```
 
-**Step 2: Pull and run a model**
+**Step 2: Pull and run Gemma 4**
+
+Google released Gemma 4 on April 2, 2026 under Apache 2.0 — fully open, no usage limits, no acceptable-use enforcement. It comes in four sizes:
 
 ```bash
-# 8B model — works well on 16GB
-ollama pull llama3.1:8b
+# E4B — blazing fast, fits in 16GB, multimodal (text + image + audio)
+ollama pull gemma4:4b
 
-# 14B model — needs 24GB
-ollama pull qwen2.5:14b
+# 26B MoE — 26B params, only 3.8B active — fits in 24GB, remarkable quality
+ollama pull gemma4:27b
+
+# 31B Dense — highest quality, needs 48GB
+ollama pull gemma4:32b
 
 # Run interactively
-ollama run qwen2.5:14b
+ollama run gemma4:27b
 ```
+
+The 26B MoE is the sweet spot. It scores **88.3% on AIME 2026 mathematics** and **82.3% on GPQA Diamond** (graduate-level science) — benchmarks that rival models three to four times its active parameter count. Running it on a 24GB Mac Mini M4 at 75 tokens/second is genuinely difficult to believe until you do it.
 
 **Step 3: Use the OpenAI-compatible API**
 
@@ -127,12 +137,12 @@ from openai import OpenAI
 
 client = OpenAI(
     base_url="http://localhost:11434/v1",
-    api_key="ollama",  # required but ignored
+    api_key="ollama",  # required but ignored locally
 )
 
 response = client.chat.completions.create(
-    model="qwen2.5:14b",
-    messages=[{"role": "user", "content": "Explain backpropagation."}],
+    model="gemma4:27b",
+    messages=[{"role": "user", "content": "Summarize this research paper..."}],
 )
 print(response.choices[0].message.content)
 ```
@@ -196,9 +206,12 @@ I'll be honest about the limitations, because the hype gets tiresome:
 
 For full transparency: I run an M4 Pro Mac Mini with 48GB unified memory as a persistent inference endpoint. On it runs:
 
-- **Ollama** serving Qwen2.5 32B and Llama 3.3 70B (Q4 quantization) via a local API
+- **Ollama** serving **Gemma 4 27B** (the MoE variant) as the primary model via local API
+- **Gemma 4 E4B** as a fast-path model for lightweight tasks — summarization, tagging, quick Q&A
 - **Open WebUI** as the chat interface, accessible only on my local network
-- A lightweight **FastAPI** router that directs requests to different models based on task type — 32B for reasoning, 8B for quick summarization
+- A lightweight **FastAPI** router that directs requests based on task type — 27B for reasoning and RAG, E4B for anything that just needs a fast answer
+
+Why Gemma 4 specifically? A few reasons. The MoE architecture means the 27B model runs at 75+ tokens/second on 24GB — which feels instant for conversational use. The 256K context window on the larger models means I can dump an entire research paper into a prompt without chunking. And being Apache 2.0 with no usage restrictions matters for institutional deployment — no ToS to worry about, no vendor lock-in.
 
 The whole stack boots on startup, draws less power than my desk lamp, makes no noise, and costs me nothing per query. I've stopped paying for API credits for anything that doesn't require frontier-level reasoning.
 
@@ -236,4 +249,4 @@ The Mac Mini M4 is not a compromise. For inference, it's increasingly the correc
 
 ---
 
-*Benchmark data sourced from [like2byte.com](https://like2byte.com/mac-mini-m4-deepseek-r1-ai-benchmarks/), [compute-market.com](https://www.compute-market.com/blog/mac-mini-m4-for-ai-apple-silicon-2026), and [famstack.dev](https://famstack.dev/guides/mlx-vs-gguf-apple-silicon/). API pricing from [OpenAI](https://openai.com/api/pricing/). MLX vs llama.cpp benchmark analysis from [groundy.com](https://groundy.com/articles/mlx-vs-llamacpp-on-apple-silicon-which-runtime-to-use-for-local-llm-inference/) and [arxiv.org/pdf/2511.05502](https://arxiv.org/pdf/2511.05502). Hardware prices as of April 2026.*
+*Mac Mini M4 benchmark data sourced from [like2byte.com](https://like2byte.com/mac-mini-m4-deepseek-r1-ai-benchmarks/) and [compute-market.com](https://www.compute-market.com/blog/mac-mini-m4-for-ai-apple-silicon-2026). Gemma 4 Apple Silicon performance from [dev.to — Gemma 4 on Apple Silicon: 85 tok/s](https://dev.to/raullen_chai_76e18e9705b0/gemma-4-on-apple-silicon-85-toks-with-a-pip-install-299a) and [sudoall.com](https://sudoall.com/gemma-4-31b-apple-silicon-local-guide/). Gemma 4 model specs and benchmarks from [Google DeepMind](https://deepmind.google/models/gemma/gemma-4/) and [blog.google](https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/). MLX vs llama.cpp analysis from [famstack.dev](https://famstack.dev/guides/mlx-vs-gguf-apple-silicon/) and [arxiv.org/pdf/2511.05502](https://arxiv.org/pdf/2511.05502). API pricing from [OpenAI](https://openai.com/api/pricing/). Hardware prices as of April 2026.*
