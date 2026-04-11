@@ -1,7 +1,14 @@
 import fs from "fs/promises";
 import path from "path";
 
-const CACHE_PATH = path.join(process.cwd(), "data", "github-cache.json");
+// On Vercel the app directory is read-only; /tmp is writable per-invocation.
+// Locally we write next to the source so it gets committed and seeded on deploy.
+const CACHE_PATH = process.env.VERCEL
+  ? "/tmp/github-cache.json"
+  : path.join(process.cwd(), "data", "github-cache.json");
+
+// Build-time seed (committed to git, always readable)
+const SEED_PATH = path.join(process.cwd(), "data", "github-cache.json");
 const GITHUB_HEADERS = {
   Accept: "application/vnd.github.v3+json",
   "User-Agent": "fiqlab-portfolio",
@@ -160,10 +167,16 @@ export async function saveGitHubCache(data: GitHubCache): Promise<void> {
 }
 
 export async function readGitHubCache(): Promise<GitHubCache | null> {
-  try {
-    const raw = await fs.readFile(CACHE_PATH, "utf-8");
-    return JSON.parse(raw) as GitHubCache;
-  } catch {
-    return null;
+  // On Vercel: try /tmp first (written by a refresh call this invocation),
+  // then fall back to the build-time seed committed in data/.
+  const paths = process.env.VERCEL ? [CACHE_PATH, SEED_PATH] : [CACHE_PATH];
+  for (const p of paths) {
+    try {
+      const raw = await fs.readFile(p, "utf-8");
+      return JSON.parse(raw) as GitHubCache;
+    } catch {
+      // try next
+    }
   }
+  return null;
 }
