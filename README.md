@@ -1,6 +1,6 @@
 # fiqlab
 
-Personal research portfolio and blog built with Next.js 15. Features academic publications, project portfolio, technical blog with interactive diagrams, and a 3D map.
+Personal research portfolio and blog built with Next.js 15. Features academic publications, project portfolio, technical blog with interactive diagrams, Mapbox 3D maps, and email contact via Resend.
 
 **Live:** [fiqlab.vercel.app](https://fiqlab.vercel.app) &nbsp;·&nbsp; **Author:** [Taufiqurrahman](https://github.com/fiqgant)
 
@@ -13,11 +13,12 @@ Personal research portfolio and blog built with Next.js 15. Features academic pu
 | Framework | Next.js 15 (App Router, Turbopack) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v3 |
-| Blog | MDX via `next-mdx-remote` |
+| Blog | MDX via `next-mdx-remote` v6 |
 | Syntax highlight | `rehype-pretty-code` + Shiki |
 | Diagrams | Mermaid JS (client-side render) |
 | 3D Background | Three.js (neural network particle field) |
 | Map | Mapbox GL JS (3D globe with auto-rotation) |
+| Email | Resend |
 | Search | Fuse.js (fuzzy search) |
 | Math | KaTeX |
 | Icons | Lucide React |
@@ -31,7 +32,9 @@ Personal research portfolio and blog built with Next.js 15. Features academic pu
 - **Blog** — MDX with syntax highlighting, Mermaid diagrams, KaTeX math, reading time, table of contents, tag filtering
 - **Publications** — synced from Google Scholar via SerpAPI with local cache
 - **Portfolio** — project showcase with GitHub stats
-- **About** — interactive Mapbox 3D map showing location
+- **About** — profile, academic stats, interactive Mapbox 3D map
+- **Contact** — Resend-powered email form + full-height Mapbox map side by side
+- **Tools & Skills** — icon grid with glow hover effect, category filter, Software/Hardware tabs
 - **Hero** — animated Three.js neural network particle background with mouse parallax
 - **Search** — fuzzy full-text search across blog posts and publications
 - **Dark mode** — system-aware via `next-themes`
@@ -70,6 +73,10 @@ GOOGLE_SCHOLAR_AUTHOR_ID=your_author_id
 # GitHub username — for portfolio stats
 GITHUB_USERNAME=your_username
 
+# Resend — for contact form email delivery (resend.com)
+RESEND_API_KEY=re_your_api_key
+CONTACT_TO_EMAIL=you@yourdomain.com
+
 # Feature flags
 NEXT_PUBLIC_SHOW_SYNC=true
 ```
@@ -90,24 +97,31 @@ Open [http://localhost:3000](http://localhost:3000).
 fiqlab/
 ├── app/                        # Next.js App Router pages
 │   ├── about/                  # About page with Mapbox map
+│   ├── api/contact/            # Resend email API route
+│   ├── api/github/             # GitHub stats API
+│   ├── api/publications/       # Publications API
+│   ├── api/search/             # Search API
 │   ├── blog/[slug]/            # Blog post detail
 │   ├── blog/                   # Blog listing with tag filter
-│   ├── contact/                # Contact form
+│   ├── contact/                # Contact form + Mapbox map
 │   ├── portfolio/              # Project portfolio
 │   ├── publications/           # Academic publications
-│   └── tools/                  # Utility tools
+│   └── tools/                  # Tools & skills showcase
 │
 ├── components/
 │   ├── blog/                   # BlogCard, MDXContent, MermaidDiagram, TOC
-│   ├── hero/                   # Three.js background
-│   ├── map/                    # Mapbox 3D map
+│   ├── contact/                # ContactForm (Resend integration)
+│   ├── hero/                   # Three.js neural network background
+│   ├── map/                    # Mapbox 3D map (reusable)
 │   ├── publications/           # Publication cards
-│   ├── search/                 # Search modal
+│   ├── search/                 # Search modal (Fuse.js)
+│   ├── tools/                  # ToolsClient with icon grid
 │   └── ui/                     # Navbar, Footer
 │
 ├── content/blog/               # MDX blog posts
-├── data/                       # Personal info, publications, portfolio
-└── lib/                        # Blog loader, Scholar sync, rehype plugins
+├── data/                       # Personal info, publications, portfolio, tools
+├── lib/                        # Blog loader, Scholar sync, rehype plugins
+└── .github/workflows/          # CI, Lighthouse, Scholar sync
 ```
 
 ---
@@ -142,6 +156,16 @@ flowchart LR
 
 ---
 
+## GitHub Actions
+
+| Workflow | Trigger | Purpose |
+|---|---|---|
+| `ci.yml` | Push / PR to main | Build + lint + type check |
+| `lighthouse.yml` | After Vercel deploy | Performance / SEO audit |
+| `scholar-sync.yml` | Every Sunday 00:00 UTC | Refresh Google Scholar cache |
+
+---
+
 ## Customization
 
 Edit `data/personal.ts` to update name, bio, location, social links, and research interests.
@@ -149,6 +173,8 @@ Edit `data/personal.ts` to update name, bio, location, social links, and researc
 Edit `data/publications.ts` as a local fallback if SerpAPI is not configured.
 
 Edit `data/portfolio.ts` to manage projects manually.
+
+Edit `data/tools.ts` to add or update skills and tools.
 
 ---
 
@@ -160,7 +186,7 @@ The project is ready to deploy on **Vercel** with zero configuration.
 vercel --prod
 ```
 
-Add all environment variables from `.env.local` to your Vercel project settings.
+Add all environment variables from `.env.local` to your Vercel project settings. Make sure to set **Node.js version to 22.x** in Vercel → Settings → General.
 
 ---
 

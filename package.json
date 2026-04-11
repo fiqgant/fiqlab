@@ -16,6 +16,7 @@
     "@heroui/system": "^2.4.6",
     "@heroui/theme": "^2.4.5",
     "@types/three": "^0.183.1",
+    "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.15.0",
