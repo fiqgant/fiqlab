@@ -3,12 +3,12 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
-import { Search, FileText, BookOpen, FolderKanban, X, ArrowRight } from "lucide-react";
+import { Search, FileText, BookOpen, X, ArrowRight } from "lucide-react";
 import { useSearchStore } from "@/lib/store/search";
 import { cn } from "@/lib/utils";
 
 interface SearchItem {
-  type: "blog" | "publication" | "project";
+  type: "blog" | "publication";
   slug?: string;
   id?: string;
   title: string;
@@ -21,7 +21,6 @@ interface SearchItem {
 const typeConfig = {
   blog: { icon: FileText, label: "Blog", color: "text-blue-500", href: (s: SearchItem) => `/blog/${s.slug}` },
   publication: { icon: BookOpen, label: "Publication", color: "text-teal-500", href: (s: SearchItem) => `/publications#${s.id}` },
-  project: { icon: FolderKanban, label: "Project", color: "text-green-500", href: (s: SearchItem) => `/portfolio#${s.id}` },
 };
 
 export function SearchModal() {
@@ -38,10 +37,9 @@ export function SearchModal() {
     if (!isOpen) return;
 
     const load = async () => {
-      const [blogRes, pubData, projData] = await Promise.all([
+      const [blogRes, pubData] = await Promise.all([
         fetch("/api/search").then((r) => r.json()).catch(() => []),
         import("@/data/publications").then((m) => m.publications),
-        import("@/data/portfolio").then((m) => m.projects),
       ]);
 
       const items: SearchItem[] = [
@@ -52,14 +50,6 @@ export function SearchModal() {
           title: p.title,
           excerpt: p.abstract,
           tags: p.tags,
-          year: p.year,
-        })),
-        ...projData.map((p) => ({
-          type: "project" as const,
-          id: p.id,
-          title: p.title,
-          excerpt: p.description,
-          tags: p.tech,
           year: p.year,
         })),
       ];
@@ -152,7 +142,7 @@ export function SearchModal() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKey}
-            placeholder="Search posts, publications, projects..."
+            placeholder="Search posts and publications..."
             className="flex-1 bg-transparent text-base outline-none placeholder:text-[#0A0A0A]/40 dark:placeholder:text-[#FAFAFA]/40"
             aria-label="Search"
           />
@@ -174,7 +164,7 @@ export function SearchModal() {
           </div>
         ) : (
           <div className="max-h-[60vh] overflow-y-auto py-2">
-            {(["blog", "publication", "project"] as const).map((type) => {
+            {(["blog", "publication"] as const).map((type) => {
               const items = grouped[type];
               if (!items?.length) return null;
               const cfg = typeConfig[type];
