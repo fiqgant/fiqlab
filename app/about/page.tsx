@@ -101,7 +101,7 @@ export default function AboutPage() {
                 Google Scholar
               </Link>
               <Link
-                href={`https://sinta.kemdikbud.go.id/authors/profile/${personal.sintaId}`}
+                href={personal.sintaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-xs text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 hover:text-blue-500 transition-colors"
