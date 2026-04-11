@@ -1,18 +1,18 @@
 ---
-title: "Backpropagation: Perhitungan Manual Lengkap dari Nol"
+title: "Backpropagation: A Complete Step-by-Step Manual Calculation"
 date: "2025-01-08"
-excerpt: "Panduan paling detail untuk memahami backpropagation — mulai dari forward pass, kalkulasi loss, hingga update bobot, semuanya dihitung manual angka per angka."
+excerpt: "The most detailed guide to understanding backpropagation — from forward pass and loss computation to weight updates, calculated digit by digit with nothing hidden."
 thumbnail: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?w=1200&h=630&fit=crop"
 tags: ["Deep Learning", "Neural Networks", "Math", "Tutorial"]
 category: "Tutorial"
 featured: true
 ---
 
-Backpropagation adalah jantung dari semua neural network modern. Tapi kebanyakan tutorial melewatinya dengan notasi matriks yang abstrak. Di artikel ini kita akan **menghitung satu per satu**, digit per digit, sehingga tidak ada satu langkah pun yang tersembunyi.
+Backpropagation is the engine behind every modern neural network. Yet most tutorials skip it with abstract matrix notation. In this article we will compute **every single step** — digit by digit — so nothing is left as a black box.
 
-## Setup Jaringan
+## Network Setup
 
-Kita akan menggunakan jaringan sederhana: **2 input → 2 hidden → 1 output**, dengan aktivasi Sigmoid di semua neuron.
+We will use a simple network: **2 inputs → 2 hidden neurons → 1 output**, with Sigmoid activation at every neuron.
 
 ```mermaid
 flowchart LR
@@ -36,9 +36,9 @@ flowchart LR
     bo(["b_o = 0.60"]) --> o1
 ```
 
-### Nilai Awal
+### Initial Values
 
-| Simbol | Nilai | Keterangan |
+| Symbol | Value | Description |
 |---|---|---|
 | x₁ | 0.05 | Input 1 |
 | x₂ | 0.10 | Input 2 |
@@ -48,18 +48,18 @@ flowchart LR
 | w₂ | 0.20 | x₂ → h₁ |
 | w₃ | 0.25 | x₁ → h₂ |
 | w₄ | 0.30 | x₂ → h₂ |
-| b_h | 0.35 | Bias hidden layer |
+| b_h | 0.35 | Hidden layer bias |
 | w₅ | 0.40 | h₁ → o₁ |
 | w₆ | 0.45 | h₂ → o₁ |
-| b_o | 0.60 | Bias output layer |
+| b_o | 0.60 | Output layer bias |
 
-### Fungsi Aktivasi Sigmoid
+### Sigmoid Activation Function
 
 ```
 σ(x) = 1 / (1 + e^(−x))
 ```
 
-Turunannya sangat elegan — bisa dinyatakan dalam output-nya sendiri:
+Its derivative is elegantly expressed in terms of the output itself:
 
 ```
 σ'(x) = σ(x) · (1 − σ(x))
@@ -67,13 +67,13 @@ Turunannya sangat elegan — bisa dinyatakan dalam output-nya sendiri:
 
 ---
 
-## Bagian 1 — Forward Pass
+## Part 1 — Forward Pass
 
-Forward pass adalah proses menghitung prediksi dari input ke output.
+The forward pass computes the prediction by flowing data from inputs to output.
 
-### Langkah 1.1 — Hidden Neuron h₁
+### Step 1.1 — Hidden Neuron h₁
 
-Hitung **net input** (weighted sum):
+Compute the **net input** (weighted sum):
 
 ```
 net_h1 = (w₁ · x₁) + (w₂ · x₂) + b_h
@@ -82,7 +82,7 @@ net_h1 = (w₁ · x₁) + (w₂ · x₂) + b_h
        = 0.3775
 ```
 
-Terapkan fungsi aktivasi Sigmoid:
+Apply the Sigmoid activation:
 
 ```
 out_h1 = σ(0.3775)
@@ -92,7 +92,7 @@ out_h1 = σ(0.3775)
        = 0.59327
 ```
 
-### Langkah 1.2 — Hidden Neuron h₂
+### Step 1.2 — Hidden Neuron h₂
 
 ```
 net_h2 = (w₃ · x₁) + (w₄ · x₂) + b_h
@@ -107,7 +107,7 @@ out_h2 = σ(0.3925)
        = 0.59688
 ```
 
-### Langkah 1.3 — Output Neuron o₁
+### Step 1.3 — Output Neuron o₁
 
 ```
 net_o1 = (w₅ · out_h1) + (w₆ · out_h2) + b_o
@@ -122,7 +122,7 @@ out_o1 = σ(1.10591)
        = 0.75137
 ```
 
-### Ringkasan Forward Pass
+### Forward Pass Summary
 
 ```mermaid
 flowchart LR
@@ -136,9 +136,9 @@ flowchart LR
 
 ---
 
-## Bagian 2 — Menghitung Loss (Error)
+## Part 2 — Computing the Loss
 
-Kita gunakan **Mean Squared Error (MSE)**:
+We use **Mean Squared Error (MSE)**:
 
 ```
 E = 0.5 × (t₁ − out_o1)²
@@ -148,25 +148,25 @@ E = 0.5 × (t₁ − out_o1)²
   = 0.27482
 ```
 
-> Faktor `0.5` sengaja ditambahkan agar turunannya lebih bersih — hasilnya `(t − out)` bukan `2(t − out)`.
+> The `0.5` factor is intentional — it cancels the exponent when we differentiate, giving a clean `(t − out)` instead of `2(t − out)`.
 
-Error sebesar **0.27482** berarti prediksi kita (0.75137) sangat jauh dari target (0.01). Backpropagation akan mengkoreksi semua bobot untuk meminimalkan error ini.
+An error of **0.27482** means our prediction (0.75137) is far from the target (0.01). Backpropagation will correct every weight to minimize this error.
 
 ---
 
-## Bagian 3 — Backward Pass (Output Layer)
+## Part 3 — Backward Pass (Output Layer)
 
-Tujuan: hitung seberapa besar kontribusi setiap bobot terhadap error, menggunakan **chain rule**.
+Goal: measure how much each weight contributed to the error, using the **chain rule**.
 
-### Langkah 3.1 — Gradient di Output
+### Step 3.1 — Gradient at the Output
 
-Kita ingin `∂E/∂w₅`. Dengan chain rule:
+We want `∂E/∂w₅`. By the chain rule:
 
 ```
 ∂E/∂w₅ = ∂E/∂out_o1 × ∂out_o1/∂net_o1 × ∂net_o1/∂w₅
 ```
 
-**Term 1** — Turunan error terhadap output:
+**Term 1** — Derivative of error with respect to output:
 ```
 ∂E/∂out_o1 = −(t₁ − out_o1)
            = −(0.01 − 0.75137)
@@ -174,7 +174,7 @@ Kita ingin `∂E/∂w₅`. Dengan chain rule:
            = +0.74137
 ```
 
-**Term 2** — Turunan sigmoid:
+**Term 2** — Sigmoid derivative:
 ```
 ∂out_o1/∂net_o1 = out_o1 × (1 − out_o1)
                 = 0.75137 × (1 − 0.75137)
@@ -182,19 +182,19 @@ Kita ingin `∂E/∂w₅`. Dengan chain rule:
                 = 0.18681
 ```
 
-**Term 3** — Turunan net_o1 terhadap w₅:
+**Term 3** — Derivative of net_o1 with respect to w₅:
 ```
 ∂net_o1/∂w₅ = out_h1 = 0.59327
 ```
 
-**Kalikan semua:**
+**Multiply all three terms:**
 ```
 ∂E/∂w₅ = 0.74137 × 0.18681 × 0.59327
         = 0.13851 × 0.59327
         = 0.08217
 ```
 
-### Langkah 3.2 — Gradient untuk w₆
+### Step 3.2 — Gradient for w₆
 
 ```
 ∂E/∂w₆ = ∂E/∂out_o1 × ∂out_o1/∂net_o1 × ∂net_o1/∂w₆
@@ -203,29 +203,29 @@ Kita ingin `∂E/∂w₅`. Dengan chain rule:
         = 0.08267
 ```
 
-> Catatan: nilai `∂E/∂out_o1 × ∂out_o1/∂net_o1 = 0.13851` disebut **delta output (δo)** — kita simpan untuk dipakai di hidden layer.
+> Note: the product `∂E/∂out_o1 × ∂out_o1/∂net_o1 = 0.13851` is called the **output delta (δo)** — we save it for use in the hidden layer.
 
-### Langkah 3.3 — Update Bobot Output
+### Step 3.3 — Update Output Weights
 
 ```
-w₅_baru = w₅ − η × ∂E/∂w₅
-         = 0.40 − (0.5 × 0.08217)
-         = 0.40 − 0.04109
-         = 0.35891
+w₅_new = w₅ − η × ∂E/∂w₅
+       = 0.40 − (0.5 × 0.08217)
+       = 0.40 − 0.04109
+       = 0.35891
 
-w₆_baru = w₆ − η × ∂E/∂w₆
-         = 0.45 − (0.5 × 0.08267)
-         = 0.45 − 0.04134
-         = 0.40866
+w₆_new = w₆ − η × ∂E/∂w₆
+       = 0.45 − (0.5 × 0.08267)
+       = 0.45 − 0.04134
+       = 0.40866
 ```
 
 ---
 
-## Bagian 4 — Backward Pass (Hidden Layer)
+## Part 4 — Backward Pass (Hidden Layer)
 
-Sekarang kita propagasi error ke hidden layer. Ini yang membuat backpropagation sedikit lebih rumit — error harus "dikirim balik" melalui bobot output.
+Now we propagate the error back into the hidden layer. This is the trickier part — the error must travel backwards through the output weights.
 
-### Langkah 4.1 — Gradient Error ke h₁
+### Step 4.1 — Error Gradient for h₁
 
 ```mermaid
 flowchart RL
@@ -239,16 +239,16 @@ flowchart RL
     DELTA --> W5 --> E --> SIG --> X1 --> GRAD
 ```
 
-**Berapa error yang "mengalir" ke h₁?**
+**How much error flows back to h₁?**
 
-Error sampai ke h₁ melalui w₅ saja (karena hanya satu output):
+The error reaches h₁ only through w₅ (since there is a single output):
 ```
 ∂E/∂out_h1 = δo × w₅
            = 0.13851 × 0.40
            = 0.05540
 ```
 
-**Turunan sigmoid di h₁:**
+**Sigmoid derivative at h₁:**
 ```
 ∂out_h1/∂net_h1 = out_h1 × (1 − out_h1)
                 = 0.59327 × (1 − 0.59327)
@@ -256,20 +256,20 @@ Error sampai ke h₁ melalui w₅ saja (karena hanya satu output):
                 = 0.24127
 ```
 
-**Delta hidden h₁ (δh1):**
+**Hidden delta for h₁ (δh1):**
 ```
 δh1 = ∂E/∂out_h1 × ∂out_h1/∂net_h1
     = 0.05540 × 0.24127
     = 0.01337
 ```
 
-**Gradient untuk w₁ dan w₂:**
+**Gradients for w₁ and w₂:**
 ```
 ∂E/∂w₁ = δh1 × x₁ = 0.01337 × 0.05 = 0.000669
 ∂E/∂w₂ = δh1 × x₂ = 0.01337 × 0.10 = 0.001337
 ```
 
-### Langkah 4.2 — Gradient Error ke h₂
+### Step 4.2 — Error Gradient for h₂
 
 ```
 ∂E/∂out_h2 = δo × w₆
@@ -287,20 +287,20 @@ Error sampai ke h₁ melalui w₅ saja (karena hanya satu output):
 ∂E/∂w₄ = δh2 × x₂ = 0.01500 × 0.10 = 0.001500
 ```
 
-### Langkah 4.3 — Update Bobot Hidden
+### Step 4.3 — Update Hidden Weights
 
 ```
-w₁_baru = 0.15 − (0.5 × 0.000669) = 0.15 − 0.000335 = 0.149665
-w₂_baru = 0.20 − (0.5 × 0.001337) = 0.20 − 0.000669 = 0.199331
-w₃_baru = 0.25 − (0.5 × 0.000750) = 0.25 − 0.000375 = 0.249625
-w₄_baru = 0.30 − (0.5 × 0.001500) = 0.30 − 0.000750 = 0.299250
+w₁_new = 0.15 − (0.5 × 0.000669) = 0.15 − 0.000335 = 0.149665
+w₂_new = 0.20 − (0.5 × 0.001337) = 0.20 − 0.000669 = 0.199331
+w₃_new = 0.25 − (0.5 × 0.000750) = 0.25 − 0.000375 = 0.249625
+w₄_new = 0.30 − (0.5 × 0.001500) = 0.30 − 0.000750 = 0.299250
 ```
 
 ---
 
-## Bagian 5 — Ringkasan Satu Iterasi
+## Part 5 — One Iteration Summary
 
-| Bobot | Lama | Gradient | Baru |
+| Weight | Old | Gradient | New |
 |---|---|---|---|
 | w₁ | 0.15000 | 0.000669 | 0.149665 |
 | w₂ | 0.20000 | 0.001337 | 0.199331 |
@@ -309,13 +309,13 @@ w₄_baru = 0.30 − (0.5 × 0.001500) = 0.30 − 0.000750 = 0.299250
 | w₅ | 0.40000 | 0.082170 | 0.358910 |
 | w₆ | 0.45000 | 0.082670 | 0.408660 |
 
-Perhatikan bahwa **w₅ dan w₆ berubah jauh lebih besar** (±0.04) dibanding w₁–w₄ (±0.0003). Ini masuk akal — bobot di output layer punya pengaruh langsung terhadap error, sedangkan bobot di hidden layer pengaruhnya sudah "diencerkan" oleh beberapa layer.
+Notice that **w₅ and w₆ shift much more** (±0.04) than w₁–w₄ (±0.0003). This makes sense — output layer weights have a direct influence on the error, while hidden layer weights are "diluted" by the intervening sigmoid.
 
 ---
 
-## Bagian 6 — Iterasi Kedua (Verifikasi Konvergensi)
+## Part 6 — Second Iteration (Convergence Check)
 
-Gunakan bobot baru untuk forward pass kedua:
+Use the updated weights for a second forward pass:
 
 ```
 net_h1 = (0.149665 × 0.05) + (0.199331 × 0.10) + 0.35
@@ -337,7 +337,7 @@ net_o1 = (0.35891 × 0.59315) + (0.40866 × 0.59676) + 0.60
 out_o1 = σ(1.05681) = 0.74217
 ```
 
-Error iterasi kedua:
+Loss at iteration 2:
 ```
 E₂ = 0.5 × (0.01 − 0.74217)²
    = 0.5 × (0.73217)²
@@ -345,34 +345,34 @@ E₂ = 0.5 × (0.01 − 0.74217)²
    = 0.26804
 ```
 
-**Error turun dari 0.27482 → 0.26804** ✓
+**Loss dropped from 0.27482 → 0.26804** ✓
 
-Setelah ribuan iterasi, error akan mendekati nol dan output mendekati target 0.01.
+After thousands of iterations the loss approaches zero and the output converges toward the target 0.01.
 
 ---
 
-## Bagian 7 — Alur Backpropagation Lengkap
+## Part 7 — Full Backpropagation Flow
 
 ```mermaid
 flowchart TD
-    FP["FORWARD PASS\nHitung prediksi"]
-    LOSS["HITUNG LOSS\nE = 0.5×(t−ŷ)²"]
-    DO["Delta Output δo\n= ∂E/∂out × σ'(net_o)"]
-    UO["Update bobot output\nw₅, w₆"]
-    DH["Delta Hidden δh\n= (δo × w) × σ'(net_h)"]
-    UH["Update bobot hidden\nw₁, w₂, w₃, w₄"]
-    CHECK{"Error\ncukup kecil?"}
-    DONE(["✓ Selesai"])
-    NEXT["Iterasi berikutnya\ndengan data baru"]
+    FP["FORWARD PASS\nCompute prediction"]
+    LOSS["COMPUTE LOSS\nE = 0.5×(t−ŷ)²"]
+    DO["Output Delta δo\n= ∂E/∂out × σ'(net_o)"]
+    UO["Update output weights\nw₅, w₆"]
+    DH["Hidden Delta δh\n= (δo × w) × σ'(net_h)"]
+    UH["Update hidden weights\nw₁, w₂, w₃, w₄"]
+    CHECK{"Loss small\nenough?"}
+    DONE(["✓ Done"])
+    NEXT["Next iteration\nwith new data"]
 
     FP --> LOSS --> DO --> UO --> DH --> UH --> CHECK
-    CHECK -->|Ya| DONE
-    CHECK -->|Tidak| NEXT --> FP
+    CHECK -->|Yes| DONE
+    CHECK -->|No| NEXT --> FP
 ```
 
 ---
 
-## Bagian 8 — Kode Python untuk Verifikasi
+## Part 8 — Python Verification
 
 ```python
 import numpy as np
@@ -384,19 +384,19 @@ def sigmoid_deriv(x):
     s = sigmoid(x)
     return s * (1 - s)
 
-# Inisialisasi
+# Initialization
 x = np.array([0.05, 0.10])
 t = 0.01
 eta = 0.5
 
-W_h = np.array([[0.15, 0.25],   # w1, w3 (kolom = neuron hidden)
+W_h = np.array([[0.15, 0.25],   # w1, w3 (columns = hidden neurons)
                 [0.20, 0.30]])  # w2, w4
 b_h = 0.35
 
 W_o = np.array([0.40, 0.45])    # w5, w6
 b_o = 0.60
 
-print("=== Iterasi 1 ===")
+print("=== Iteration 1 ===")
 
 # Forward pass
 net_h = x @ W_h + b_h           # [net_h1, net_h2]
@@ -416,7 +416,7 @@ print(f"Loss   : {E:.5f}")
 delta_o = -(t - out_o) * sigmoid_deriv(net_o)
 print(f"delta_o: {delta_o:.5f}")
 
-grad_Wo = delta_o * out_h        # gradient w5, w6
+grad_Wo = delta_o * out_h        # gradients for w5, w6
 W_o_new = W_o - eta * grad_Wo
 
 # Backward — hidden layer
@@ -424,82 +424,82 @@ delta_h = (delta_o * W_o) * sigmoid_deriv(net_h)
 grad_Wh = np.outer(x, delta_h)  # shape (2, 2)
 W_h_new = W_h - eta * grad_Wh
 
-print(f"\nBobot output baru : {W_o_new}")
-print(f"Bobot hidden baru :\n{W_h_new}")
+print(f"\nNew output weights : {W_o_new}")
+print(f"New hidden weights :\n{W_h_new}")
 
-# Verifikasi iterasi 2
+# Verify iteration 2
 net_h2 = x @ W_h_new + b_h
 out_h2 = sigmoid(net_h2)
 net_o2 = out_h2 @ W_o_new + b_o
 out_o2 = sigmoid(net_o2)
 E2 = 0.5 * (t - out_o2) ** 2
-print(f"\n=== Iterasi 2 ===")
+print(f"\n=== Iteration 2 ===")
 print(f"out_o  : {out_o2:.5f}")
 print(f"Loss   : {E2:.5f}")
 ```
 
-Output yang dihasilkan:
+Expected output:
 
 ```
-=== Iterasi 1 ===
+=== Iteration 1 ===
 out_h  : [0.59327 0.59688]
 out_o  : 0.75137
 Loss   : 0.27482
 delta_o: 0.13851
 
-Bobot output baru : [0.35891 0.40866]
-Bobot hidden baru :
+New output weights : [0.35891 0.40866]
+New hidden weights :
 [[0.149665 0.249625]
  [0.199331 0.299250]]
 
-=== Iterasi 2 ===
+=== Iteration 2 ===
 out_o  : 0.74217
 Loss   : 0.26804
 ```
 
-Hasil kode persis cocok dengan perhitungan manual kita. ✓
+The code output matches our manual calculation exactly. ✓
 
 ---
 
-## Mengapa Ini Penting
+## Why This Matters
 
 ```mermaid
 flowchart LR
-    subgraph "Yang Berjalan di CPU/GPU"
-        M["Jutaan parameter\ndiupdate serentak"]
+    subgraph "What runs on a GPU"
+        M["Millions of parameters\nupdated simultaneously"]
     end
 
-    subgraph "Yang Baru Kita Hitung"
-        S["6 bobot\n2 neuron hidden\n1 output"]
+    subgraph "What we just computed"
+        S["6 weights\n2 hidden neurons\n1 output"]
     end
 
-    subgraph "Prinsipnya Sama"
-        P["Chain rule\nditerapkan berulang\nuntuk setiap bobot"]
+    subgraph "Same principle"
+        P["Chain rule applied\nrepeatedly to\nevery weight"]
     end
 
     S --> P --> M
 ```
 
-**GPT, YOLO, ResNet** — semua menggunakan mekanisme yang persis sama. Yang berbeda hanyalah:
+**GPT, YOLO, ResNet** — all use the exact same mechanism. The only differences are:
 
-- Jumlah layer (bukan 2, tapi bisa 100+)
-- Jumlah neuron (bukan 2, tapi jutaan)
-- Fungsi aktivasi (ReLU, GELU, SiLU — bukan Sigmoid)
-- Optimizer (Adam, SGD — bukan vanilla gradient descent)
+- Number of layers (not 2, but 100+)
+- Number of neurons (not 2, but millions)
+- Activation functions (ReLU, GELU, SiLU — not Sigmoid)
+- Optimizer (Adam, SGD — not vanilla gradient descent)
 
-Tapi **chain rule dan alur forward-backward** tetap identik dengan yang baru kita hitung di atas.
+But the **chain rule and the forward-backward flow** are identical to what we just computed above.
 
 ---
 
-## Ringkasan Formula
+## Formula Reference
 
 | Step | Formula |
 |---|---|
-| Forward — net input | `net = Σ(wᵢ · xᵢ) + b` |
-| Forward — aktivasi | `out = σ(net)` |
+| Forward — net input | `net = sum(wᵢ · xᵢ) + b` |
+| Forward — activation | `out = σ(net)` |
 | Loss | `E = 0.5 × (t − out)²` |
-| Delta output | `δo = −(t − out) × σ'(net_o)` |
-| Gradient bobot output | `∂E/∂wₒ = δo × out_h` |
-| Delta hidden | `δh = (δo × wₒ) × σ'(net_h)` |
-| Gradient bobot hidden | `∂E/∂wₕ = δh × x` |
-| Update bobot | `w_baru = w − η × ∂E/∂w` |
+| Output delta | `δo = −(t − out) × σ'(net_o)` |
+| Output weight gradient | `∂E/∂wo = δo × out_h` |
+| Hidden delta | `δh = (δo × wo) × σ'(net_h)` |
+| Hidden weight gradient | `∂E/∂wh = δh × x` |
+| Weight update | `w_new = w − η × ∂E/∂w` |
