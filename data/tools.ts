@@ -37,6 +37,9 @@ export const skillSections: SkillSection[] = [
           { name: "Python", level: "expert" },
           { name: "TypeScript", level: "proficient" },
           { name: "JavaScript", level: "proficient" },
+          { name: "Swift", level: "familiar" },
+          { name: "Dart", level: "familiar" },
+          { name: "Kotlin", level: "familiar" },
           { name: "C/C++", level: "familiar" },
           { name: "Bash", level: "proficient" },
         ],
@@ -135,6 +138,9 @@ export const allTools: Tool[] = skillSections.flatMap((section) =>
 
 export const toolIconMap: Record<string, string> = {
   Python: "FileCode",
+  Swift: "Smartphone",
+  Dart: "Zap",
+  Kotlin: "Coffee",
   TypeScript: "FileType",
   JavaScript: "FileCode2",
   "C/C++": "Binary",
