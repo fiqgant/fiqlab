@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
   Code2, Brain, Globe, Database, Cloud, Cpu, Terminal, FileCode,
   FileType, FileCode2, Binary, Flame, Target, Eye, LineChart, Layers,
@@ -9,7 +9,7 @@ import {
   Smartphone, Watch, Headphones, Layers3, LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { skillSections, toolIconMap, type SkillSection, type SkillLevel } from "@/data/tools";
+import { skillSections, toolIconMap, type SkillLevel } from "@/data/tools";
 
 const iconComponents: Record<string, LucideIcon> = {
   Code2, Brain, Globe, Database, Cloud, Cpu, Terminal, FileCode,
@@ -19,89 +19,105 @@ const iconComponents: Record<string, LucideIcon> = {
   Smartphone, Watch, Headphones,
 };
 
-const levelConfig: Record<SkillLevel, { label: string; color: string; bar: string; pct: number }> = {
-  expert:     { label: "Expert",     color: "text-blue-400",  bar: "from-blue-500 to-cyan-400",   pct: 100 },
-  proficient: { label: "Proficient", color: "text-teal-400",  bar: "from-teal-500 to-green-400",  pct: 72  },
-  familiar:   { label: "Familiar",   color: "text-green-400", bar: "from-green-500 to-lime-400",  pct: 44  },
+const levelConfig: Record<SkillLevel, {
+  label: string;
+  dot: string;
+  glow: string;
+  iconColor: string;
+  border: string;
+}> = {
+  expert: {
+    label: "Expert",
+    dot: "bg-blue-500",
+    glow: "0 0 20px rgba(59,130,246,0.6), 0 0 40px rgba(59,130,246,0.3)",
+    iconColor: "text-blue-400",
+    border: "hover:border-blue-500/50",
+  },
+  proficient: {
+    label: "Proficient",
+    dot: "bg-teal-500",
+    glow: "0 0 20px rgba(20,184,166,0.6), 0 0 40px rgba(20,184,166,0.3)",
+    iconColor: "text-teal-400",
+    border: "hover:border-teal-500/50",
+  },
+  familiar: {
+    label: "Familiar",
+    dot: "bg-green-500",
+    glow: "0 0 20px rgba(34,197,94,0.6), 0 0 40px rgba(34,197,94,0.3)",
+    iconColor: "text-green-400",
+    border: "hover:border-green-500/50",
+  },
 };
 
-function SkillBar({ level, visible }: { level: SkillLevel; visible: boolean }) {
+function ToolIcon({ name, level, iconName }: { name: string; level: SkillLevel; iconName: string }) {
+  const [hovered, setHovered] = useState(false);
+  const Icon = iconComponents[iconName] || Box;
   const cfg = levelConfig[level];
+
   return (
-    <div className="h-1 w-full rounded-full bg-white/10 overflow-hidden">
+    <div
+      className={cn(
+        "group relative flex flex-col items-center gap-3 p-5 rounded-2xl border border-white/10 bg-white/5 cursor-default",
+        "transition-all duration-300 hover:bg-white/10 hover:scale-105",
+        cfg.border
+      )}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Glow layer */}
       <div
-        className={cn("h-full rounded-full bg-gradient-to-r transition-all duration-700 ease-out", cfg.bar)}
-        style={{ width: visible ? `${cfg.pct}%` : "0%" }}
+        className="absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none"
+        style={{
+          opacity: hovered ? 1 : 0,
+          boxShadow: cfg.glow,
+        }}
       />
-    </div>
-  );
-}
 
-function CategoryCard({ cat, sectionColor }: {
-  cat: SkillSection["categories"][number];
-  sectionColor: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+      {/* Icon */}
+      <div
+        className={cn(
+          "relative w-14 h-14 rounded-xl flex items-center justify-center",
+          "bg-white/5 transition-all duration-300",
+          hovered && "bg-white/10"
+        )}
+      >
+        <Icon
+          className={cn(
+            "w-7 h-7 transition-all duration-300",
+            hovered ? cfg.iconColor : "text-[#FAFAFA]/50"
+          )}
+        />
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  const CatIcon = iconComponents[cat.icon] || Box;
-
-  return (
-    <div ref={ref} className="glass rounded-2xl overflow-hidden">
-      {/* Category header */}
-      <div className={cn("px-5 py-3 flex items-center gap-2.5 bg-gradient-to-r", cat.color, "bg-opacity-10")}>
-        <div className="p-1.5 rounded-lg bg-white/10">
-          <CatIcon className="w-3.5 h-3.5 text-white" />
-        </div>
-        <span className="text-sm font-semibold text-white">{cat.category}</span>
-        <span className="ml-auto text-xs text-white/60">{cat.tools.length} tools</span>
+        {/* Inner glow on icon */}
+        {hovered && (
+          <div
+            className="absolute inset-0 rounded-xl pointer-events-none"
+            style={{ boxShadow: `inset 0 0 12px ${cfg.glow.split(",")[0].replace("0 0 20px ", "")}` }}
+          />
+        )}
       </div>
 
-      {/* Tools list */}
-      <div className="divide-y divide-white/5">
-        {cat.tools.map((tool, i) => {
-          const iconName = toolIconMap[tool.name] || "Box";
-          const Icon = iconComponents[iconName] || Box;
-          const lvl = levelConfig[tool.level];
+      {/* Name */}
+      <span className="text-xs font-medium text-center leading-tight text-[#FAFAFA]/70 group-hover:text-[#FAFAFA]/95 transition-colors duration-300">
+        {name}
+      </span>
 
-          return (
-            <div
-              key={tool.name}
-              className="flex items-center gap-3 px-5 py-3 hover:bg-white/5 transition-colors duration-150"
-              style={{ transitionDelay: `${i * 40}ms` }}
-            >
-              <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
-                <Icon className="w-4 h-4 text-[#FAFAFA]/60" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm font-medium text-[#FAFAFA]/90 truncate">{tool.name}</span>
-                  <span className={cn("text-[10px] font-semibold ml-2 flex-shrink-0", lvl.color)}>
-                    {lvl.label}
-                  </span>
-                </div>
-                <SkillBar level={tool.level} visible={visible} />
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {/* Level dot */}
+      <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
     </div>
   );
 }
 
 export function ToolsClient() {
   const [activeTab, setActiveTab] = useState(0);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const section = skillSections[activeTab];
+
+  const categories = section.categories;
+  const filteredTools = (activeCategory
+    ? categories.filter((c) => c.category === activeCategory)
+    : categories
+  ).flatMap((c) => c.tools.map((t) => ({ ...t, category: c.category })));
 
   const totalTools = section.categories.reduce((n, c) => n + c.tools.length, 0);
   const expertCount = section.categories.reduce(
@@ -113,17 +129,17 @@ export function ToolsClient() {
 
   return (
     <>
-      {/* Tabs */}
+      {/* Section tabs */}
       <div className="flex justify-center gap-2 mb-12">
         {skillSections.map((s, i) => (
           <button
             key={s.id}
-            onClick={() => setActiveTab(i)}
+            onClick={() => { setActiveTab(i); setActiveCategory(null); }}
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300",
               activeTab === i
-                ? `bg-gradient-to-r ${s.color} text-white shadow-lg`
-                : "glass text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA]"
+                ? `bg-gradient-to-r ${s.color} text-white shadow-lg shadow-blue-500/20`
+                : "glass text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 hover:text-[#FAFAFA]"
             )}
           >
             {s.label}
@@ -132,11 +148,11 @@ export function ToolsClient() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-12">
+      <div className="grid grid-cols-3 gap-4 mb-10">
         {[
           { label: "Total Tools", value: totalTools },
-          { label: "Expert Level", value: expertCount },
-          { label: "Proficient", value: profCount },
+          { label: "Expert",      value: expertCount },
+          { label: "Proficient",  value: profCount },
         ].map((stat) => (
           <div key={stat.label} className="glass rounded-2xl p-5 text-center">
             <p className="text-3xl font-bold gradient-text">{stat.value}</p>
@@ -145,23 +161,52 @@ export function ToolsClient() {
         ))}
       </div>
 
-      {/* Section description */}
-      <p className="text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 mb-8 text-center">
-        {section.description}
-      </p>
+      {/* Category filter pills */}
+      <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <button
+          onClick={() => setActiveCategory(null)}
+          className={cn(
+            "px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200",
+            activeCategory === null
+              ? "border-blue-500/60 text-blue-400 bg-blue-500/10"
+              : "border-white/10 text-[#FAFAFA]/50 hover:border-white/30 hover:text-[#FAFAFA]/80"
+          )}
+        >
+          All
+        </button>
+        {categories.map((cat) => (
+          <button
+            key={cat.category}
+            onClick={() => setActiveCategory(activeCategory === cat.category ? null : cat.category)}
+            className={cn(
+              "px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200",
+              activeCategory === cat.category
+                ? "border-blue-500/60 text-blue-400 bg-blue-500/10"
+                : "border-white/10 text-[#FAFAFA]/50 hover:border-white/30 hover:text-[#FAFAFA]/80"
+            )}
+          >
+            {cat.category}
+          </button>
+        ))}
+      </div>
 
-      {/* Category grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {section.categories.map((cat) => (
-          <CategoryCard key={cat.category} cat={cat} sectionColor={section.color} />
+      {/* Icon grid */}
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+        {filteredTools.map((tool) => (
+          <ToolIcon
+            key={tool.name}
+            name={tool.name}
+            level={tool.level}
+            iconName={toolIconMap[tool.name] || "Box"}
+          />
         ))}
       </div>
 
       {/* Legend */}
       <div className="flex flex-wrap items-center justify-center gap-6 mt-12 pt-8 border-t border-white/10">
-        {Object.entries(levelConfig).map(([key, cfg]) => (
-          <div key={key} className="flex items-center gap-2">
-            <div className={cn("w-8 h-1.5 rounded-full bg-gradient-to-r", cfg.bar)} />
+        {Object.entries(levelConfig).map(([, cfg]) => (
+          <div key={cfg.label} className="flex items-center gap-2">
+            <span className={cn("w-2 h-2 rounded-full", cfg.dot)} />
             <span className="text-xs text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">{cfg.label}</span>
           </div>
         ))}
