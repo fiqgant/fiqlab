@@ -8,6 +8,8 @@ jobs:
     name: Lighthouse Audit
     runs-on: ubuntu-latest
     if: github.event.deployment_status.state == 'success'
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout

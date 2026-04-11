@@ -232,7 +232,7 @@ Sorted by Manhattan distance:
 | 5 | P₁ | 5 | Fail |
 | 6 | P₆ | 4 | Fail |
 
-Wait — with Manhattan distance, P₂, P₃, and P₄ all tie at distance 3. With K=3, we select P₅, then two from {P₂, P₃, P₄}. Regardless of which two we pick, the result is at least 1 Pass + 1 of (Fail or Pass), so **Pass still wins**.
+Wait — with Manhattan distance, P₂, P₃, and P₄ all tie at distance 3. With K=3, we select P₅, then any two from the tied group (P₂, P₃, P₄). Regardless of which two we pick, the result is at least 1 Pass + 1 of (Fail or Pass), so **Pass still wins**.
 
 Both metrics agree: **the student is predicted to Pass.**
 
@@ -484,7 +484,7 @@ Prediction: Pass
 ## When to Use KNN
 
 **KNN works well when:**
-- Dataset is small to medium (< 100K samples)
+- Dataset is small to medium (under 100K samples)
 - Decision boundaries are irregular and non-linear
 - You need a fast baseline with no hyperparameter tuning (except K)
 - Interpretability matters — you can always show which neighbors drove the prediction
