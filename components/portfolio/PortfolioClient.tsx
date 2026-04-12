@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import {
@@ -12,7 +12,9 @@ import {
   Star,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { PaginationControls } from "@/components/ui/PaginationControls";
 import type { GitHubCache, GitHubRepo } from "@/lib/github";
+import { DEFAULT_PAGE_SIZE, getTotalPages, slicePageItems, type PageSize } from "@/lib/pagination";
 import { cn } from "@/lib/utils";
 
 type SortMode = "stars" | "recent";
@@ -61,6 +63,8 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
   const [data, setData] = useState<GitHubCache | null>(initialData);
   const [loading, setLoading] = useState(false);
   const [sortMode, setSortMode] = useState<SortMode>("stars");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState<PageSize>(DEFAULT_PAGE_SIZE);
 
   const sortedRepos = useMemo(() => {
     if (!data) {
@@ -75,6 +79,20 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
       return b.stars - a.stars || new Date(b.pushedAt).getTime() - new Date(a.pushedAt).getTime();
     });
   }, [data, sortMode]);
+
+  const totalPages = useMemo(
+    () => getTotalPages(sortedRepos.length, pageSize),
+    [sortedRepos.length, pageSize],
+  );
+
+  const visibleRepos = useMemo(
+    () => slicePageItems(sortedRepos, currentPage, pageSize),
+    [sortedRepos, currentPage, pageSize],
+  );
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages));
+  }, [totalPages]);
 
   const totalStars = useMemo(
     () => data?.repos.reduce((sum, repo) => sum + repo.stars, 0) ?? 0,
@@ -168,7 +186,10 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
               {data && (
                 <button
                   type="button"
-                  onClick={() => setSortMode((current) => (current === "stars" ? "recent" : "stars"))}
+                  onClick={() => {
+                    setSortMode((current) => (current === "stars" ? "recent" : "stars"));
+                    setCurrentPage(1);
+                  }}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass text-sm font-medium hover:scale-[1.02] transition-all duration-200"
                 >
                   <ArrowUpDown className="w-4 h-4" />
@@ -207,10 +228,24 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
           </div>
 
           {sortedRepos.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {sortedRepos.map((repo) => (
-                <RepoCard key={repo.id} repo={repo} />
-              ))}
+            <div className="space-y-6">
+              <PaginationControls
+                totalItems={sortedRepos.length}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                itemLabel="repos"
+                onPageChange={setCurrentPage}
+                onPageSizeChange={(nextPageSize) => {
+                  setPageSize(nextPageSize);
+                  setCurrentPage(1);
+                }}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {visibleRepos.map((repo) => (
+                  <RepoCard key={repo.id} repo={repo} />
+                ))}
+              </div>
             </div>
           ) : (
             <div className="glass rounded-2xl p-6 text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">

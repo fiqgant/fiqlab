@@ -21,7 +21,7 @@ export function PublicationCard({ pub, compact = false }: PublicationCardProps) 
     <article
       id={elementId}
       className={cn(
-        "glass-hover p-5 sm:p-6 group",
+        "glass-hover hover-glow p-5 sm:p-6 group",
         compact ? "" : "scroll-mt-24"
       )}
     >

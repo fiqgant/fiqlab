@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { PaginationControls } from "@/components/ui/PaginationControls";
 import type { BlogPost } from "@/lib/blog";
+import { DEFAULT_PAGE_SIZE, getTotalPages, slicePageItems, type PageSize } from "@/lib/pagination";
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -11,10 +13,33 @@ interface BlogListProps {
 
 export function BlogList({ posts, allTags }: BlogListProps) {
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState<PageSize>(DEFAULT_PAGE_SIZE);
 
-  const filtered = activeTag
-    ? posts.filter((p) => p.frontmatter.tags?.includes(activeTag))
-    : posts;
+  const filtered = useMemo(
+    () => activeTag
+      ? posts.filter((post) => post.frontmatter.tags?.includes(activeTag))
+      : posts,
+    [activeTag, posts],
+  );
+
+  const totalPages = useMemo(
+    () => getTotalPages(filtered.length, pageSize),
+    [filtered.length, pageSize],
+  );
+
+  const visiblePosts = useMemo(
+    () => slicePageItems(filtered, currentPage, pageSize),
+    [filtered, currentPage, pageSize],
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeTag]);
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages));
+  }, [totalPages]);
 
   return (
     <>
@@ -53,10 +78,24 @@ export function BlogList({ posts, allTags }: BlogListProps) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((post) => (
-            <BlogCard key={post.slug} post={post} />
-          ))}
+        <div className="space-y-6">
+          <PaginationControls
+            totalItems={filtered.length}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            itemLabel="posts"
+            onPageChange={setCurrentPage}
+            onPageSizeChange={(nextPageSize) => {
+              setPageSize(nextPageSize);
+              setCurrentPage(1);
+            }}
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {visiblePosts.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))}
+          </div>
         </div>
       )}
     </>

@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { RefreshCw } from "lucide-react";
 import toast from "react-hot-toast";
-import { publications } from "@/data/publications";
-import type { ScholarArticle, ScholarCache } from "@/lib/scholar";
+import { publications, type PublicationSource } from "@/data/publications";
+import { PaginationControls } from "@/components/ui/PaginationControls";
+import { DEFAULT_PAGE_SIZE, getTotalPages, slicePageItems, type PageSize } from "@/lib/pagination";
+import type { ScholarCache } from "@/lib/scholar";
 import { cn } from "@/lib/utils";
 import { PublicationCard } from "./PublicationCard";
 
@@ -19,8 +21,12 @@ type ApiPublicationsResponse = ScholarCache | {
   lastUpdated: null;
 };
 
-function getScholarGroups(articles: ScholarArticle[]) {
-  const years = Array.from(new Set(articles.map((article) => article.year || "Unknown"))).sort((a, b) => {
+function normalizeYear(year: string | number | undefined) {
+  return year ? String(year) : "Unknown";
+}
+
+function getPublicationGroups(items: PublicationSource[]) {
+  const years = Array.from(new Set(items.map((item) => normalizeYear(item.year)))).sort((a, b) => {
     if (a === "Unknown") return 1;
     if (b === "Unknown") return -1;
     return Number(b) - Number(a);
@@ -28,16 +34,7 @@ function getScholarGroups(articles: ScholarArticle[]) {
 
   return years.map((year) => ({
     year,
-    publications: articles.filter((article) => (article.year || "Unknown") === year),
-  }));
-}
-
-function getManualGroups() {
-  const years = Array.from(new Set(publications.map((publication) => publication.year))).sort((a, b) => b - a);
-
-  return years.map((year) => ({
-    year: String(year),
-    publications: publications.filter((publication) => publication.year === year),
+    publications: items.filter((item) => normalizeYear(item.year) === year),
   }));
 }
 
@@ -45,12 +42,33 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
   const [data, setData] = useState<ScholarCache | null>(initialData);
   const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(initialData?.lastUpdated ?? null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState<PageSize>(DEFAULT_PAGE_SIZE);
 
   const scholarData = data && data.articles.length > 0 && data.profile ? data : null;
-  const publicationGroups = useMemo(
-    () => (scholarData ? getScholarGroups(scholarData.articles) : getManualGroups()),
-    [scholarData]
+  const allPublications = useMemo<PublicationSource[]>(
+    () => scholarData ? scholarData.articles : publications,
+    [scholarData],
   );
+
+  const totalPages = useMemo(
+    () => getTotalPages(allPublications.length, pageSize),
+    [allPublications.length, pageSize],
+  );
+
+  const visiblePublications = useMemo(
+    () => slicePageItems(allPublications, currentPage, pageSize),
+    [allPublications, currentPage, pageSize],
+  );
+
+  const publicationGroups = useMemo(
+    () => getPublicationGroups(visiblePublications),
+    [visiblePublications],
+  );
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages));
+  }, [totalPages]);
 
   const totalCitations = scholarData
     ? scholarData.profile.citedBy.all
@@ -102,7 +120,7 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
         <p className="text-sm font-semibold uppercase tracking-widest text-teal-500 mb-3">Research</p>
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Publications</h1>
         <p className="text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">
-          {(scholarData ? scholarData.articles.length : publications.length)} publications · {totalCitations}+ total citations
+          {allPublications.length} publications · {totalCitations}+ total citations
         </p>
 
         {process.env.NEXT_PUBLIC_SHOW_SYNC === "true" && (
@@ -172,7 +190,20 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
         )}
       </div>
 
-      <div className="space-y-10">
+      <div className="space-y-6">
+        <PaginationControls
+          totalItems={allPublications.length}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          itemLabel="publications"
+          onPageChange={setCurrentPage}
+          onPageSizeChange={(nextPageSize) => {
+            setPageSize(nextPageSize);
+            setCurrentPage(1);
+          }}
+        />
+
+        <div className="space-y-10">
         {publicationGroups.map((group) => (
           <section key={group.year}>
             <div className="flex items-center gap-4 mb-4">
@@ -192,6 +223,7 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
             </div>
           </section>
         ))}
+        </div>
       </div>
     </div>
   );
