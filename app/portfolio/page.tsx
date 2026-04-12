@@ -116,7 +116,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   return (
     <article
       id={project.id}
-      className="glass-hover flex flex-col h-full p-6 group"
+      className="glass-hover hover-glow flex flex-col h-full p-6 group"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-3 mb-3">

@@ -238,7 +238,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
   const languageColor = repo.language ? languageColors[repo.language] ?? "#94a3b8" : "#94a3b8";
 
   return (
-    <article className="glass-hover p-5 sm:p-6 group flex flex-col h-full">
+    <article className="glass-hover hover-glow p-5 sm:p-6 group flex flex-col h-full">
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2 min-w-0">
           <span
