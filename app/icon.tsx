@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { BrandMark } from "@/components/ui/BrandMark";
 
 export const runtime = "edge";
 export const size = { width: 32, height: 32 };
@@ -11,25 +12,15 @@ export default function Icon() {
         style={{
           width: 32,
           height: 32,
-          borderRadius: 8,
-          background: "linear-gradient(135deg, #3B82F6, #14B8A6)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <span
-          style={{
-            color: "white",
-            fontSize: 22,
-            fontWeight: 800,
-            fontFamily: "sans-serif",
-            lineHeight: 1,
-            marginTop: 1,
-          }}
-        >
-          T
-        </span>
+        <BrandMark
+          idPrefix="favicon-brand"
+          style={{ width: "100%", height: "100%" }}
+        />
       </div>
     ),
     { ...size }

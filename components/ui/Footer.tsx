@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Github, Linkedin, Mail, BookOpen } from "lucide-react";
+import { BrandMark } from "@/components/ui/BrandMark";
 import { personal } from "@/data/personal";
 
 const socialLinks = [
@@ -29,11 +30,7 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-teal-500 flex items-center justify-center">
-                <span className="text-white font-bold text-base leading-none">
-                  T
-                </span>
-              </div>
+              <BrandMark idPrefix="footer-brand" className="w-9 h-9" />
               <span className="font-bold gradient-text">Taufiqurrahman</span>
             </div>
             <p className="text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 leading-relaxed max-w-xs">
