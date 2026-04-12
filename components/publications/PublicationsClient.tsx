@@ -47,8 +47,6 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
   const [lastUpdated, setLastUpdated] = useState<string | null>(initialData?.lastUpdated ?? null);
 
   const scholarData = data && data.articles.length > 0 && data.profile ? data : null;
-  const hasScholarData = Boolean(scholarData);
-
   const publicationGroups = useMemo(
     () => (scholarData ? getScholarGroups(scholarData.articles) : getManualGroups()),
     [scholarData]

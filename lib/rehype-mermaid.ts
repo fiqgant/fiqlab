@@ -1,5 +1,5 @@
 import { visit } from "unist-util-visit";
-import type { Root, Element, Text } from "hast";
+import type { Root, Element } from "hast";
 
 function getTextContent(node: Element): string {
   let text = "";
