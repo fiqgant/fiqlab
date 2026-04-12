@@ -12,7 +12,7 @@ export function BlogCard({ post }: BlogCardProps) {
   const { frontmatter, slug, excerpt, readingTimeText } = post;
 
   return (
-    <Link href={`/blog/${slug}`} className="group block">
+    <Link href={`/blog/${slug}`} className="group block h-full rounded-2xl hover-glow">
       <article className="h-full glass-hover overflow-hidden">
         {/* Thumbnail */}
         <div className="relative h-48 overflow-hidden rounded-t-2xl bg-gradient-to-br from-blue-500/20 to-teal-500/20">
