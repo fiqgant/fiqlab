@@ -29,23 +29,26 @@ jobs:
       - name: Format results
         id: format
         run: |
-          echo "results<<EOF" >> $GITHUB_OUTPUT
-          echo "${{ steps.lighthouse.outputs.manifest }}" | node -e "
-            const data = JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));
-            data.forEach(r => {
-              const s = r.summary;
-              const url = new URL(r.url).pathname || '/';
-              console.log('**' + url + '**');
-              console.log('| Metric | Score |');
-              console.log('|---|---|');
-              console.log('| Performance | ' + Math.round(s.performance * 100) + ' |');
-              console.log('| Accessibility | ' + Math.round(s.accessibility * 100) + ' |');
-              console.log('| Best Practices | ' + Math.round(s['best-practices'] * 100) + ' |');
-              console.log('| SEO | ' + Math.round(s.seo * 100) + ' |');
-              console.log('');
-            });
-          " >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          {
+            echo "results<<EOF"
+            for json in .lighthouseci/*.report.json; do
+              url=$(jq -r '.finalUrl' "$json")
+              pathname=$(node -e "try{const u=new URL('$url');console.log(u.pathname||'/')}catch(e){console.log('/')}")
+              perf=$(jq -r '(.categories.performance.score * 100) | round' "$json")
+              a11y=$(jq -r '(.categories.accessibility.score * 100) | round' "$json")
+              bp=$(jq -r '(.categories["best-practices"].score * 100) | round' "$json")
+              seo=$(jq -r '(.categories.seo.score * 100) | round' "$json")
+              echo "**${pathname}**"
+              echo "| Metric | Score |"
+              echo "|---|---|"
+              echo "| Performance | ${perf} |"
+              echo "| Accessibility | ${a11y} |"
+              echo "| Best Practices | ${bp} |"
+              echo "| SEO | ${seo} |"
+              echo ""
+            done
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
       - name: Comment on commit
         uses: peter-evans/commit-comment@v3
