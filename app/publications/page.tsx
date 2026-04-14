@@ -3,11 +3,14 @@ import { publications } from "@/data/publications";
 import { PublicationsClient } from "@/components/publications/PublicationsClient";
 import { personal } from "@/data/personal";
 import { readScholarCache } from "@/lib/scholar";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Publications",
-  description: `Academic publications by ${personal.name} in Computer Vision, Deep Learning, and IoT.`,
-};
+  description: `Academic publications by ${personal.name} in Computer Vision, Deep Learning, YOLO, and IoT.`,
+  path: "/publications",
+  keywords: ["scholarly articles", "google scholar", "research publications"],
+});
 
 export default async function PublicationsPage() {
   const cache = await readScholarCache();

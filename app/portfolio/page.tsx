@@ -3,11 +3,15 @@ import { PortfolioClient } from "@/components/portfolio/PortfolioClient";
 import { PaginatedProjectGrid } from "@/components/portfolio/PaginatedProjectGrid";
 import { projects } from "@/data/portfolio";
 import { readGitHubCache } from "@/lib/github";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Portfolio",
-  description: "Research projects and software tools by Taufiqurrahman — Computer Vision, IoT, and AI systems.",
-};
+  description:
+    "Research projects and software tools by Taufiqurrahman covering Computer Vision, IoT, and AI systems.",
+  path: "/portfolio",
+  keywords: ["AI projects", "software portfolio", "computer vision projects"],
+});
 
 export default async function PortfolioPage() {
   const githubCache = await readGitHubCache();

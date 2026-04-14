@@ -6,6 +6,14 @@ import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 import { SearchModal } from "@/components/search/SearchModal";
 import { Analytics } from "@vercel/analytics/next";
+import {
+  absoluteUrl,
+  defaultDescription,
+  defaultKeywords,
+  defaultTitle,
+  siteName,
+  siteUrl,
+} from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,55 +22,56 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://taufiqurrahman.ac.id",
-  ),
+  metadataBase: new URL(siteUrl),
+  applicationName: siteName,
   title: {
-    default: "Taufiqurrahman — Researcher",
-    template: "%s | Taufiqurrahman",
+    default: defaultTitle,
+    template: `%s | ${siteName}`,
   },
-  description:
-    "Personal academic website of Taufiqurrahman — Assistant Professor specializing in Computer Vision, YOLO object detection, Deep Learning, and IoT systems.",
-  keywords: [
-    "Taufiqurrahman",
-    "Computer Vision",
-    "YOLO",
-    "Deep Learning",
-    "IoT",
-    "AI Research",
-    "Object Detection",
-    "Machine Learning",
-  ],
-  authors: [{ name: "Taufiqurrahman" }],
+  description: defaultDescription,
+  keywords: defaultKeywords,
+  authors: [{ name: "Taufiqurrahman", url: absoluteUrl("/about") }],
   creator: "Taufiqurrahman",
+  publisher: siteName,
+  alternates: {
+    canonical: absoluteUrl("/"),
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_SITE_URL,
-    siteName: "Taufiqurrahman",
-    title: "Taufiqurrahman — Researcher",
-    description:
-      "Assistant Professor specializing in Computer Vision, YOLO, Deep Learning, and IoT systems.",
+    url: absoluteUrl("/"),
+    siteName,
+    title: defaultTitle,
+    description: defaultDescription,
     images: [
       {
-        url: "/og-image.png",
+        url: absoluteUrl("/opengraph-image"),
         width: 1200,
         height: 630,
-        alt: "Taufiqurrahman — Researcher",
+        alt: defaultTitle,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Taufiqurrahman — Researcher",
-    description:
-      "Assistant Professor specializing in Computer Vision, YOLO, Deep Learning, and IoT.",
-    images: ["/og-image.png"],
+    title: defaultTitle,
+    description: defaultDescription,
+    images: [absoluteUrl("/opengraph-image")],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export const viewport: Viewport = {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Code2, ExternalLink } from "lucide-react";
 import { personal } from "@/data/personal";
@@ -7,6 +8,26 @@ import { readScholarCache } from "@/lib/scholar";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { PublicationCard } from "@/components/publications/PublicationCard";
 import { HeroBackgroundClient } from "@/components/hero/HeroBackgroundClient";
+import {
+  absoluteUrl,
+  createPageMetadata,
+  defaultDescription,
+  defaultTitle,
+} from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: defaultTitle,
+  openGraphTitle: `${defaultTitle} | FiqLab`,
+  absoluteTitle: true,
+  description: defaultDescription,
+  path: "/",
+  keywords: [
+    personal.institution,
+    "research portfolio",
+    "academic website",
+    "computer vision researcher",
+  ],
+});
 
 export default async function HomePage() {
   const posts = await getAllPosts();
@@ -29,9 +50,51 @@ export default async function HomePage() {
           citations: article.citedBy,
         }))
     : publications.filter((p) => p.featured).slice(0, 3);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": absoluteUrl("/#person"),
+        name: personal.name,
+        url: absoluteUrl("/"),
+        image: absoluteUrl("/opengraph-image"),
+        description: personal.longBio.replace(/\n/g, " "),
+        jobTitle: personal.role,
+        worksFor: {
+          "@type": "Organization",
+          name: personal.institution,
+        },
+        email: `mailto:${personal.email}`,
+        sameAs: [
+          personal.github,
+          personal.linkedin,
+          personal.googleScholar,
+          personal.sintaUrl,
+        ],
+        knowsAbout: personal.researchInterests.map((interest) => interest.title),
+      },
+      {
+        "@type": "WebSite",
+        "@id": absoluteUrl("/#website"),
+        url: absoluteUrl("/"),
+        name: "FiqLab",
+        description: defaultDescription,
+        inLanguage: "en",
+        publisher: {
+          "@id": absoluteUrl("/#person"),
+        },
+      },
+    ],
+  };
 
   return (
     <div className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <section className="relative min-h-screen flex flex-col items-center justify-center py-32 px-4 overflow-hidden">
         <HeroBackgroundClient />
         <div className="relative z-10 text-center max-w-3xl mx-auto">

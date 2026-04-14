@@ -3,11 +3,14 @@ import Link from "next/link";
 import { MapPin, Mail, Github, Linkedin, BookOpen, GraduationCap, Briefcase, Globe } from "lucide-react";
 import { personal } from "@/data/personal";
 import { MapboxMapClient } from "@/components/map/MapboxMapClient";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "About",
-  description: `About ${personal.name}, ${personal.role}.`,
-};
+  description: `About ${personal.name}, ${personal.role}, research background, academic profile, and areas of expertise.`,
+  path: "/about",
+  keywords: [personal.institution, "academic profile", "researcher biography"],
+});
 
 const education = [
   {
@@ -34,8 +37,41 @@ const experience = [
 ];
 
 export default function AboutPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: {
+      "@type": "Person",
+      name: personal.name,
+      alternateName: personal.shortName,
+      description: personal.longBio.replace(/\n/g, " "),
+      url: absoluteUrl("/about"),
+      jobTitle: personal.role,
+      worksFor: {
+        "@type": "Organization",
+        name: personal.institution,
+      },
+      alumniOf: education.map((item) => ({
+        "@type": "CollegeOrUniversity",
+        name: item.institution,
+      })),
+      sameAs: [
+        personal.github,
+        personal.linkedin,
+        personal.googleScholar,
+        personal.sintaUrl,
+      ],
+      knowsAbout: personal.researchInterests.map((item) => item.title),
+    },
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <div className="mb-16 text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-blue-500 mb-3">
           About

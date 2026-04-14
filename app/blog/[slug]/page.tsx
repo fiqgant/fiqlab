@@ -8,6 +8,7 @@ import { MDXContent } from "@/components/blog/MDXContent";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareButtons } from "@/components/blog/ShareButtons";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -23,30 +24,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug(slug);
   if (!post) return {};
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taufiqurrahman.ac.id";
-  const url = `${siteUrl}/blog/${slug}`;
-
-  return {
+  return createPageMetadata({
     title: post.frontmatter.title,
     description: post.excerpt,
-    openGraph: {
-      type: "article",
-      url,
-      title: post.frontmatter.title,
-      description: post.excerpt,
-      publishedTime: post.frontmatter.date,
-      tags: post.frontmatter.tags,
-      images: post.frontmatter.thumbnail
-        ? [{ url: post.frontmatter.thumbnail, width: 1200, height: 630 }]
-        : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.frontmatter.title,
-      description: post.excerpt,
-      images: post.frontmatter.thumbnail ? [post.frontmatter.thumbnail] : undefined,
-    },
-  };
+    path: `/blog/${slug}`,
+    type: "article",
+    images: post.frontmatter.thumbnail
+      ? [post.frontmatter.thumbnail]
+      : ["/opengraph-image"],
+    publishedTime: post.frontmatter.date,
+    tags: post.frontmatter.tags,
+    keywords: [
+      ...(post.frontmatter.tags || []),
+      post.frontmatter.category || "Blog",
+      "technical article",
+    ],
+  });
 }
 
 export default async function BlogPostPage({ params }: Props) {
@@ -54,12 +47,12 @@ export default async function BlogPostPage({ params }: Props) {
   const post = await getPostBySlug(slug);
   if (!post) notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://taufiqurrahman.ac.id";
-  const url = `${siteUrl}/blog/${slug}`;
+  const url = absoluteUrl(`/blog/${slug}`);
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
+    mainEntityOfPage: url,
     headline: post.frontmatter.title,
     description: post.excerpt,
     datePublished: post.frontmatter.date,
@@ -67,7 +60,12 @@ export default async function BlogPostPage({ params }: Props) {
       "@type": "Person",
       name: "Taufiqurrahman",
     },
-    image: post.frontmatter.thumbnail,
+    publisher: {
+      "@type": "Organization",
+      name: "FiqLab",
+      url: absoluteUrl("/"),
+    },
+    image: post.frontmatter.thumbnail || absoluteUrl("/opengraph-image"),
     url,
     keywords: post.frontmatter.tags?.join(", "),
   };

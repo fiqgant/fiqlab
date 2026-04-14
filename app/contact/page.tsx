@@ -4,11 +4,14 @@ import Link from "next/link";
 import { personal } from "@/data/personal";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { MapboxMapClient } from "@/components/map/MapboxMapClient";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Contact",
-  description: `Get in touch with ${personal.name} for research collaboration.`,
-};
+  description: `Contact ${personal.name} for research collaboration, academic partnerships, and speaking engagements.`,
+  path: "/contact",
+  keywords: ["contact researcher", "research collaboration", "academic partnership"],
+});
 
 const contactLinks = [
   { icon: Mail,     label: "Email",          value: personal.email,  href: `mailto:${personal.email}` },
@@ -18,8 +21,27 @@ const contactLinks = [
 ];
 
 export default function ContactPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: `Contact ${personal.name}`,
+    url: absoluteUrl("/contact"),
+    mainEntity: {
+      "@type": "Person",
+      name: personal.name,
+      email: personal.email,
+      telephone: personal.phone,
+      address: personal.address,
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Header */}
       <div className="text-center mb-16">
         <p className="text-sm font-semibold uppercase tracking-widest text-blue-500 mb-3">Contact</p>

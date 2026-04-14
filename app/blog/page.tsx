@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/blog";
 import { BlogList } from "@/components/blog/BlogList";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Blog",
-  description: "Articles on Computer Vision, Deep Learning, IoT, and AI research by Taufiqurrahman.",
-};
+  description:
+    "Articles on Computer Vision, Deep Learning, IoT, and AI research by Taufiqurrahman.",
+  path: "/blog",
+  keywords: ["AI blog", "deep learning articles", "computer vision tutorials"],
+});
 
 export default async function BlogPage() {
   const posts = await getAllPosts();

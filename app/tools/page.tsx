@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { ToolsClient } from "@/components/tools/ToolsClient";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Tools & Skills",
   description: "Hardware and software I use in research and development.",
-};
+  path: "/tools",
+  keywords: ["research tools", "software skills", "hardware stack"],
+});
 
 export default function ToolsPage() {
   return (
