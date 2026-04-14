@@ -3,9 +3,10 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const NODE_COUNT = 120;
-const CONNECTION_DISTANCE = 2.2;
+const NODE_COUNT = 48;
+const CONNECTION_DISTANCE = 1.8;
 const FLOAT_SPEED = 0.00018;
+const TARGET_FPS = 24;
 
 function randomRange(min: number, max: number) {
   return Math.random() * (max - min) + min;
@@ -19,7 +20,12 @@ export function HeroBackground() {
     if (!canvas) return;
 
     // ── Renderer ──────────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: false,
+      powerPreference: "low-power",
+    });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
 
@@ -63,7 +69,7 @@ export function HeroBackground() {
     });
 
     // ── Connection lines ───────────────────────────────────────
-    const MAX_LINES = NODE_COUNT * 4;
+    const MAX_LINES = NODE_COUNT * 3;
     const linePositions = new Float32Array(MAX_LINES * 2 * 3);
     const lineColors = new Float32Array(MAX_LINES * 2 * 3);
 
@@ -90,7 +96,7 @@ export function HeroBackground() {
       mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
       mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
     };
-    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("pointermove", onMouseMove, { passive: true });
 
     // ── Resize ─────────────────────────────────────────────────
     const resize = () => {
@@ -107,12 +113,25 @@ export function HeroBackground() {
     // ── Animate ────────────────────────────────────────────────
     let rafId: number;
     let t = 0;
+    let lastFrame = 0;
+    let isVisible = true;
 
     const colorA = new THREE.Color(0x3b82f6); // blue-500
     const colorB = new THREE.Color(0x14b8a6); // teal-500
 
-    const animate = () => {
+    const onVisibilityChange = () => {
+      isVisible = document.visibilityState === "visible";
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    const animate = (now: number) => {
       rafId = requestAnimationFrame(animate);
+      if (!isVisible || now - lastFrame < 1000 / TARGET_FPS) {
+        return;
+      }
+
+      lastFrame = now;
       t += FLOAT_SPEED;
 
       // Smooth camera parallax
@@ -187,11 +206,12 @@ export function HeroBackground() {
       renderer.render(scene, camera);
     };
 
-    animate();
+    animate(0);
 
     return () => {
       cancelAnimationFrame(rafId);
-      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("pointermove", onMouseMove);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       ro.disconnect();
       renderer.dispose();
       nodeGeo.dispose();

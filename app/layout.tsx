@@ -4,7 +4,6 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
-import { SearchModal } from "@/components/search/SearchModal";
 import { Analytics } from "@vercel/analytics/next";
 import {
   absoluteUrl,
@@ -91,7 +90,6 @@ export default function RootLayout({
       <body className="font-sans antialiased min-h-screen flex flex-col">
         <Providers>
           <Navbar />
-          <SearchModal />
           <main className="flex-1">{children}</main>
           <Footer />
         </Providers>

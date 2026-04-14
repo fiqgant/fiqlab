@@ -54,14 +54,14 @@ export function BlogCard({ post }: BlogCardProps) {
               {frontmatter.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/10 text-blue-500 border border-blue-500/20"
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30"
                 >
                   <Tag className="w-2.5 h-2.5" />
                   {tag}
                 </span>
               ))}
               {frontmatter.tags.length > 3 && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/5 text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/5 text-[#0A0A0A]/70 dark:text-[#FAFAFA]/70">
                   +{frontmatter.tags.length - 3}
                 </span>
               )}

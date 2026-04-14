@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,6 +8,11 @@ import { Search, Menu, X } from "lucide-react";
 import { BrandMark } from "@/components/ui/BrandMark";
 import { useSearchStore } from "@/lib/store/search";
 import { cn } from "@/lib/utils";
+
+const SearchModal = dynamic(
+  () => import("@/components/search/SearchModal").then((m) => m.SearchModal),
+  { ssr: false },
+);
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -22,6 +28,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isSearchOpen = useSearchStore((s) => s.isOpen);
   const openSearch = useSearchStore((s) => s.open);
 
   useEffect(() => {
@@ -147,6 +154,8 @@ export function Navbar() {
           </nav>
         </div>
       )}
+
+      {isSearchOpen ? <SearchModal /> : null}
     </>
   );
 }
