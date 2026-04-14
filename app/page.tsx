@@ -152,7 +152,7 @@ export default async function HomePage() {
           </div>
           <Link
             href="/publications"
-            className="hidden sm:inline-flex items-center gap-1 text-sm text-blue-500 hover:text-blue-400 font-medium transition-colors"
+            className="hidden sm:inline-flex items-center gap-1 text-sm text-blue-700 visited:text-blue-700 dark:text-blue-400 dark:visited:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors"
           >
             View all <ArrowRight className="w-4 h-4" />
           </Link>
@@ -167,7 +167,7 @@ export default async function HomePage() {
         <div className="text-center mt-8 sm:hidden">
           <Link
             href="/publications"
-            className="inline-flex items-center gap-1 text-sm text-blue-500 font-medium"
+            className="inline-flex items-center gap-1 text-sm text-blue-700 visited:text-blue-700 dark:text-blue-400 dark:visited:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors"
           >
             View all publications <ArrowRight className="w-4 h-4" />
           </Link>
@@ -186,7 +186,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/blog"
-              className="hidden sm:inline-flex items-center gap-1 text-sm text-blue-500 hover:text-blue-400 font-medium transition-colors"
+              className="hidden sm:inline-flex items-center gap-1 text-sm text-blue-700 visited:text-blue-700 dark:text-blue-400 dark:visited:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors"
             >
               Read all <ArrowRight className="w-4 h-4" />
             </Link>

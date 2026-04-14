@@ -37,13 +37,13 @@ export function BlogCard({ post }: BlogCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
           {/* Category badge */}
-          {frontmatter.category && (
-            <div className="absolute top-3 left-3">
-              <span className="glass px-2 py-0.5 rounded-lg text-[11px] font-semibold text-white">
-                {frontmatter.category}
-              </span>
-            </div>
-          )}
+            {frontmatter.category && (
+              <div className="absolute top-3 left-3">
+                <span className="px-2 py-0.5 rounded-lg text-[11px] font-semibold text-white bg-black/70 border border-white/10 shadow-sm">
+                  {frontmatter.category}
+                </span>
+              </div>
+            )}
         </div>
 
         {/* Content */}
@@ -54,7 +54,7 @@ export function BlogCard({ post }: BlogCardProps) {
               {frontmatter.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30"
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-sky-100 text-sky-800 border border-sky-200 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-500/30"
                 >
                   <Tag className="w-2.5 h-2.5" />
                   {tag}

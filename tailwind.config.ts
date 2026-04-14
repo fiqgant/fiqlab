@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { heroui } from "@heroui/react";
 import typography from "@tailwindcss/typography";
 
 const config: Config = {
@@ -8,7 +7,6 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./content/**/*.{md,mdx}",
-    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
   theme: {
@@ -86,34 +84,6 @@ const config: Config = {
   },
   plugins: [
     typography,
-    heroui({
-      themes: {
-        light: {
-          colors: {
-            primary: {
-              DEFAULT: "#3B82F6",
-              foreground: "#FFFFFF",
-            },
-            secondary: {
-              DEFAULT: "#14B8A6",
-              foreground: "#FFFFFF",
-            },
-          },
-        },
-        dark: {
-          colors: {
-            primary: {
-              DEFAULT: "#3B82F6",
-              foreground: "#FFFFFF",
-            },
-            secondary: {
-              DEFAULT: "#14B8A6",
-              foreground: "#FFFFFF",
-            },
-          },
-        },
-      },
-    }),
   ],
 };
 

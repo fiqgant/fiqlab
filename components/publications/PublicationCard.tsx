@@ -40,15 +40,15 @@ export function PublicationCard({ pub, compact = false }: PublicationCardProps) 
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/link inline-flex items-start gap-1.5"
+              className="group/link inline-flex items-start gap-1.5 text-slate-900 visited:text-slate-900 hover:text-blue-700 dark:text-slate-100 dark:visited:text-slate-100 dark:hover:text-blue-400"
             >
-              <h3 className="font-semibold text-sm sm:text-base leading-snug group-hover/link:text-blue-500 transition-colors duration-200">
+              <h3 className="font-semibold text-sm sm:text-base leading-snug transition-colors duration-200">
                 {pub.title}
               </h3>
               <ExternalLink className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 opacity-0 group-hover/link:opacity-100 text-blue-500 transition-opacity" />
             </a>
           ) : (
-            <h3 className="font-semibold text-sm sm:text-base leading-snug">{pub.title}</h3>
+            <h3 className="font-semibold text-sm sm:text-base leading-snug text-[#0A0A0A]/85 dark:text-[#FAFAFA]/90">{pub.title}</h3>
           )}
 
           {/* Authors */}

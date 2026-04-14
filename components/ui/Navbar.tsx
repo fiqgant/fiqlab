@@ -70,7 +70,7 @@ export function Navbar() {
                 idPrefix="navbar-brand"
                 className="w-9 h-9 transition-transform duration-300 group-hover:scale-105"
               />
-              <span className="font-bold text-sm hidden sm:block gradient-text">
+              <span className="font-bold text-sm gradient-text">
                 Taufiqurrahman
               </span>
             </Link>
@@ -106,7 +106,10 @@ export function Navbar() {
               >
                 <Search className="w-3.5 h-3.5" />
                 <span className="hidden sm:block text-xs">Search</span>
-                <kbd className="hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] bg-white/10 rounded border border-white/10 font-mono">
+                <kbd
+                  aria-hidden="true"
+                  className="hidden sm:flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] bg-white/10 rounded border border-white/10 font-mono"
+                >
                   ⌘K
                 </kbd>
               </button>

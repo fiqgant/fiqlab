@@ -58,12 +58,12 @@ export function Footer() {
             <h3 className="font-semibold mb-4 text-sm uppercase tracking-wider text-[#0A0A0A]/75 dark:text-[#FAFAFA]/75">
               Navigation
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[#0A0A0A]/70 dark:text-[#FAFAFA]/70 hover:text-blue-500 transition-colors duration-200"
+                    className="block min-h-[32px] py-2 text-sm leading-6 text-[#0A0A0A]/70 dark:text-[#FAFAFA]/70 hover:text-blue-700 dark:hover:text-blue-400 transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
