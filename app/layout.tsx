@@ -23,6 +23,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   applicationName: siteName,
+  generator: "Next.js",
   title: {
     default: defaultTitle,
     template: `%s | ${siteName}`,
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Taufiqurrahman", url: absoluteUrl("/about") }],
   creator: "Taufiqurrahman",
   publisher: siteName,
+  referrer: "origin-when-cross-origin",
   alternates: {
     canonical: absoluteUrl("/"),
     types: {

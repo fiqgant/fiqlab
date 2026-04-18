@@ -62,6 +62,8 @@ export function createPageMetadata({
   }));
 
   return {
+    generator: "Next.js",
+    referrer: "origin-when-cross-origin",
     title:
       absoluteTitle && typeof title === "string" ? { absolute: title } : title,
     description,
