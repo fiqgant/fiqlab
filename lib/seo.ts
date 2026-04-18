@@ -68,6 +68,9 @@ export function createPageMetadata({
     keywords: [...new Set([...defaultKeywords, ...keywords])],
     alternates: {
       canonical,
+      types: {
+        "application/rss+xml": absoluteUrl("/rss.xml"),
+      },
     },
     authors: [
       {
@@ -78,6 +81,17 @@ export function createPageMetadata({
     creator: personal.name,
     publisher: siteName,
     category: "technology",
+    robots: {
+      index: !noIndex,
+      follow: !noIndex,
+      googleBot: {
+        index: !noIndex,
+        follow: !noIndex,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     openGraph: {
       type,
       locale: "en_US",
@@ -94,17 +108,6 @@ export function createPageMetadata({
       title: resolvedOpenGraphTitle,
       description,
       images: resolvedImages.map((image) => image.url),
-    },
-    robots: {
-      index: !noIndex,
-      follow: !noIndex,
-      googleBot: {
-        index: !noIndex,
-        follow: !noIndex,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-        "max-video-preview": -1,
-      },
     },
   };
 }

@@ -34,6 +34,9 @@ export const metadata: Metadata = {
   publisher: siteName,
   alternates: {
     canonical: absoluteUrl("/"),
+    types: {
+      "application/rss+xml": absoluteUrl("/rss.xml"),
+    },
   },
   openGraph: {
     type: "website",
@@ -71,9 +74,18 @@ export const metadata: Metadata = {
   verification: process.env.GOOGLE_SITE_VERIFICATION
     ? { google: process.env.GOOGLE_SITE_VERIFICATION }
     : undefined,
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": siteName,
+  },
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0A0A0A" },
