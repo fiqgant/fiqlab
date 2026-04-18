@@ -22,9 +22,18 @@ jobs:
             ${{ github.event.deployment_status.target_url }}
             ${{ github.event.deployment_status.target_url }}/blog
             ${{ github.event.deployment_status.target_url }}/publications
-          uploadArtifacts: true
           temporaryPublicStorage: true
+          extraHeaders: |
+            Service-Worker-Allowed: /
         id: lighthouse
+
+      - name: Debug - Print report URLs
+        if: failure()
+        run: |
+          echo "=== Lighthouse JSON Reports ==="
+          ls -la .lighthouseci/
+          echo "=== Check redirect issue ==="
+          cat .lighthouseci/*.json | jq -r '.finalUrl' 2>/dev/null || echo "No valid JSON"
 
       - name: Format results
         id: format
