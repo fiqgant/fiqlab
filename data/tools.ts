@@ -73,7 +73,7 @@ export const skillSections: SkillSection[] = [
       {
         category: "Databases",
         icon: "Database",
-        color: "from-green-500 to-teal-500",
+        color: "from-sky-500 to-teal-500",
         tools: [
           { name: "PostgreSQL", level: "proficient" },
           { name: "MongoDB", level: "familiar" },
