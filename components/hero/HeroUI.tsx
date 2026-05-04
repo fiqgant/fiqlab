@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Github, Linkedin, BookOpen, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { personal } from "@/data/personal";
 
@@ -10,9 +10,30 @@ interface Props {
 
 export function HeroUI({ onToggleMode }: Props) {
   const [minimized, setMinimized] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [toast, setToast] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  const handleTerminalClick = () => {
+    if (isMobile) {
+      setToast(true);
+      setTimeout(() => setToast(false), 3000);
+    } else {
+      onToggleMode();
+    }
+  };
 
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center px-6 select-none">
+      {toast && (
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-[#000a14]/90 backdrop-blur-sm border border-[#00d4ff]/30 rounded-sm text-xs font-mono text-[#00d4ff] whitespace-nowrap shadow-[0_0_20px_rgba(0,212,255,0.15)]">
+          Terminal mode is only available on desktop
+        </div>
+      )}
+
       <div className="flex items-center gap-2 fixed bottom-4 right-4 z-20">
         <button
           onClick={() => setMinimized(!minimized)}
@@ -23,7 +44,7 @@ export function HeroUI({ onToggleMode }: Props) {
           <span>{minimized ? "expand" : "minimize"}</span>
         </button>
         <button
-          onClick={onToggleMode}
+          onClick={handleTerminalClick}
           className="flex items-center gap-2 px-3 py-1.5 text-xs font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/60 backdrop-blur-sm transition-all duration-200 rounded-sm"
         >
           <span>&gt;_</span>
