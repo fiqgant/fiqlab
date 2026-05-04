@@ -10,8 +10,14 @@ export function ConditionalShell({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem("fiqlab-mode");
-    setIsTerminalMode(stored !== "ui");
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      setIsTerminalMode(false);
+      localStorage.setItem("fiqlab-mode", "ui");
+    } else {
+      const stored = localStorage.getItem("fiqlab-mode");
+      setIsTerminalMode(stored !== "ui");
+    }
     setMounted(true);
   }, []);
 
@@ -23,8 +29,13 @@ export function ConditionalShell({ children }: { children: React.ReactNode }) {
     };
     window.addEventListener("storage", handler);
     const interval = setInterval(() => {
-      const stored = localStorage.getItem("fiqlab-mode");
-      setIsTerminalMode(stored !== "ui");
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        setIsTerminalMode(false);
+      } else {
+        const stored = localStorage.getItem("fiqlab-mode");
+        setIsTerminalMode(stored !== "ui");
+      }
     }, 200);
     return () => {
       window.removeEventListener("storage", handler);

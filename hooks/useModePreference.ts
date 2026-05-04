@@ -11,9 +11,15 @@ export function useModePreference() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY) as SiteMode | null;
-    if (stored === "ui" || stored === "terminal") {
-      setModeState(stored);
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      setModeState("ui");
+      localStorage.setItem(STORAGE_KEY, "ui");
+    } else {
+      const stored = localStorage.getItem(STORAGE_KEY) as SiteMode | null;
+      if (stored === "ui" || stored === "terminal") {
+        setModeState(stored);
+      }
     }
     setMounted(true);
   }, []);
@@ -24,6 +30,8 @@ export function useModePreference() {
   }, []);
 
   const toggle = useCallback(() => {
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
     setMode(mode === "terminal" ? "ui" : "terminal");
   }, [mode, setMode]);
 
