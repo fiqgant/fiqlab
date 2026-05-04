@@ -43,16 +43,13 @@ export function HeroUI({ onToggleMode }: Props) {
       </button>
 
       {minimized ? (
-        <div className="absolute bottom-16 right-4 z-20 flex items-center gap-3 px-4 py-2 border border-[#00d4ff]/30 bg-black/60 backdrop-blur-sm rounded-sm">
+        <div
+          onClick={() => setMinimized(false)}
+          className="absolute bottom-16 right-4 z-20 flex items-center gap-3 px-4 py-2 border border-[#00d4ff]/30 bg-black/60 backdrop-blur-sm rounded-sm cursor-pointer hover:bg-black/80 transition-all duration-200"
+        >
           <span className="text-[#00d4ff] font-mono text-sm font-bold">{personal.name}</span>
           <span className="text-[#0077cc] font-mono text-xs">{personal.role}</span>
-          <button
-            onClick={() => setMinimized(false)}
-            className="ml-2 flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/40 backdrop-blur-sm transition-all duration-200 rounded-sm"
-            title="Expand"
-          >
-            <ChevronUp size={12} />
-          </button>
+          <ChevronUp size={14} className="text-white ml-2" />
         </div>
       ) : (
         <div className="max-w-2xl w-full space-y-8 text-center relative">
