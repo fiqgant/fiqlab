@@ -52,7 +52,6 @@ export function HeroUI({ onToggleMode }: Props) {
             title="Expand"
           >
             <ChevronUp size={12} />
-            <span>expand</span>
           </button>
         </div>
       ) : (
@@ -65,7 +64,6 @@ export function HeroUI({ onToggleMode }: Props) {
               title="Minimize"
             >
               <ChevronDown size={12} />
-              <span>minimize</span>
             </button>
           </div>
           <div className="space-y-3">
