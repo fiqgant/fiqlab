@@ -42,10 +42,10 @@ const levelConfig: Record<SkillLevel, {
   },
   familiar: {
     label: "Familiar",
-    dot: "bg-green-500",
-    glow: "0 0 20px rgba(34,197,94,0.6), 0 0 40px rgba(34,197,94,0.3)",
-    iconColor: "text-green-400",
-    border: "hover:border-green-500/50",
+    dot: "bg-sky-500",
+    glow: "0 0 20px rgba(14,165,233,0.6), 0 0 40px rgba(14,165,233,0.3)",
+    iconColor: "text-sky-400",
+    border: "hover:border-sky-500/50",
   },
 };
 

@@ -21,41 +21,40 @@ export function PublicationCard({ pub, compact = false }: PublicationCardProps) 
     <article
       id={elementId}
       className={cn(
-        "glass-hover hover-glow p-5 sm:p-6 group",
+        "border border-[#00d4ff]/15 bg-[#000510] p-5 sm:p-6 group hover:border-[#00d4ff]/40 transition-colors duration-200",
         compact ? "" : "scroll-mt-24"
       )}
     >
       <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-        {/* Year badge */}
         <div className="flex-shrink-0">
-          <span className="inline-flex items-center justify-center w-16 h-7 rounded-lg bg-gradient-to-r from-blue-500/20 to-teal-500/20 text-blue-500 text-xs font-bold border border-blue-500/20">
+          <span className="inline-flex items-center justify-center w-16 h-7 border border-[#00d4ff]/30 text-[#00d4ff] text-xs font-mono font-bold bg-[#00d4ff]/5">
             {pub.year}
           </span>
         </div>
 
         <div className="flex-1 min-w-0">
-          {/* Title */}
           {href ? (
             <a
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group/link inline-flex items-start gap-1.5 text-slate-900 visited:text-slate-900 hover:text-blue-700 dark:text-slate-100 dark:visited:text-slate-100 dark:hover:text-blue-400"
+              className="group/link inline-flex items-start gap-1.5 text-[#00d4ff]/80 hover:text-white transition-colors duration-200"
             >
-              <h3 className="font-semibold text-sm sm:text-base leading-snug transition-colors duration-200">
+              <h3 className="font-semibold font-mono text-sm sm:text-base leading-snug">
                 {pub.title}
               </h3>
-              <ExternalLink className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 opacity-0 group-hover/link:opacity-100 text-blue-500 transition-opacity" />
+              <ExternalLink className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 opacity-0 group-hover/link:opacity-100 transition-opacity" />
             </a>
           ) : (
-            <h3 className="font-semibold text-sm sm:text-base leading-snug text-[#0A0A0A]/85 dark:text-[#FAFAFA]/90">{pub.title}</h3>
+            <h3 className="font-semibold font-mono text-sm sm:text-base leading-snug text-[#00d4ff]/80">
+              {pub.title}
+            </h3>
           )}
 
-          {/* Authors */}
-          <p className="text-sm text-[#0A0A0A]/70 dark:text-[#FAFAFA]/70 mt-1.5">
+          <p className="text-xs font-mono text-[#0077cc] mt-1.5">
             {authors.map((author, i) => (
               <span key={i}>
-                <span className={author === "Taufiqurrahman" ? "font-semibold text-blue-500" : ""}>
+                <span className={author === "Taufiqurrahman" ? "font-semibold text-white" : ""}>
                   {author}
                 </span>
                 {i < authors.length - 1 && ", "}
@@ -63,30 +62,27 @@ export function PublicationCard({ pub, compact = false }: PublicationCardProps) 
             ))}
           </p>
 
-          {/* Journal */}
-          <p className="text-sm italic text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 mt-0.5">
+          <p className="text-xs font-mono italic text-[#005599] mt-0.5">
             {journal}
           </p>
 
-          {/* Abstract (if not compact) */}
           {!compact && description && (
-            <p className="text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 mt-3 leading-relaxed line-clamp-3">
+            <p className="text-xs font-mono text-[#0077cc] mt-3 leading-relaxed line-clamp-3">
               {description}
             </p>
           )}
 
-          {/* Tags + Citations */}
           <div className="flex flex-wrap items-center gap-2 mt-3">
             {tags.slice(0, compact ? 3 : 5).map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-teal-500/10 text-teal-500 border border-teal-500/20"
+                className="px-2 py-0.5 text-[10px] font-mono font-medium text-[#00d4ff] border border-[#00d4ff]/25 bg-[#00d4ff]/5"
               >
-                {tag}
+                [{tag}]
               </span>
             ))}
             {citations !== undefined && (
-              <span className="ml-auto flex items-center gap-1 text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+              <span className="ml-auto flex items-center gap-1 text-[10px] font-mono text-[#0077cc]">
                 <Quote className="w-3 h-3" />
                 {citations} citations
               </span>

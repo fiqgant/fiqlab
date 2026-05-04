@@ -54,7 +54,7 @@ export function CodeBlock({ children, filename, language }: CodeBlockProps) {
           className={cn(
             "flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs transition-all duration-200",
             copied
-              ? "bg-green-500/20 text-green-400"
+              ? "bg-blue-500/20 text-blue-400"
               : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white"
           )}
           aria-label="Copy code"

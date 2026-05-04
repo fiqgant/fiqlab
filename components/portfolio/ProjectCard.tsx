@@ -5,7 +5,7 @@ import type { Project } from "@/data/portfolio";
 const categoryConfig: Record<Project["category"], { label: string; color: string }> = {
   research: { label: "Research", color: "bg-blue-500/10 text-blue-500 border-blue-500/20" },
   webapp: { label: "Web App", color: "bg-teal-500/10 text-teal-500 border-teal-500/20" },
-  embedded: { label: "Embedded", color: "bg-green-500/10 text-green-500 border-green-500/20" },
+  embedded: { label: "Embedded", color: "bg-sky-500/10 text-sky-500 border-sky-500/20" },
   tool: { label: "Tool", color: "bg-orange-500/10 text-orange-500 border-orange-500/20" },
 };
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, Tag } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import { BlogPost } from "@/lib/blog";
 import { formatDate } from "@/lib/utils";
 
@@ -12,74 +12,66 @@ export function BlogCard({ post }: BlogCardProps) {
   const { frontmatter, slug, excerpt, readingTimeText } = post;
 
   return (
-    <Link href={`/blog/${slug}`} className="group block h-full rounded-2xl hover-glow">
-      <article className="h-full glass-hover overflow-hidden">
-        {/* Thumbnail */}
-        <div className="relative h-48 overflow-hidden rounded-t-2xl bg-gradient-to-br from-blue-500/20 to-teal-500/20">
+    <Link
+      href={`/blog/${slug}`}
+      className="group block h-full border border-[#00d4ff]/15 hover:border-[#00d4ff]/50 bg-[#000510] transition-colors duration-200"
+    >
+      <article className="h-full overflow-hidden flex flex-col">
+        <div className="relative h-48 overflow-hidden bg-[#000510]">
           {frontmatter.thumbnail ? (
             <Image
               src={frontmatter.thumbnail}
               alt={frontmatter.title}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover transition-transform duration-500 group-hover:scale-105 opacity-60 group-hover:opacity-80"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-teal-500 opacity-60 flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">
-                  {frontmatter.title[0]}
-                </span>
-              </div>
+              <span className="text-4xl font-bold font-mono text-[#003d88] group-hover:text-[#0077cc] transition-colors">
+                {frontmatter.title[0]}
+              </span>
             </div>
           )}
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000510] via-transparent to-transparent" />
 
-          {/* Category badge */}
-            {frontmatter.category && (
-              <div className="absolute top-3 left-3">
-                <span className="px-2 py-0.5 rounded-lg text-[11px] font-semibold text-white bg-black/70 border border-white/10 shadow-sm">
-                  {frontmatter.category}
-                </span>
-              </div>
-            )}
+          {frontmatter.category && (
+            <div className="absolute top-3 left-3">
+              <span className="px-2 py-0.5 text-[11px] font-mono font-semibold text-white bg-black/80 border border-[#ffb000]/30">
+                {frontmatter.category}
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* Content */}
-        <div className="p-5">
-          {/* Tags */}
+        <div className="p-5 flex-1 flex flex-col">
           {frontmatter.tags && frontmatter.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mb-3">
               {frontmatter.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-sky-100 text-sky-800 border border-sky-200 dark:bg-blue-500/15 dark:text-blue-300 dark:border-blue-500/30"
+                  className="px-2 py-0.5 text-[10px] font-mono font-medium text-[#00d4ff] border border-[#00d4ff]/25 bg-[#00d4ff]/5"
                 >
-                  <Tag className="w-2.5 h-2.5" />
-                  {tag}
+                  [{tag}]
                 </span>
               ))}
               {frontmatter.tags.length > 3 && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/5 text-[#0A0A0A]/70 dark:text-[#FAFAFA]/70">
+                <span className="px-2 py-0.5 text-[10px] font-mono text-[#0077cc]">
                   +{frontmatter.tags.length - 3}
                 </span>
               )}
             </div>
           )}
 
-          {/* Title */}
-          <h3 className="font-bold text-base leading-snug mb-2 group-hover:text-blue-500 transition-colors duration-200 line-clamp-2">
+          <h3 className="font-bold font-mono text-sm leading-snug mb-2 text-[#00d4ff]/80 group-hover:text-white transition-colors duration-200 line-clamp-2">
             {frontmatter.title}
           </h3>
 
-          {/* Excerpt */}
-          <p className="text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 line-clamp-2 leading-relaxed mb-4">
+          <p className="text-xs font-mono text-[#0077cc] line-clamp-2 leading-relaxed mb-4 flex-1">
             {excerpt}
           </p>
 
-          {/* Meta */}
-          <div className="flex items-center gap-4 text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+          <div className="flex items-center gap-4 text-[10px] font-mono text-[#003d88] group-hover:text-[#0077cc] transition-colors">
             <span className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               {formatDate(frontmatter.date)}
