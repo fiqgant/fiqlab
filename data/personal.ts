@@ -4,7 +4,7 @@ export const personal = {
   initials: "TF",
   role: "Researcher",
   institution: "Politeknik Wilmar Bisnis Indonesia",
-  location: "Deli Serdang, North Sumatra",
+  location: "Indonesia",
   locationCoords: { lng: 98.7588, lat: 3.5672 },
   bio: "Always learning, always building.",
   longBio: `A researcher with a focus on computer vision, deep learning, and IoT integration on embedded devices.
