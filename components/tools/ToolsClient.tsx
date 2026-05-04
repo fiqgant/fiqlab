@@ -49,21 +49,13 @@ const levelConfig: Record<SkillLevel, {
   },
 };
 
-function ToolIcon({ name, level, iconName }: { name: string; level: SkillLevel; iconName: string }) {
+function ToolIcon({ name, level, iconName, url }: { name: string; level: SkillLevel; iconName: string; url?: string }) {
   const [hovered, setHovered] = useState(false);
   const Icon = iconComponents[iconName] || Box;
   const cfg = levelConfig[level];
 
-  return (
-    <div
-      className={cn(
-        "group relative flex flex-col items-center gap-3 p-5 rounded-2xl border border-white/10 bg-white/5 cursor-default",
-        "transition-all duration-300 hover:bg-white/10 hover:scale-105",
-        cfg.border
-      )}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+  const content = (
+    <>
       {/* Glow layer */}
       <div
         className="absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none"
@@ -104,7 +96,26 @@ function ToolIcon({ name, level, iconName }: { name: string; level: SkillLevel; 
 
       {/* Level dot */}
       <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
-    </div>
+    </>
+  );
+
+  const Wrapper = url ? "a" : "div";
+
+  return (
+    <Wrapper
+      {...(url ? { href: url, target: "_blank", rel: "noopener noreferrer" } : {})}
+      className={cn(
+        "group relative flex flex-col items-center gap-3 p-5 rounded-2xl border border-white/10 bg-white/5 transition-all duration-300 hover:scale-105",
+        url
+          ? "cursor-pointer hover:bg-white/10"
+          : "cursor-default",
+        cfg.border
+      )}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {content}
+    </Wrapper>
   );
 }
 
@@ -198,6 +209,7 @@ export function ToolsClient() {
             name={tool.name}
             level={tool.level}
             iconName={toolIconMap[tool.name] || "Box"}
+            url={tool.url}
           />
         ))}
       </div>
