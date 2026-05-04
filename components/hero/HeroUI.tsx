@@ -54,15 +54,13 @@ export function HeroUI({ onToggleMode }: Props) {
       ) : (
         <div className="max-w-2xl w-full space-y-8 text-center relative">
           <div className="absolute -inset-12 bg-black/20 backdrop-blur-lg rounded-2xl border border-white/5 -z-10" />
-          <div className="flex justify-end -mt-8 mb-2">
-            <button
-              onClick={() => setMinimized(true)}
-              className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/40 backdrop-blur-sm transition-all duration-200 rounded-sm"
-              title="Minimize"
-            >
-              <ChevronDown size={12} />
-            </button>
-          </div>
+          <button
+            onClick={() => setMinimized(true)}
+            className="absolute -top-3 right-4 z-10 flex items-center justify-center w-6 h-6 text-[#00d4ff]/50 hover:text-white bg-[#000a14]/80 border border-[#00d4ff]/30 rounded-sm transition-all duration-200"
+            title="Minimize"
+          >
+            <ChevronDown size={14} />
+          </button>
           <div className="space-y-3">
             <p className="text-[#0077cc] text-sm font-mono tracking-widest uppercase">
               ~ {personal.location}
