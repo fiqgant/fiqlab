@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Navbar } from "@/components/ui/Navbar";
-import { Footer } from "@/components/ui/Footer";
+import { ConditionalShell } from "@/components/ui/ConditionalShell";
 import { Analytics } from "@vercel/analytics/next";
 import {
   absoluteUrl,
@@ -14,10 +13,10 @@ import {
   siteUrl,
 } from "@/lib/seo";
 
-const inter = Inter({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -89,8 +88,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0A0A0A" },
+    { media: "(prefers-color-scheme: light)", color: "#000000" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 
@@ -100,12 +99,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} dark`}>
-      <body className="font-sans antialiased min-h-screen flex flex-col">
+    <html lang="en" suppressHydrationWarning className={`${jetbrainsMono.variable} dark`}>
+      <body className="font-mono antialiased min-h-screen flex flex-col">
         <Providers>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <ConditionalShell>{children}</ConditionalShell>
         </Providers>
         <Analytics />
       </body>
