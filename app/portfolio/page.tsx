@@ -20,32 +20,31 @@ export default async function PortfolioPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-32">
-      {/* Header */}
       <div className="text-center mb-16">
-        <p className="text-sm font-semibold uppercase tracking-widest text-blue-500 mb-3">Work</p>
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Portfolio</h1>
-        <p className="text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 max-w-xl mx-auto">
+        <p className="text-xs font-mono uppercase tracking-widest text-white mb-3">
+          {"// WORK"}
+        </p>
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text font-mono">Portfolio</h1>
+        <p className="text-sm font-mono text-[#0077cc] max-w-xl mx-auto">
           Research systems, open-source tools, and AI-powered applications.
         </p>
       </div>
 
       <PortfolioClient initialData={githubCache} />
 
-      {/* Featured */}
       {featured.length > 0 && !githubCache && (
         <section className="mb-16">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40 mb-6">
-            Featured Projects
+          <h2 className="text-xs font-mono uppercase tracking-widest text-white mb-6">
+            {"// FEATURED_PROJECTS"}
           </h2>
           <PaginatedProjectGrid projects={featured} />
         </section>
       )}
 
-      {/* Rest */}
       {rest.length > 0 && !githubCache && (
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40 mb-6">
-            Other Projects
+          <h2 className="text-xs font-mono uppercase tracking-widest text-white mb-6">
+            {"// OTHER_PROJECTS"}
           </h2>
           <PaginatedProjectGrid
             projects={rest}
@@ -55,24 +54,22 @@ export default async function PortfolioPage() {
       )}
 
       {githubCache && (featured.length > 0 || rest.length > 0) && (
-        <details className="glass rounded-3xl p-6 sm:p-8">
+        <details className="border border-[#00d4ff]/15 bg-[#000510] p-6 sm:p-8">
           <summary className="cursor-pointer list-none flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-widest text-blue-500 mb-2">
-                Manual Archive
-              </p>
-              <h2 className="text-2xl font-bold">Other Projects</h2>
+                <p className="text-xs font-mono uppercase tracking-widest text-white mb-2">
+                  {"// MANUAL_ARCHIVE"}
+                </p>
+              <h2 className="text-2xl font-bold font-mono text-[#00d4ff]">Other_Projects</h2>
             </div>
-            <span className="text-sm text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
-              Expand manual portfolio
-            </span>
+            <span className="text-xs font-mono text-[#0077cc]">expand_archive()</span>
           </summary>
 
           <div className="mt-8 space-y-12">
             {featured.length > 0 && (
               <section>
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40 mb-6">
-                  Featured Projects
+                <h3 className="text-xs font-mono uppercase tracking-widest text-white mb-6">
+                  {"// FEATURED_PROJECTS"}
                 </h3>
                 <PaginatedProjectGrid projects={featured} />
               </section>
@@ -80,8 +77,8 @@ export default async function PortfolioPage() {
 
             {rest.length > 0 && (
               <section>
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40 mb-6">
-                  Other Projects
+                <h3 className="text-xs font-mono uppercase tracking-widest text-white mb-6">
+                  {"// OTHER_PROJECTS"}
                 </h3>
                 <PaginatedProjectGrid
                   projects={rest}
