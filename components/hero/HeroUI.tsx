@@ -34,32 +34,40 @@ export function HeroUI({ onToggleMode }: Props) {
         </div>
       )}
 
-      <div className="flex items-center gap-2 fixed bottom-4 right-4 z-20">
-        <button
-          onClick={() => setMinimized(!minimized)}
-          className="flex items-center gap-2 px-3 py-1.5 text-xs font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/60 backdrop-blur-sm transition-all duration-200 rounded-sm"
-          title={minimized ? "Expand" : "Minimize"}
-        >
-          {minimized ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-          <span>{minimized ? "expand" : "minimize"}</span>
-        </button>
-        <button
-          onClick={handleTerminalClick}
-          className="flex items-center gap-2 px-3 py-1.5 text-xs font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/60 backdrop-blur-sm transition-all duration-200 rounded-sm"
-        >
-          <span>&gt;_</span>
-          <span>terminal</span>
-        </button>
-      </div>
+      <button
+        onClick={handleTerminalClick}
+        className="fixed bottom-4 right-4 z-20 flex items-center gap-2 px-3 py-1.5 text-xs font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/60 backdrop-blur-sm transition-all duration-200 rounded-sm"
+      >
+        <span>&gt;_</span>
+        <span>terminal</span>
+      </button>
 
       {minimized ? (
         <div className="absolute bottom-16 right-4 z-20 flex items-center gap-3 px-4 py-2 border border-[#00d4ff]/30 bg-black/60 backdrop-blur-sm rounded-sm">
           <span className="text-[#00d4ff] font-mono text-sm font-bold">{personal.name}</span>
           <span className="text-[#0077cc] font-mono text-xs">{personal.role}</span>
+          <button
+            onClick={() => setMinimized(false)}
+            className="ml-2 flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/40 backdrop-blur-sm transition-all duration-200 rounded-sm"
+            title="Expand"
+          >
+            <ChevronUp size={12} />
+            <span>expand</span>
+          </button>
         </div>
       ) : (
         <div className="max-w-2xl w-full space-y-8 text-center relative">
           <div className="absolute -inset-12 bg-black/20 backdrop-blur-lg rounded-2xl border border-white/5 -z-10" />
+          <div className="flex justify-end -mt-8 mb-2">
+            <button
+              onClick={() => setMinimized(true)}
+              className="flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/40 backdrop-blur-sm transition-all duration-200 rounded-sm"
+              title="Minimize"
+            >
+              <ChevronDown size={12} />
+              <span>minimize</span>
+            </button>
+          </div>
           <div className="space-y-3">
             <p className="text-[#0077cc] text-sm font-mono tracking-widest uppercase">
               ~ {personal.location}
