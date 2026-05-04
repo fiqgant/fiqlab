@@ -45,7 +45,7 @@ export function HeroUI({ onToggleMode }: Props) {
       {minimized ? (
         <div
           onClick={() => setMinimized(false)}
-          className="absolute bottom-16 right-4 z-20 flex items-center gap-3 px-4 py-2 border border-[#00d4ff]/30 bg-black/60 backdrop-blur-sm rounded-sm cursor-pointer hover:bg-black/80 transition-all duration-200"
+          className="fixed bottom-4 right-[8.5rem] z-20 flex items-center gap-3 px-4 py-2 border border-[#00d4ff]/30 bg-black/60 backdrop-blur-sm rounded-sm cursor-pointer hover:bg-black/80 transition-all duration-200"
         >
           <span className="text-[#00d4ff] font-mono text-sm font-bold">{personal.name}</span>
           <span className="text-[#0077cc] font-mono text-xs">{personal.role}</span>
