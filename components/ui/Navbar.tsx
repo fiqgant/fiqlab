@@ -49,14 +49,14 @@ export function Navbar() {
 
   return (
     <>
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-mono",
-          scrolled
-            ? "bg-black/95 border-b border-[#00d4ff]/20 shadow-[0_0_20px_rgba(0,212,255,0.05)]"
-            : "bg-transparent border-b border-[#00d4ff]/10"
-        )}
-      >
+        <header
+          className={cn(
+            "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-mono backdrop-blur-md",
+            scrolled
+              ? "bg-[#000a14]/60 border-b border-[#00d4ff]/20 shadow-[0_0_20px_rgba(0,212,255,0.05)]"
+              : "bg-[#000a14]/30 border-b border-[#00d4ff]/10"
+          )}
+        >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
             {/* Logo */}
@@ -128,7 +128,7 @@ export function Navbar() {
             className="absolute inset-0 bg-black/80"
             onClick={() => setMobileOpen(false)}
           />
-          <nav className="absolute top-14 left-0 right-0 bg-black border-b border-[#00d4ff]/20 p-4 flex flex-col gap-1">
+          <nav className="absolute top-14 left-0 right-0 bg-[#000a14]/70 backdrop-blur-lg border-b border-[#00d4ff]/20 p-4 flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
