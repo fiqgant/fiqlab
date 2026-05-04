@@ -11,22 +11,44 @@ const config: Config = {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        mono: [
+          "JetBrains Mono",
+          "Fira Code",
+          "Cascadia Code",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "Courier New",
+          "monospace",
+        ],
+      },
       colors: {
         background: {
-          DEFAULT: "#FFFFFF",
-          dark: "#0A0A0A",
+          DEFAULT: "#000000",
+          dark: "#000000",
         },
         foreground: {
-          DEFAULT: "#0A0A0A",
-          dark: "#FAFAFA",
+          DEFAULT: "#00d4ff",
+          dark: "#00d4ff",
+        },
+        terminal: {
+          green: "#00d4ff",
+          dim: "#0077cc",
+          dark: "#000000",
+          amber: "#ffb000",
+          card: "#000510",
         },
         accent: {
-          blue: "#3B82F6",
-          teal: "#14B8A6",
+          blue: "#00d4ff",
+          teal: "#0088dd",
         },
       },
       backgroundImage: {
-        "gradient-accent": "linear-gradient(135deg, #3B82F6, #14B8A6)",
+        "gradient-accent": "linear-gradient(135deg, #00d4ff, #0088dd)",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       },
       backdropBlur: {
@@ -56,26 +78,35 @@ const config: Config = {
         DEFAULT: {
           css: {
             maxWidth: "none",
-            color: "inherit",
+            color: "#00d4ff",
+            fontFamily: "JetBrains Mono, monospace",
             a: {
-              color: "#3B82F6",
-              "&:hover": { color: "#14B8A6" },
+              color: "#00d4ff",
+              "&:hover": { color: "#ffffff" },
             },
             "h1, h2, h3, h4": {
-              color: "inherit",
+              color: "#00d4ff",
               fontWeight: "700",
+              fontFamily: "JetBrains Mono, monospace",
             },
             code: {
-              color: "#14B8A6",
-              backgroundColor: "rgba(20, 184, 166, 0.1)",
-              borderRadius: "4px",
+              color: "#ffffff",
+              backgroundColor: "rgba(255, 176, 0, 0.08)",
+              borderRadius: "0",
               padding: "0.2em 0.4em",
+              border: "1px solid rgba(255, 176, 0, 0.2)",
             },
             "code::before": { content: '""' },
             "code::after": { content: '""' },
             pre: {
-              backgroundColor: "#0d1117",
-              borderRadius: "12px",
+              backgroundColor: "#000d02",
+              borderRadius: "0",
+              border: "1px solid rgba(0, 212, 255, 0.2)",
+            },
+            strong: { color: "#00d4ff" },
+            blockquote: {
+              borderLeftColor: "#00d4ff",
+              color: "#0077cc",
             },
           },
         },
