@@ -59,11 +59,10 @@ export function SearchModal() {
     load();
   }, [isOpen]);
 
-  // Focus input
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
-      setQuery("");
+      setQuery(useSearchStore.getState().initialQuery);
       setSelectedIndex(0);
     }
   }, [isOpen]);
