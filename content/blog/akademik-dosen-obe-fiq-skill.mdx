@@ -1,0 +1,138 @@
+---
+title: "The Story Behind My Akademik Dosen OBE Fiq Skill: From RPS Headaches to an Internal Workshop"
+date: "2026-08-31"
+excerpt: "Why I built a custom Claude skill just for Indonesian OBE paperwork — curriculum, learning outcomes, semester lesson plans — then rolled it out to fellow lecturers through an internal workshop. Skill download link included."
+thumbnail: "/images/blog/akademik-dosen-obe-fiq-cover.png"
+tags: ["Claude Skill", "OBE", "Higher Education", "AI Tools", "RPS"]
+category: "Tutorial"
+featured: true
+---
+
+## The Problem Isn't the AI — It's the Paperwork
+
+Writing academic documents for OBE (Outcome-Based Education) is not a five-minute job. In Indonesia's higher-ed system, a single RPS (*Rencana Pembelajaran Semester* — the semester lesson plan every course must have) has to chain together Graduate Learning Outcomes → CPL (Program Learning Outcomes) → subject matter → the course itself → CPMK (Course Learning Outcomes) → Sub-CPMK (session-level outcomes) → activities → assessment → rubric. Every link has to hold, and every link has to be traceable back to a regulation.
+
+When I first tried leaning on a generic AI for this, the problems showed up fast:
+
+- **CPL/CPMK get made up.** A generic AI will confidently fill in learning outcomes that sound plausible, even though they're not the department's actual official data.
+- **Bloom's taxonomy level gets sloppy.** Verbs like "understand" or "explain" (Bloom levels C1-C3) kept sneaking in, even though OBE's primary outcomes are required to sit at C4-C6 (analyze and above).
+- **Assessment weights never get double-checked.** The total could land at 95% or 105% and nobody notices until a manual review catches it.
+- **Regulations change, but the prompt doesn't.** Indonesia's Permendiktisaintek No. 39/2025 (as amended by No. 10/2026) superseded the prior regulation — if you have to retype that context into a prompt every single time, sooner or later someone forgets.
+
+This isn't a "the AI isn't smart enough" problem. It's a **lack of consistent rules** applied every time someone asks for an academic document. So instead of hunting for a longer prompt, I built a **skill**.
+
+## Why a Skill, Not Just a Prompt
+
+A custom skill in Claude is essentially a bundle of instructions, references, and templates that gets loaded whenever the topic matches. The difference from a regular prompt: a skill can carry *supporting files* that actually get opened and used, instead of being half-remembered from the model's own memory.
+
+For this OBE use case, I organized it into layers:
+
+| Folder | Contents | Why it's separated |
+|---|---|---|
+| `references/` | A bank of Bloom C4-C6 verbs, credit-hour/workload rules, a summary of the latest regulations | So outcome wording and workload rules always get checked against a source instead of guessed |
+| `workflows/` | Step-by-step flows for building an RPS, building a curriculum, an "anti-fabrication" flow, and exporting to the campus's SIAKAD format | So the sequence of steps stays consistent no matter which lecturer is using it |
+| `calculators/` | Formulas for credit hours (SKS) and assessment weighting | So numbers get calculated, not eyeballed |
+| `templates/` | RPS templates, curriculum templates, full OBE alignment matrices, a lecturer-research table, down to the official `.xlsx` template the campus SIAKAD system expects | So the output is immediately usable in the format the campus already recognizes |
+| `checklists/` | An OBE audit checklist | A mandatory self-check before any document ships |
+
+Three principles I locked in from day one, non-negotiable:
+
+1. **Source-first / no fabrication** — if official data (learning outcomes, credit hours, weights, lecturer research, campus policy) isn't available yet, the skill has to ask first, never invent it. If the user insists on continuing anyway, the output gets a hard label: *"Initial draft proposal; must be validated by the department/curriculum team before use."*
+2. **Bloom C4-C6 only** — every time it formulates a learning outcome, the skill is required to open the verb bank rather than guess from memory. Interestingly, the "C4/C5/C6" label itself is never allowed to appear in the output document — only the resulting high-level outcome wording.
+3. **The full OBE alignment chain must hold** — if any link from Graduate Profile to the quality-assurance cycle breaks, the document simply isn't OBE-compliant. Full stop.
+
+## The Update That Mattered Most: Asking About Lecturer Research First
+
+The first version of this skill had a subtle but annoying process bug. The old flow: ask for the curriculum document first, fill in 12 data items (course name, credit hours, learning outcomes, course outcomes, etc.), and only at item 13 — almost the very end — did the skill ask for the lecturer's research to cite as supporting reference material.
+
+The problem: an RPS is **required** to include the lecturer's own research as part of its content. Asking for it that late meant exactly what happened to me — the RPS was already half-built by the time I realized the research data was missing, forcing me to backtrack and patch it in.
+
+In v5.9.0, I flipped the order entirely. Now, **as the very first step** — before building any part of the RPS — the skill has to ask for two things at once, in a single message:
+
+1. The lecturer's research data (name, title, year, source type, DOI/URL, relevance to the course)
+2. The department's curriculum document (or at minimum, the graduate profile, learning outcomes, and curriculum map)
+
+If the lecturer doesn't have that data yet, that's fine — the skill continues with an explicit placeholder, *"Lecturer research: [to be filled in by the lecturer/department]"*, and logs it as incomplete data. The one rule that never bends: never invent a research title.
+
+A small change in question order, but a big difference in how it actually feels to use.
+
+## Sharing It: Not Just for Me
+
+A good skill that only I know how to use is basically wasted. So I also put together materials for an **internal workshop — sharing it with fellow lecturers** — specifically for the D4 TRPL study program at Politeknik Wilmar Bisnis Indonesia.
+
+A few things I emphasized in that workshop:
+
+- **Triggering the skill is just plain keywords.** Lecturers don't need to memorize special commands. Type "build an RPS," "draft a curriculum," "check Bloom level," or "audit my RPS," and the skill detects the right mode on its own.
+- **Upload documents before asking for an RPS.** If an old curriculum, a research list, or a previous RPS is already attached to the conversation, the skill reads that first — no need to retype everything by hand.
+- **Watch the label at the end of the document.** Every output is marked "Final" or "Draft Proposal [NEEDS DEPARTMENT/CAMPUS VALIDATION]" — that's not a formality, it's the signal for whether a document is ready for official use or still needs department review.
+- **The campus SIAKAD export format is a different file from the narrative RPS.** To get the campus system's format, you have to ask for it explicitly ("SIAKAD format," "session-by-session breakdown") so the skill fills in the official `.xlsx` template instead of treating it like a regular RPS draft.
+
+The full OBE alignment chain, one of the core slides in the deck:
+
+```
+Graduate Profile → CPL → Subject Matter → Course → CPMK → Sub-CPMK → Activities → Assessment → Rubric → Quality Cycle (PPEPP)
+```
+
+If any single link in that chain breaks, the document can't be called OBE-compliant — the rule is that simple, and it's also the single most common finding whenever the skill is used to audit an old RPS.
+
+## The v5.10.0 Update: Cowork Mode, Projects, and Automatic Folder Structure
+
+After using this for a while, one small complaint kept resurfacing: preparing a full course package — RPS, module, worksheets, slides — in a regular chat meant uploading every file manually, one at a time, and the results just appeared on screen. Saving everything into the right folder was still on me, file by file, session by session.
+
+Claude actually already has an answer for this: **Cowork mode** and **Projects**. The difference from a regular chat:
+
+| | Regular Chat | Cowork Mode |
+|---|---|---|
+| Workflow | One question-and-answer session, every step directed manually | Claude works autonomously across many steps; you check back when it's done |
+| Best for | One document at a time | A full package (RPS + module + worksheets + slides) in a single request |
+| Files | Uploaded manually, one at a time, every chat | Read and written directly to your computer's folders |
+| Final output | Shows up on screen; you save it yourself | Saved neatly into the working folder you specify |
+
+Add **Projects** and **Project Instructions** on top: an instruction like "always use the OBE Fiq skill" only needs to be typed once into Project Instructions, and **Project Knowledge** (the old curriculum, the research list) only needs to be uploaded once — no re-uploading every time you open a new chat. Cowork can also run inside that same Project, so its instructions and files come along for the ride.
+
+The catch: the moment a skill gets access to a working folder, it needs **clear folder rules** — otherwise things get messy, or it starts creating random folders every time a new document is requested. So in v5.10.0 I added a standard folder pattern the skill must follow:
+
+```
+Academic 2026/                          (main folder, set up once by the user)
+├── Regulations & Curriculum/           (cross-course references, NOT per-course)
+├── [Course A]/
+│   ├── RPS, module, worksheets, slides for this course (in the course folder's root)
+│   ├── Session 1/
+│   ├── Session 2/
+│   └── Session .../
+└── [Other courses, same pattern]
+```
+
+The rules I locked into this flow:
+
+- **`Regulations & Curriculum/` is only for cross-course documents** — department curriculum, decrees, regulations — never let one of those end up inside a specific course's folder.
+- **Course-level documents live in the course folder's root**, not inside a session folder. `Session N/` folders are only for material specific to that one session.
+- **Check the existing structure before creating a new folder** — never assume the folder is empty, and never create a duplicate folder with a similar name.
+- **Don't create all 16 session folders at once** if only a few have actually been requested — create only as many as needed.
+- **No folders outside this pattern without asking first.** If there's a need for something outside the pattern (say, an accreditation-specific folder), the skill is required to ask where it should go.
+
+The practical effect: a lecturer only has to name the main folder once at the start (or just let Cowork use whatever folder is already connected), then simply asks for whatever document they need — the skill figures out where it belongs, and mentions briefly in chat whenever it creates a new folder.
+
+## What I Learned From Building This
+
+A few things worth writing down for anyone building a similar skill for administrative or academic work:
+
+- **Ban fabrication explicitly — don't expect the model to "just know."** The anti-fabrication principle needs to be written as a hard rule with an actual verification flow (`alur_anti_ngarang.md`), not just mentioned once in the skill's description.
+- **Put formulas in a file, not in the prompt.** I moved credit-hour math (1 credit hour = 45 hours = 2,700 minutes per semester) and assessment-weight math into a separate calculator file so it's applied consistently, instead of being "roughly" recalculated with a different result every time.
+- **A final self-check is mandatory, not optional.** The audit checklist that runs before output ships catches a lot of things that are easy to miss — a weight total that isn't 100%, a Bloom label accidentally left in the document, an outdated regulation that's technically been superseded but still lingering.
+- **Updating a skill is an iterative process, not a one-shot design.** Version 5.9.0 came from a real problem with the order lecturer research got asked for; version 5.10.0 came from a complaint about messy files when using Cowork. A good skill is the product of repeated real use, not something perfectly designed up front.
+- **The moment a skill gets folder access, lock down the folder pattern from day one.** Without strict rules about where files can and can't go, the "autonomy" to work independently through Cowork turns into folder chaos fast.
+
+## Try It Yourself
+
+If you're a lecturer or from another department who wants to try this, the skill file (`akademik-dosen-obe-fiq`, v5.10.0) is available for download here:
+
+**[Download OBE Fiq Skill v5.10.0 (.skill)](https://github.com/fiqgant/fiqlab/releases/download/obe-fiq-skill-v5.10.0/akademik-dosen-obe-fiq-v5.10.0.skill)**
+
+The setup is short: download the file, then upload it as a custom skill in Claude (Settings → Capabilities → Skills, or through Claude Code). After that, just type requests as usual — "build an RPS for course X," "draft the CPL," "audit my RPS" — and the skill detects the right mode and immediately asks for whatever data is required before building anything. If you want a full course package at once (RPS + module + worksheets + slides) without repeated manual uploads, use it through Cowork mode or inside a Project so the skill can read and write directly to a working folder using the `Academic 2026 → Regulations & Curriculum + per-course → per-session` structure described above.
+
+One reminder from the workshop that applies to anyone trying this: this skill is designed to **help you draft**, not replace department validation. Every draft proposal still needs to be checked by the curriculum team before it's used as an official document.
+
+Or, if you're reading this on your phone, just scan below:
+
+![QR code to download the Akademik Dosen OBE Fiq skill v5.10.0](/images/blog/akademik-dosen-obe-fiq-qr.png)
