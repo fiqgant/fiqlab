@@ -1,7 +1,7 @@
 ---
-title: "The Story Behind My Akademik Dosen OBE Fiq Skill: From RPS Headaches to an Internal Workshop"
+title: "The Story Behind My Akademik Dosen OBE Fiq Skill: From RPS Headaches to a Reusable Claude Skill"
 date: "2026-08-31"
-excerpt: "Why I built a custom Claude skill just for Indonesian OBE paperwork — curriculum, learning outcomes, semester lesson plans — then rolled it out to fellow lecturers through an internal workshop. Skill download link included."
+excerpt: "Why I built a custom Claude skill just for Indonesian OBE paperwork — curriculum, learning outcomes, semester lesson plans. Skill download link included."
 thumbnail: "/images/blog/akademik-dosen-obe-fiq-cover.png"
 tags: ["Claude Skill", "OBE", "Higher Education", "AI Tools", "RPS"]
 category: "Tutorial"
@@ -56,18 +56,18 @@ If the lecturer doesn't have that data yet, that's fine — the skill continues 
 
 A small change in question order, but a big difference in how it actually feels to use.
 
-## Sharing It: Not Just for Me
+## Making It Usable by Other Lecturers
 
-A good skill that only I know how to use is basically wasted. So I also put together materials for an **internal workshop — sharing it with fellow lecturers** — specifically for the D4 TRPL study program at Politeknik Wilmar Bisnis Indonesia.
+A good skill that only I know how to use is basically wasted. So I wrote it to be picked up by any lecturer in the D4 TRPL study program at Politeknik Wilmar Bisnis Indonesia, not just me.
 
-A few things I emphasized in that workshop:
+A few things that matter when someone else uses it:
 
 - **Triggering the skill is just plain keywords.** Lecturers don't need to memorize special commands. Type "build an RPS," "draft a curriculum," "check Bloom level," or "audit my RPS," and the skill detects the right mode on its own.
 - **Upload documents before asking for an RPS.** If an old curriculum, a research list, or a previous RPS is already attached to the conversation, the skill reads that first — no need to retype everything by hand.
 - **Watch the label at the end of the document.** Every output is marked "Final" or "Draft Proposal [NEEDS DEPARTMENT/CAMPUS VALIDATION]" — that's not a formality, it's the signal for whether a document is ready for official use or still needs department review.
 - **The campus SIAKAD export format is a different file from the narrative RPS.** To get the campus system's format, you have to ask for it explicitly ("SIAKAD format," "session-by-session breakdown") so the skill fills in the official `.xlsx` template instead of treating it like a regular RPS draft.
 
-The full OBE alignment chain, one of the core slides in the deck:
+The full OBE alignment chain the skill enforces:
 
 ```
 Graduate Profile → CPL → Subject Matter → Course → CPMK → Sub-CPMK → Activities → Assessment → Rubric → Quality Cycle (PPEPP)
@@ -131,7 +131,7 @@ If you're a lecturer or from another department who wants to try this, the skill
 
 The setup is short: download the file, then upload it as a custom skill in Claude (Settings → Capabilities → Skills, or through Claude Code). After that, just type requests as usual — "build an RPS for course X," "draft the CPL," "audit my RPS" — and the skill detects the right mode and immediately asks for whatever data is required before building anything. If you want a full course package at once (RPS + module + worksheets + slides) without repeated manual uploads, use it through Cowork mode or inside a Project so the skill can read and write directly to a working folder using the `Academic 2026 → Regulations & Curriculum + per-course → per-session` structure described above.
 
-One reminder from the workshop that applies to anyone trying this: this skill is designed to **help you draft**, not replace department validation. Every draft proposal still needs to be checked by the curriculum team before it's used as an official document.
+One reminder that applies to anyone trying this: this skill is designed to **help you draft**, not replace department validation. Every draft proposal still needs to be checked by the curriculum team before it's used as an official document.
 
 Or, if you're reading this on your phone, just scan below:
 
