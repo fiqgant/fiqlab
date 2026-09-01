@@ -113,6 +113,26 @@ The rules I locked into this flow:
 
 The practical effect: a lecturer only has to name the main folder once at the start (or just let Cowork use whatever folder is already connected), then simply asks for whatever document they need — the skill figures out where it belongs, and mentions briefly in chat whenever it creates a new folder.
 
+## The v5.13.0 Update: Closing the Loop — CPMK Attainment and a Learning Roadmap
+
+Everything up to v5.10.0 was about *producing* documents — curriculum, RPS, teaching tools. But OBE doesn't end when the RPS is written. The cycle only closes when you go back at the end of the semester, check whether the course learning outcomes (CPMK) were actually met, and feed that back into the next round. v5.13.0 adds the two pieces that were missing from that loop.
+
+**CPMK attainment evaluation.** Give the skill the Sub-CPMK → assessment → weight map from the RPS, plus the students' actual scores per assessment, and it computes:
+
+- each student's CPMK score, weighted (not a flat average)
+- per-student pass/fail against the minimum threshold (NBM) for each CPMK
+- classroom-level attainment percentage per CPMK, compared against the program's target
+- the final course grade and pass/fail status per student
+- a follow-up plan (RTL) for any CPMK that landed under target — probable cause, remediation options, who owns the fix — mapped to the PPEPP quality cycle
+
+The same non-negotiable rule carries over: the minimum threshold, the classroom target, and the course pass mark all have to come from institutional policy. If they're not supplied, the skill asks; if you push it to run on example numbers anyway, every result gets stamped `[DEFAULT ASSUMPTION - NEEDS PROGRAM/SPMI VALIDATION]`. Student scores are never invented.
+
+There's also an auto-formula Excel version. Copy the template, fill in one sheet (raw scores per assessment), and the CPMK scores, classroom attainment, and course pass/fail dashboard all calculate themselves. The weighting chain baked into it — assessment instrument → Sub-CPMK → CPMK → CPL → final course grade — matches Politeknik WBI's official 9+1 assessment components.
+
+**Learning roadmap in the WBI format.** This one groups the Sub-CPMK that already exist into *modules* spanning ranges of sessions, then builds a WBI-style Excel roadmap: Output / Concept / Indicators / Learning Strategy per module, UTS and UAS as their own columns, a distinct pastel colour per module. Two guardrails: it only runs *after* the Sub-CPMK exist — no roadmap built on invented outcomes — and the module grouping is interpretive, so the skill proposes a grouping and waits for confirmation before generating the file.
+
+**One more reference file.** For anything touching internal quality assurance (SPMI/PPEPP), the skill now points to the *2026 SPMI Implementation Guide* — the current rule is that internal quality standards have to *exceed* the national standard (SN-Dikti), not merely copy it.
+
 ## What I Learned From Building This
 
 A few things worth writing down for anyone building a similar skill for administrative or academic work:
@@ -120,19 +140,19 @@ A few things worth writing down for anyone building a similar skill for administ
 - **Ban fabrication explicitly — don't expect the model to "just know."** The anti-fabrication principle needs to be written as a hard rule with an actual verification flow (`alur_anti_ngarang.md`), not just mentioned once in the skill's description.
 - **Put formulas in a file, not in the prompt.** I moved credit-hour math (1 credit hour = 45 hours = 2,700 minutes per semester) and assessment-weight math into a separate calculator file so it's applied consistently, instead of being "roughly" recalculated with a different result every time.
 - **A final self-check is mandatory, not optional.** The audit checklist that runs before output ships catches a lot of things that are easy to miss — a weight total that isn't 100%, a Bloom label accidentally left in the document, an outdated regulation that's technically been superseded but still lingering.
-- **Updating a skill is an iterative process, not a one-shot design.** Version 5.9.0 came from a real problem with the order lecturer research got asked for; version 5.10.0 came from a complaint about messy files when using Cowork. A good skill is the product of repeated real use, not something perfectly designed up front.
+- **Updating a skill is an iterative process, not a one-shot design.** Version 5.9.0 came from a real problem with the order lecturer research got asked for; version 5.10.0 came from a complaint about messy files when using Cowork; version 5.13.0 came from noticing the skill only covered the front half of the OBE cycle and never the end-of-semester evaluation that closes it. A good skill is the product of repeated real use, not something perfectly designed up front.
 - **The moment a skill gets folder access, lock down the folder pattern from day one.** Without strict rules about where files can and can't go, the "autonomy" to work independently through Cowork turns into folder chaos fast.
 
 ## Try It Yourself
 
-If you're a lecturer or from another department who wants to try this, the skill file (`akademik-dosen-obe-fiq`, v5.10.0) is available for download here:
+If you're a lecturer or from another department who wants to try this, the skill file (`akademik-dosen-obe-fiq`, v5.13.0) is available for download here:
 
-**[Download OBE Fiq Skill v5.10.0 (.skill)](https://github.com/fiqgant/fiqlab/releases/download/obe-fiq-skill-v5.10.0/akademik-dosen-obe-fiq-v5.10.0.skill)**
+**[Download OBE Fiq Skill v5.13.0 (.skill)](https://github.com/fiqgant/fiqlab/releases/download/obe-fiq-skill-v5.13.0/akademik-dosen-obe-fiq-v5.13.0.skill)**
 
-The setup is short: download the file, then upload it as a custom skill in Claude (Settings → Capabilities → Skills, or through Claude Code). After that, just type requests as usual — "build an RPS for course X," "draft the CPL," "audit my RPS" — and the skill detects the right mode and immediately asks for whatever data is required before building anything. If you want a full course package at once (RPS + module + worksheets + slides) without repeated manual uploads, use it through Cowork mode or inside a Project so the skill can read and write directly to a working folder using the `Academic 2026 → Regulations & Curriculum + per-course → per-session` structure described above.
+The setup is short: download the file, then upload it as a custom skill in Claude (Settings → Capabilities → Skills, or through Claude Code). After that, just type requests as usual — "build an RPS for course X," "draft the CPL," "audit my RPS," "evaluate CPMK attainment from these grades," "build the learning roadmap for this course" — and the skill detects the right mode and immediately asks for whatever data is required before building anything. If you want a full course package at once (RPS + module + worksheets + slides) without repeated manual uploads, use it through Cowork mode or inside a Project so the skill can read and write directly to a working folder using the `Academic 2026 → Regulations & Curriculum + per-course → per-session` structure described above.
 
 One reminder that applies to anyone trying this: this skill is designed to **help you draft**, not replace department validation. Every draft proposal still needs to be checked by the curriculum team before it's used as an official document.
 
 Or, if you're reading this on your phone, just scan below:
 
-![QR code to download the Akademik Dosen OBE Fiq skill v5.10.0](/images/blog/akademik-dosen-obe-fiq-qr.png)
+![QR code to download the Akademik Dosen OBE Fiq skill](/images/blog/akademik-dosen-obe-fiq-qr.png)
