@@ -1,12 +1,14 @@
 ---
 title: "The Story Behind My Akademik Dosen OBE Fiq Skill: From RPS Headaches to a Reusable Claude Skill"
 date: "2026-08-31"
-excerpt: "Why I built a custom Claude skill just for Indonesian OBE paperwork — curriculum, learning outcomes, semester lesson plans. Skill download link included."
+excerpt: "Why I built a custom Claude skill for Indonesian OBE work — and why it's not just the RPS: curriculum, CPL/CPMK, CPMK attainment, learning roadmaps, and the dosen–mahasiswa learning contract. Skill download link included."
 thumbnail: "/images/blog/akademik-dosen-obe-fiq-cover.png"
-tags: ["Claude Skill", "OBE", "Higher Education", "AI Tools", "RPS"]
+tags: ["Claude Skill", "OBE", "Higher Education", "AI Tools", "RPS", "Curriculum Design"]
 category: "Tutorial"
 featured: true
 ---
+
+_**Update — 3 September 2026:** the skill is now at **v5.16.0**, and this post has grown with each release. If you take one thing from it: what started as an "RPS generator" isn't just about the RPS anymore. It's a full OBE document suite — curriculum, CPL/CPMK/Sub-CPMK, the RPS itself, the SIAKAD export, teaching tools, assessment and rubrics, end-of-semester CPMK attainment, the WBI learning roadmap, and the dosen–mahasiswa learning contract (Kontrak Pembelajaran). The most recent changes: the [learning contract](#the-v5140-update-the-learning-contract-kontrak-pembelajaran) (v5.14.0), a [rebuilt WBI roadmap layout](#the-v5150-update-getting-the-wbi-roadmap-layout-right) (v5.15.0), and [one institutional letterhead across every output](#the-v5160-update-one-letterhead-for-everything) (v5.16.0)._
 
 ## The Problem Isn't the AI — It's the Paperwork
 
@@ -129,9 +131,41 @@ The same non-negotiable rule carries over: the minimum threshold, the classroom 
 
 There's also an auto-formula Excel version. Copy the template, fill in one sheet (raw scores per assessment), and the CPMK scores, classroom attainment, and course pass/fail dashboard all calculate themselves. The weighting chain baked into it — assessment instrument → Sub-CPMK → CPMK → CPL → final course grade — matches Politeknik WBI's official 9+1 assessment components.
 
-**Learning roadmap in the WBI format.** This one groups the Sub-CPMK that already exist into *modules* spanning ranges of sessions, then builds a WBI-style Excel roadmap: Output / Concept / Indicators / Learning Strategy per module, UTS and UAS as their own columns, a distinct pastel colour per module. Two guardrails: it only runs *after* the Sub-CPMK exist — no roadmap built on invented outcomes — and the module grouping is interpretive, so the skill proposes a grouping and waits for confirmation before generating the file.
+**Learning roadmap in the WBI format.** This one groups the Sub-CPMK that already exist into *modules* spanning ranges of sessions, then builds a WBI-style Excel roadmap: Output / Concept / Indicators / Learning Strategy per module, the exam sessions marked distinctly, a pastel colour per module. Two guardrails: it only runs *after* the Sub-CPMK exist — no roadmap built on invented outcomes — and the module grouping is interpretive, so the skill proposes a grouping and waits for confirmation before generating the file. (v5.15.0 reworked exactly how this file is laid out — see below.)
 
 **One more reference file.** For anything touching internal quality assurance (SPMI/PPEPP), the skill now points to the *2026 SPMI Implementation Guide* — the current rule is that internal quality standards have to *exceed* the national standard (SN-Dikti), not merely copy it.
+
+## The v5.14.0 Update: The Learning Contract (Kontrak Pembelajaran)
+
+Here's the thing this whole post keeps circling back to: people call it "the RPS skill," but the RPS was only ever the first mode. By v5.13.0 the same skill was already producing the curriculum, deriving CPL/CPMK/Sub-CPMK, filling the campus SIAKAD `.xlsx`, building teaching tools, scoring end-of-semester CPMK attainment, and generating the WBI learning roadmap. v5.14.0 adds the one document that sits *between* the lecturer and the students: the **Kontrak Pembelajaran** — the learning contract.
+
+At Politeknik WBI this is a **Formulir Mutu** (a quality-assurance form), signed at the start of the semester by three parties: the lecturer, the class representative (*Komting*), and the head of study program. It's not a new planning document — it's the "agreed, student-facing version" of the RPS for that same course. And that's exactly where a generic AI gets it wrong: asked for a learning contract, it happily writes a *fresh* set of outcomes, a *different* weekly schedule, its own assessment weights. Now you have two documents for one course that don't agree with each other.
+
+So the skill's rule for this mode is blunt: **the contract is derived from the RPS, never re-authored.** Course description, CPL/CPMK, the weekly matrix, and the 100% assessment split are all pulled straight from the existing RPS. The mode's first step is literally to check whether the RPS for that course already exists in the conversation or working folder — if it doesn't, the skill offers to build the RPS first rather than inventing contract content from nothing.
+
+What it produces:
+
+- **The quality-form header and signature block** — institution identity, document code (the course code, unless the campus numbers its forms separately), and the three-column Pihak I / Pihak II / Disetujui table. Names of the *Komting* and the head of program have to come from the user — the skill will not make up the name of someone who signs an official document.
+- **Ten content sections** — description, practical benefits, learning outcomes written as plain narrative (not a table of CPL codes) so students can actually read them, an *instructional analysis* drawn as a flow diagram, teaching strategy, reading list, assignments, grading criteria, weekly schedule, and class ground rules (late tolerance, minimum attendance, plagiarism policy, quiz timing — a WBI default draft is offered but must be confirmed, never auto-pasted).
+- **A consistency guarantee** — the instructional-analysis diagram reuses the *same* module grouping as the course's WBI learning roadmap if one already exists; assignments and schedule have to line up with the RPS weekly matrix; the grading summary has to total 100% and match the RPS exactly, not be recalculated on its own.
+
+Three new files ship with it: `workflows/alur_kontrak_pembelajaran.md`, `templates/template_kontrak_pembelajaran.md`, and the WBI quality-assurance unit's logo asset for the form header.
+
+## The v5.15.0 Update: Getting the WBI Roadmap Layout Right
+
+No new mode this time — v5.15.0 is one workflow file (`alur_roadmap_wbi.md`) rewritten until the generated roadmap actually matches the WBI reference format instead of an approximation of it. Three concrete changes:
+
+- **Weights belong in the roadmap.** The Output row now carries a percentage next to each Sub-CPMK — `analyse … (15%)` — and those numbers have to come from the course's already-validated 100% assessment weighting, not be made up on the spot. If per-Sub-CPMK weights were never set, the skill stops and offers to work them out with the weight calculator first, rather than printing a roadmap with guessed or blank percentages.
+- **Exams attach to the module before them, not floating columns.** In the old output UTS and UAS were standalone columns. In the WBI format they sit at the *tail* of the preceding module: the session number and a merged "Output + Concept" cell (`Mid Exam (10%)`) get their own exam colour, but the Sub Learning Outcome, Indicators, and Learning Strategy rows stay merged into the parent module — because there's no separate indicator or teaching strategy for an exam sitting.
+- **The visual spec is pinned down.** An explicit repeating pastel palette for modules (`#C0D5EC`, `#F0CCB0`, `#CADFB6`, `#AEB8C9`), yellow `#F9DB78` for UTS and orange `#DF8344` for UAS, the course name as bold-italic vertical text down the right edge, and the `LEARNING OUTCOME:` heading spanning the full table width. Small stuff, but it's the difference between "a table" and "the form the study program recognises."
+
+It's a minor version bump, and that's the point: once a deliverable is in real use, most of the work is these fit-and-finish passes, not new capabilities.
+
+## The v5.16.0 Update: One Letterhead for Everything
+
+Another small one, same spirit. Until now, whether an output file carried the Politeknik WBI logo depended on whether I remembered to attach one. v5.16.0 makes it a rule: every deliverable that needs institutional identity — RPS, module, worksheet, roadmap, CPMK evaluation, slides, PDF — uses the bundled `assets/logo_wbi_politeknik.png` in its header by default. The one exception is documents formally issued by the campus quality-assurance body (*Lembaga Penjaminan Mutu*), like the learning contract, which keep the separate LPM logo. And an explicit guardrail that matters more than it sounds: the skill must use the actual image asset, never try to *redraw* the logo from text or shapes.
+
+Not exciting, but it's the kind of consistency that makes a stack of generated documents look like they came from one office instead of five.
 
 ## What I Learned From Building This
 
@@ -140,19 +174,20 @@ A few things worth writing down for anyone building a similar skill for administ
 - **Ban fabrication explicitly — don't expect the model to "just know."** The anti-fabrication principle needs to be written as a hard rule with an actual verification flow (`alur_anti_ngarang.md`), not just mentioned once in the skill's description.
 - **Put formulas in a file, not in the prompt.** I moved credit-hour math (1 credit hour = 45 hours = 2,700 minutes per semester) and assessment-weight math into a separate calculator file so it's applied consistently, instead of being "roughly" recalculated with a different result every time.
 - **A final self-check is mandatory, not optional.** The audit checklist that runs before output ships catches a lot of things that are easy to miss — a weight total that isn't 100%, a Bloom label accidentally left in the document, an outdated regulation that's technically been superseded but still lingering.
-- **Updating a skill is an iterative process, not a one-shot design.** Version 5.9.0 came from a real problem with the order lecturer research got asked for; version 5.10.0 came from a complaint about messy files when using Cowork; version 5.13.0 came from noticing the skill only covered the front half of the OBE cycle and never the end-of-semester evaluation that closes it. A good skill is the product of repeated real use, not something perfectly designed up front.
+- **Updating a skill is an iterative process, not a one-shot design.** Version 5.9.0 came from a real problem with the order lecturer research got asked for; version 5.10.0 came from a complaint about messy files when using Cowork; version 5.13.0 came from noticing the skill only covered the front half of the OBE cycle and never the end-of-semester evaluation that closes it; version 5.14.0 came from realizing the learning contract kept drifting out of sync with the RPS whenever it was written separately; version 5.15.0 was pure fit-and-finish — making the WBI roadmap file match the study program's real template down to the exam-column layout and the palette; version 5.16.0 turned "remember to add the logo" into a default the skill can't forget. A good skill is the product of repeated real use, not something perfectly designed up front.
+- **Name a tool by its first job and people will underrate the rest.** Everyone still calls this "the RPS skill," even though the RPS is one mode among more than a dozen. That's fine as a nickname, but when a new lecturer picks it up it's worth saying out loud: it also does the curriculum, the outcomes, the assessment, the end-of-semester evaluation, the roadmap, and the learning contract — one aligned chain, not a pile of separate tools.
 - **The moment a skill gets folder access, lock down the folder pattern from day one.** Without strict rules about where files can and can't go, the "autonomy" to work independently through Cowork turns into folder chaos fast.
 
 ## Try It Yourself
 
-If you're a lecturer or from another department who wants to try this, the skill file (`akademik-dosen-obe-fiq`, v5.13.0) is available for download here:
+If you're a lecturer or from another department who wants to try this, the skill file (`akademik-dosen-obe-fiq`, v5.16.0) is available for download here:
 
-**[Download OBE Fiq Skill v5.13.0 (.skill)](https://github.com/fiqgant/fiqlab/releases/download/obe-fiq-skill-v5.13.0/akademik-dosen-obe-fiq-v5.13.0.skill)**
+**[Download OBE Fiq Skill v5.16.0 (.skill)](https://github.com/fiqgant/fiqlab/releases/download/obe-fiq-skill-v5.16.0/akademik-dosen-obe-fiq-v5.16.0.skill)**
 
-The setup is short: download the file, then upload it as a custom skill in Claude (Settings → Capabilities → Skills, or through Claude Code). After that, just type requests as usual — "build an RPS for course X," "draft the CPL," "audit my RPS," "evaluate CPMK attainment from these grades," "build the learning roadmap for this course" — and the skill detects the right mode and immediately asks for whatever data is required before building anything. If you want a full course package at once (RPS + module + worksheets + slides) without repeated manual uploads, use it through Cowork mode or inside a Project so the skill can read and write directly to a working folder using the `Academic 2026 → Regulations & Curriculum + per-course → per-session` structure described above.
+The setup is short: download the file, then upload it as a custom skill in Claude (Settings → Capabilities → Skills, or through Claude Code). After that, just type requests as usual — "build an RPS for course X," "draft the CPL," "audit my RPS," "evaluate CPMK attainment from these grades," "build the learning roadmap for this course," "write the Kontrak Pembelajaran for this course" — and the skill detects the right mode and immediately asks for whatever data is required before building anything. If you want a full course package at once (RPS + module + worksheets + slides) without repeated manual uploads, use it through Cowork mode or inside a Project so the skill can read and write directly to a working folder using the `Academic 2026 → Regulations & Curriculum + per-course → per-session` structure described above.
 
 One reminder that applies to anyone trying this: this skill is designed to **help you draft**, not replace department validation. Every draft proposal still needs to be checked by the curriculum team before it's used as an official document.
 
 Or, if you're reading this on your phone, just scan below:
 
-![QR code to download the Akademik Dosen OBE Fiq skill](/images/blog/akademik-dosen-obe-fiq-qr.png)
+![QR code to download the Akademik Dosen OBE Fiq skill v5.16.0](/images/blog/akademik-dosen-obe-fiq-qr.png)
