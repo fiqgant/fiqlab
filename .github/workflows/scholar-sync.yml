@@ -28,9 +28,21 @@ jobs:
 
       - name: Fetch Scholar data
         run: |
-          curl -sf \
+          http_code=$(curl -s -w "%{http_code}" \
             "https://serpapi.com/search.json?engine=google_scholar_author&author_id=${{ secrets.GOOGLE_SCHOLAR_AUTHOR_ID }}&api_key=${{ secrets.SERPAPI_KEY }}" \
-            -o /tmp/scholar_raw.json
+            -o /tmp/scholar_raw.json)
+
+          if [ "$http_code" -ge 400 ]; then
+            echo "SerpApi request failed with HTTP $http_code"
+            cat /tmp/scholar_raw.json
+            exit 1
+          fi
+
+          if grep -q '"error"' /tmp/scholar_raw.json; then
+            echo "SerpApi returned an error payload:"
+            cat /tmp/scholar_raw.json
+            exit 1
+          fi
 
           node -e "
             const raw = JSON.parse(require('fs').readFileSync('/tmp/scholar_raw.json', 'utf8'));
