@@ -1,0 +1,134 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin.woff2) format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin-ext.woff2) format("woff2");
+      unicode-range: U+0100-02BA, U+1E00-1E9F, U+2020, U+20A0-20AB, U+2C60-2C7F, U+A720-A7FF;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #000000;
+      font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+      color: #00d4ff;
+    }
+    .b4-bg { background: #000000; }
+    .b4-scan {
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 3px, rgba(0,0,0,0.22) 3px 4px),
+        rgba(0, 212, 255, 0.02);
+      pointer-events: none;
+    }
+    .b4-pad { position: absolute; left: 76px; right: 76px; }
+    .b4-pline { font-size: 35px; font-weight: 500; line-height: 1.5; white-space: pre; }
+    .b4-gt { color: #00d4ff; font-weight: 700; }
+    .b4-cmd { color: #00d4ff; }
+    .b4-cur {
+      display: inline-block;
+      width: 20px;
+      height: 34px;
+      background: #00d4ff;
+      vertical-align: -6px;
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+    }
+    .b4-rows { position: absolute; left: 76px; right: 76px; }
+    .b4-row {
+      font-size: 25px;
+      line-height: 2.1;
+      white-space: pre;
+      color: #00d4ff;
+      letter-spacing: -0.01em;
+      opacity: 0;
+    }
+    .b4-date { color: #0077cc; }
+    .b4-amber {
+      color: #ffb000;
+      text-shadow: 0 0 10px rgba(255, 176, 0, 0.6), 0 0 20px rgba(255, 176, 0, 0.3);
+    }
+    .b4-head {
+      position: absolute;
+      left: 76px;
+      font-size: 44px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #00d4ff;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="04-writing" data-width="1080" data-height="1920" data-duration="5.5">
+    <div class="b4-bg clip" data-start="0" data-duration="5.5" data-track-index="0" id="b4-bg-t0"></div>
+
+    <div class="b4-pad b4-pline clip" data-start="0" data-duration="5.5" data-track-index="1" id="b4-pad-t1" style="top: 280px;"><span class="b4-gt">&gt;&nbsp;</span><span class="b4-cmd" id="b4-cmd"></span><span class="b4-cur" id="b4-curCmd"></span></div>
+
+    <div class="b4-rows clip" data-start="0" data-duration="5.5" data-track-index="2" id="b4-rows-t2" style="top: 420px;">
+      <div class="b4-row" id="b4-r1"><span class="b4-date">2026</span>  Deploying Computer Vision Models on IoT Edge Devices</div>
+      <div class="b4-row" id="b4-r2"><span class="b4-date">2026</span>  Getting Started with YOLOv8 <span class="b4-amber">[yolo]</span></div>
+      <div class="b4-row" id="b4-r3"><span class="b4-date">2026</span>  Detecting Plant Diseases with CNN</div>
+    </div>
+
+    <div class="b4-head clip" data-start="0" data-duration="5.5" data-track-index="3" id="b4-head" style="top: 660px;">WRITING</div>
+
+    <div class="b4-pad b4-pline clip" data-start="0" data-duration="5.5" data-track-index="4" id="b4-pad-t4" style="top: 800px;"><span class="b4-gt">&gt;&nbsp;</span><span class="b4-cur" id="b4-curIdle" style="opacity: 0;"></span></div>
+
+    <div class="b4-scan clip" data-start="0" data-duration="5.5" data-track-index="9" id="b4-scan-t9"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    (function () {
+      var DUR = 5.5;
+      var ENTER = 1.5;
+      var tl = gsap.timeline({ paused: true });
+
+      var cmdEl = document.getElementById("b4-cmd");
+      var curCmd = document.getElementById("b4-curCmd");
+      var curIdle = document.getElementById("b4-curIdle");
+      var CMD = "blog --latest";
+
+      var d = { i: 0 };
+      tl.to(d, {
+        i: CMD.length, duration: 1.05, ease: "none",
+        onUpdate: function () { cmdEl.textContent = CMD.slice(0, Math.round(d.i)); }
+      }, 0.4);
+
+      var rows = ["#b4-r1", "#b4-r2", "#b4-r3"];
+      for (var k = 0; k < rows.length; k++) {
+        tl.fromTo(rows[k], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, 1.6 + k * 0.3);
+      }
+
+      tl.fromTo("#b4-head", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 3.6);
+      tl.fromTo("#b4-head",
+        { textShadow: "0 0 0px rgba(0,212,255,0)" },
+        { textShadow: "0 0 12px rgba(0,212,255,0.5), 0 0 24px rgba(0,212,255,0.2)", duration: 0.22, ease: "power2.out" },
+        3.7);
+
+      var CYC = Math.max(1, Math.round(DUR / 0.9));
+      var bd = { p: 0 };
+      tl.to(bd, {
+        p: CYC * Math.PI * 2, duration: DUR, ease: "none",
+        onUpdate: function () {
+          var t = tl.time();
+          var on = Math.sin(bd.p) > 0 ? "1" : "0";
+          curCmd.style.opacity = t < ENTER ? on : "0";
+          curIdle.style.opacity = t >= 4.6 ? on : "0";
+        }
+      }, 0);
+
+      window.__timelines["04-writing"] = tl;
+    })();
+  </script>
+</template>

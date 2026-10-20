@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const MapboxMap = dynamic(() => import("./MapboxMap"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full rounded-2xl glass animate-pulse" />
+    <div className="w-full h-full rounded-sm glass animate-pulse" />
   ),
 });
 

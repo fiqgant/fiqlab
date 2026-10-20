@@ -28,24 +28,24 @@ const levelConfig: Record<SkillLevel, {
 }> = {
   expert: {
     label: "Expert",
-    dot: "bg-blue-500",
+    dot: "bg-accent",
     glow: "0 0 20px rgba(59,130,246,0.6), 0 0 40px rgba(59,130,246,0.3)",
-    iconColor: "text-blue-400",
-    border: "hover:border-blue-500/50",
+    iconColor: "text-accent",
+    border: "hover:border-accent/50",
   },
   proficient: {
     label: "Proficient",
-    dot: "bg-teal-500",
+    dot: "bg-accent",
     glow: "0 0 20px rgba(20,184,166,0.6), 0 0 40px rgba(20,184,166,0.3)",
-    iconColor: "text-teal-400",
-    border: "hover:border-teal-500/50",
+    iconColor: "text-accent",
+    border: "hover:border-accent/50",
   },
   familiar: {
     label: "Familiar",
-    dot: "bg-sky-500",
+    dot: "bg-accent",
     glow: "0 0 20px rgba(14,165,233,0.6), 0 0 40px rgba(14,165,233,0.3)",
-    iconColor: "text-sky-400",
-    border: "hover:border-sky-500/50",
+    iconColor: "text-accent",
+    border: "hover:border-accent/50",
   },
 };
 
@@ -58,7 +58,7 @@ function ToolIcon({ name, level, iconName, url }: { name: string; level: SkillLe
     <>
       {/* Glow layer */}
       <div
-        className="absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 rounded-sm transition-opacity duration-300 pointer-events-none"
         style={{
           opacity: hovered ? 1 : 0,
           boxShadow: cfg.glow,
@@ -68,29 +68,29 @@ function ToolIcon({ name, level, iconName, url }: { name: string; level: SkillLe
       {/* Icon */}
       <div
         className={cn(
-          "relative w-14 h-14 rounded-xl flex items-center justify-center",
-          "bg-white/5 transition-all duration-300",
-          hovered && "bg-white/10"
+          "relative w-14 h-14 rounded-sm flex items-center justify-center",
+          "bg-ink/5 transition-all duration-300",
+          hovered && "bg-ink/10"
         )}
       >
         <Icon
           className={cn(
             "w-7 h-7 transition-all duration-300",
-            hovered ? cfg.iconColor : "text-[#FAFAFA]/50"
+            hovered ? cfg.iconColor : "text-ink/50"
           )}
         />
 
         {/* Inner glow on icon */}
         {hovered && (
           <div
-            className="absolute inset-0 rounded-xl pointer-events-none"
+            className="absolute inset-0 rounded-sm pointer-events-none"
             style={{ boxShadow: `inset 0 0 12px ${cfg.glow.split(",")[0].replace("0 0 20px ", "")}` }}
           />
         )}
       </div>
 
       {/* Name */}
-      <span className="text-xs font-medium text-center leading-tight text-[#FAFAFA]/70 group-hover:text-[#FAFAFA]/95 transition-colors duration-300">
+      <span className="text-xs font-medium text-center leading-tight text-ink/70 group-hover:text-ink/95 transition-colors duration-300">
         {name}
       </span>
 
@@ -105,9 +105,9 @@ function ToolIcon({ name, level, iconName, url }: { name: string; level: SkillLe
     <Wrapper
       {...(url ? { href: url, target: "_blank", rel: "noopener noreferrer" } : {})}
       className={cn(
-        "group relative flex flex-col items-center gap-3 p-5 rounded-2xl border border-white/10 bg-white/5 transition-all duration-300 hover:scale-105",
+        "group relative flex flex-col items-center gap-3 p-5 rounded-sm border border-ink/10 bg-ink/5 transition-all duration-300 hover:scale-105",
         url
-          ? "cursor-pointer hover:bg-white/10"
+          ? "cursor-pointer hover:bg-ink/10"
           : "cursor-default",
         cfg.border
       )}
@@ -149,8 +149,8 @@ export function ToolsClient() {
             className={cn(
               "px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300",
               activeTab === i
-                ? `bg-gradient-to-r ${s.color} text-white shadow-lg shadow-blue-500/20`
-                : "glass text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 hover:text-[#FAFAFA]"
+                ? `bg-gradient-to-r ${s.color} text-ink shadow-lg shadow-blue-500/20`
+                : "glass text-ink/60 hover:text-ink"
             )}
           >
             {s.label}
@@ -165,9 +165,9 @@ export function ToolsClient() {
           { label: "Expert",      value: expertCount },
           { label: "Proficient",  value: profCount },
         ].map((stat) => (
-          <div key={stat.label} className="glass rounded-2xl p-5 text-center">
+          <div key={stat.label} className="glass rounded-sm p-5 text-center">
             <p className="text-3xl font-bold gradient-text">{stat.value}</p>
-            <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-1">{stat.label}</p>
+            <p className="text-xs text-ink/50 mt-1">{stat.label}</p>
           </div>
         ))}
       </div>
@@ -179,8 +179,8 @@ export function ToolsClient() {
           className={cn(
             "px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200",
             activeCategory === null
-              ? "border-blue-500/60 text-blue-400 bg-blue-500/10"
-              : "border-white/10 text-[#FAFAFA]/50 hover:border-white/30 hover:text-[#FAFAFA]/80"
+              ? "border-accent/60 text-accent bg-accent/10"
+              : "border-ink/10 text-ink/50 hover:border-ink/30 hover:text-ink/80"
           )}
         >
           All
@@ -192,8 +192,8 @@ export function ToolsClient() {
             className={cn(
               "px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200",
               activeCategory === cat.category
-                ? "border-blue-500/60 text-blue-400 bg-blue-500/10"
-                : "border-white/10 text-[#FAFAFA]/50 hover:border-white/30 hover:text-[#FAFAFA]/80"
+                ? "border-accent/60 text-accent bg-accent/10"
+                : "border-ink/10 text-ink/50 hover:border-ink/30 hover:text-ink/80"
             )}
           >
             {cat.category}
@@ -215,11 +215,11 @@ export function ToolsClient() {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap items-center justify-center gap-6 mt-12 pt-8 border-t border-white/10">
+      <div className="flex flex-wrap items-center justify-center gap-6 mt-12 pt-8 border-t border-ink/10">
         {Object.entries(levelConfig).map(([, cfg]) => (
           <div key={cfg.label} className="flex items-center gap-2">
             <span className={cn("w-2 h-2 rounded-full", cfg.dot)} />
-            <span className="text-xs text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">{cfg.label}</span>
+            <span className="text-xs text-ink/60">{cfg.label}</span>
           </div>
         ))}
       </div>

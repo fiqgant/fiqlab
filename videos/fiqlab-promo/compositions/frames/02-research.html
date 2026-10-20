@@ -1,0 +1,159 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin.woff2) format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin-ext.woff2) format("woff2");
+      unicode-range: U+0100-02BA, U+1E00-1E9F, U+2020, U+20A0-20AB, U+2C60-2C7F, U+A720-A7FF;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #000000;
+      font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+      color: #00d4ff;
+    }
+    .b2-bg { background: #000000; }
+    .b2-scan {
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 3px, rgba(0,0,0,0.22) 3px 4px),
+        rgba(0, 212, 255, 0.02);
+      pointer-events: none;
+    }
+    .b2-pad { position: absolute; left: 76px; right: 76px; }
+    .b2-pline { font-size: 35px; font-weight: 500; line-height: 1.5; white-space: pre; }
+    .b2-gt { color: #00d4ff; font-weight: 700; }
+    .b2-cmd { color: #00d4ff; }
+    .b2-cur {
+      display: inline-block;
+      width: 20px;
+      height: 34px;
+      background: #00d4ff;
+      vertical-align: -6px;
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+    }
+    .b2-list {
+      font-size: 24px;
+      line-height: 1.5;
+      color: #0077cc;
+      white-space: pre;
+      opacity: 0;
+    }
+    .b2-head {
+      font-size: 60px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: #00d4ff;
+    }
+    .b2-head .b2-w { display: inline-block; opacity: 0; }
+    .b2-stats { position: absolute; left: 76px; right: 76px; display: flex; gap: 90px; }
+    .b2-fig {
+      font-size: 108px;
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: #00d4ff;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.5), 0 0 24px rgba(0, 212, 255, 0.2);
+      opacity: 0;
+    }
+    .b2-fig.b2-amber {
+      color: #ffb000;
+      text-shadow: 0 0 10px rgba(255, 176, 0, 0.6), 0 0 20px rgba(255, 176, 0, 0.3);
+    }
+    .b2-unit {
+      margin-top: 14px;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #0077cc;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="02-research" data-width="1080" data-height="1920" data-duration="5.5">
+    <div class="b2-bg clip" data-start="0" data-duration="5.5" data-track-index="0" id="b2-bg-t0"></div>
+
+    <div class="b2-pad b2-pline clip" data-start="0" data-duration="5.5" data-track-index="1" id="b2-pad-t1" style="top: 280px;"><span class="b2-gt">&gt;&nbsp;</span><span class="b2-cmd" id="b2-cmd"></span><span class="b2-cur" id="b2-curCmd"></span></div>
+
+    <div class="b2-list b2-pad clip" data-start="0" data-duration="5.5" data-track-index="2" id="b2-list" style="top: 380px;">computer-vision/  deep-learning/  intelligent-systems/  edge-ai/</div>
+
+    <div class="b2-head b2-pad clip" data-start="0" data-duration="5.5" data-track-index="3" id="b2-head" style="top: 560px;"><span class="b2-w">AI</span> <span class="b2-w">&amp;</span> <span class="b2-w">COMPUTER</span> <span class="b2-w">VISION</span><br /><span class="b2-w">RESEARCH</span></div>
+
+    <div class="b2-stats clip" data-start="0" data-duration="5.5" data-track-index="4" id="b2-stats-t4" style="top: 900px;">
+      <div>
+        <div class="b2-fig b2-amber" id="b2-f1">14+</div>
+        <div class="b2-unit" id="b2-u1">Publications</div>
+      </div>
+      <div>
+        <div class="b2-fig" id="b2-f2">10+</div>
+        <div class="b2-unit" id="b2-u2">IP Rights</div>
+      </div>
+    </div>
+
+    <div class="b2-pad b2-pline clip" data-start="0" data-duration="5.5" data-track-index="5" id="b2-pad-t5" style="top: 1240px;"><span class="b2-gt">&gt;&nbsp;</span><span class="b2-cur" id="b2-curIdle" style="opacity: 0;"></span></div>
+
+    <div class="b2-scan clip" data-start="0" data-duration="5.5" data-track-index="9" id="b2-scan-t9"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    (function () {
+      var DUR = 5.5;
+      var ENTER = 1.75;
+      var tl = gsap.timeline({ paused: true });
+
+      var cmdEl = document.getElementById("b2-cmd");
+      var curCmd = document.getElementById("b2-curCmd");
+      var curIdle = document.getElementById("b2-curIdle");
+      var CMD = "ls research/";
+
+      var d = { i: 0 };
+      tl.to(d, {
+        i: CMD.length, duration: 1.15, ease: "none",
+        onUpdate: function () { cmdEl.textContent = CMD.slice(0, Math.round(d.i)); }
+      }, 0.5);
+
+      tl.fromTo("#b2-list", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 1.8);
+
+      var words = document.querySelectorAll("#b2-head .b2-w");
+      for (var k = 0; k < words.length; k++) {
+        tl.fromTo(words[k], { opacity: 0, filter: "blur(8px)", y: 8 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.24, ease: "power3.out" }, 2.9 + k * 0.11);
+      }
+      tl.fromTo("#b2-head",
+        { textShadow: "0 0 0px rgba(0,212,255,0)" },
+        { textShadow: "0 0 12px rgba(0,212,255,0.5), 0 0 24px rgba(0,212,255,0.2)", duration: 0.22, ease: "power2.out" },
+        3.3);
+
+      tl.fromTo(["#b2-f1", "#b2-u1"], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out", stagger: 0.08 }, 4.0);
+      tl.fromTo(["#b2-f2", "#b2-u2"], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.32, ease: "power3.out", stagger: 0.08 }, 4.25);
+
+      var CYC = Math.max(1, Math.round(DUR / 0.9));
+      var bd = { p: 0 };
+      tl.to(bd, {
+        p: CYC * Math.PI * 2, duration: DUR, ease: "none",
+        onUpdate: function () {
+          var t = tl.time();
+          var on = Math.sin(bd.p) > 0 ? "1" : "0";
+          curCmd.style.opacity = t < ENTER ? on : "0";
+          curIdle.style.opacity = t >= 4.6 ? on : "0";
+        }
+      }, 0);
+
+      window.__timelines["02-research"] = tl;
+    })();
+  </script>
+</template>

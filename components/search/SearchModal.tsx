@@ -19,8 +19,8 @@ interface SearchItem {
 }
 
 const typeConfig = {
-  blog: { icon: FileText, label: "Blog", color: "text-blue-500", href: (s: SearchItem) => `/blog/${s.slug}` },
-  publication: { icon: BookOpen, label: "Publication", color: "text-teal-500", href: (s: SearchItem) => `/publications#${s.id}` },
+  blog: { icon: FileText, label: "Blog", color: "text-accent", href: (s: SearchItem) => `/blog/${s.slug}` },
+  publication: { icon: BookOpen, label: "Publication", color: "text-accent", href: (s: SearchItem) => `/publications#${s.id}` },
 };
 
 export function SearchModal() {
@@ -127,38 +127,38 @@ export function SearchModal() {
     <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-md"
+        className="absolute inset-0 bg-paper/60 backdrop-blur-md"
         onClick={close}
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl glass rounded-2xl shadow-2xl overflow-hidden animate-slide-up">
+      <div className="relative w-full max-w-4xl glass rounded-sm shadow-2xl overflow-hidden animate-slide-up">
         {/* Search input */}
-        <div className="flex items-center gap-3 px-4 py-4 border-b border-white/10">
-          <Search className="w-5 h-5 text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40 flex-shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-4 border-b border-ink/10">
+          <Search className="w-5 h-5 text-ink/40 flex-shrink-0" />
           <input
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKey}
             placeholder="Search posts and publications..."
-            className="flex-1 bg-transparent text-base outline-none placeholder:text-[#0A0A0A]/40 dark:placeholder:text-[#FAFAFA]/40"
+            className="flex-1 bg-transparent text-base outline-none placeholder:text-ink/40"
             aria-label="Search"
           />
           {query && (
             <button
               onClick={() => setQuery("")}
-              className="p-1 rounded-lg hover:bg-white/10 transition-colors"
+              className="p-1 rounded-sm hover:bg-ink/10 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           )}
-          <kbd className="px-2 py-1 text-[10px] font-mono glass rounded-lg">ESC</kbd>
+          <kbd className="px-2 py-1 text-[10px] font-serif glass rounded-sm">ESC</kbd>
         </div>
 
         {/* Results */}
         {results.length === 0 && query ? (
-          <div className="p-8 text-center text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+          <div className="p-8 text-center text-ink/50">
             No results for &ldquo;{query}&rdquo;
           </div>
         ) : (
@@ -170,7 +170,7 @@ export function SearchModal() {
 
               return (
                 <div key={type} className="mb-1">
-                  <div className="px-4 py-1.5 text-[10px] uppercase tracking-widest font-semibold text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40">
+                  <div className="px-4 py-1.5 text-[10px] uppercase tracking-widest font-semibold text-ink/40">
                     {cfg.label}
                   </div>
                   {items.map((item) => {
@@ -184,14 +184,14 @@ export function SearchModal() {
                         onMouseEnter={() => setSelectedIndex(flatIdx)}
                         className={cn(
                           "w-full px-4 py-3 flex items-start gap-3 transition-all duration-150 text-left",
-                          isSelected && "bg-white/5"
+                          isSelected && "bg-ink/5"
                         )}
                       >
                         <cfg.icon className={cn("w-4 h-4 mt-0.5 flex-shrink-0", cfg.color)} />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium truncate">{item.title}</p>
                           {item.excerpt && (
-                            <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 line-clamp-1 mt-0.5">
+                            <p className="text-xs text-ink/50 line-clamp-1 mt-0.5">
                               {item.excerpt}
                             </p>
                           )}
@@ -200,7 +200,7 @@ export function SearchModal() {
                               {item.tags.slice(0, 3).map((tag) => (
                                 <span
                                   key={tag}
-                                  className="text-[10px] px-1.5 py-0.5 rounded-md bg-blue-500/10 text-blue-500"
+                                  className="text-[10px] px-1.5 py-0.5 rounded-md bg-accent/10 text-accent"
                                 >
                                   {tag}
                                 </span>
@@ -209,7 +209,7 @@ export function SearchModal() {
                           )}
                         </div>
                         {isSelected && (
-                          <ArrowRight className="w-3.5 h-3.5 mt-0.5 text-blue-500 flex-shrink-0" />
+                          <ArrowRight className="w-3.5 h-3.5 mt-0.5 text-accent flex-shrink-0" />
                         )}
                       </button>
                     );
@@ -221,15 +221,15 @@ export function SearchModal() {
         )}
 
         {/* Footer hint */}
-        <div className="px-4 py-2 border-t border-white/5 flex items-center gap-4 text-[10px] text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40">
+        <div className="px-4 py-2 border-t border-ink/5 flex items-center gap-4 text-[10px] text-ink/40">
           <span>
-            <kbd className="font-mono">↑↓</kbd> navigate
+            <kbd className="font-serif">↑↓</kbd> navigate
           </span>
           <span>
-            <kbd className="font-mono">↵</kbd> open
+            <kbd className="font-serif">↵</kbd> open
           </span>
           <span>
-            <kbd className="font-mono">esc</kbd> close
+            <kbd className="font-serif">esc</kbd> close
           </span>
           <span className="ml-auto">{results.length} results</span>
         </div>

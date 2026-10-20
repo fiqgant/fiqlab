@@ -122,21 +122,21 @@ export default function MapboxMap({ fullWidth = false }: MapboxMapProps) {
 
   if (!MAPBOX_TOKEN) {
     return (
-      <div className="w-full h-full rounded-2xl glass flex items-center justify-center">
-        <p className="text-sm text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
-          Add <code className="text-blue-500">NEXT_PUBLIC_MAPBOX_TOKEN</code> to enable 3D map
+      <div className="w-full h-full rounded-sm glass flex items-center justify-center">
+        <p className="text-sm text-ink/50">
+          Add <code className="text-accent">NEXT_PUBLIC_MAPBOX_TOKEN</code> to enable 3D map
         </p>
       </div>
     );
   }
 
   return (
-    <div className={`relative w-full overflow-hidden shadow-xl ${fullWidth ? "h-full rounded-none" : "h-72 rounded-2xl"}`}>
+    <div className={`relative w-full overflow-hidden shadow-xl ${fullWidth ? "h-full rounded-none" : "h-72 rounded-sm"}`}>
       <div ref={mapContainer} className="absolute inset-0" />
       {/* Glass overlay label */}
-      <div className="absolute bottom-4 left-4 glass px-3 py-2 rounded-xl text-xs pointer-events-none">
-        <p className="font-semibold text-blue-500">{personal.shortName}</p>
-        <p className="text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">
+      <div className="absolute bottom-4 left-4 glass px-3 py-2 rounded-sm text-xs pointer-events-none">
+        <p className="font-semibold text-accent">{personal.shortName}</p>
+        <p className="text-ink/60">
           {personal.institution} · {personal.location}
         </p>
       </div>

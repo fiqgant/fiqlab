@@ -18,7 +18,6 @@ export default function AppleIcon() {
         }}
       >
         <BrandMark
-          idPrefix="apple-brand"
           style={{ width: "100%", height: "100%" }}
         />
       </div>

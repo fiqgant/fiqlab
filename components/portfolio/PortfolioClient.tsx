@@ -155,16 +155,16 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
 
   return (
     <section className="space-y-8 mb-16">
-      <div className="glass rounded-3xl p-6 sm:p-8">
+      <div className="glass rounded-sm p-6 sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-blue-500 mb-2">
+            <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-2">
               GitHub
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
               {data ? "GitHub Repos" : "Sync GitHub Projects"}
             </h2>
-            <p className="text-sm sm:text-base text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 max-w-2xl">
+            <p className="text-sm sm:text-base text-ink/60 max-w-2xl">
               {data
                 ? "Refresh your public repositories on demand and showcase your latest open-source work."
                 : "No GitHub cache yet. Sync once to fetch public repositories and replace the manual fallback with live repo cards."}
@@ -177,7 +177,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
                 type="button"
                 onClick={handleRefresh}
                 disabled={loading}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500/20 to-teal-500/20 border border-blue-500/20 text-sm font-medium text-blue-500 hover:scale-[1.02] transition-all duration-200 disabled:opacity-70 disabled:hover:scale-100"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-sm bg-gradient-to-r from-accent/20 to-accent/20 border border-accent/20 text-sm font-medium text-accent hover:scale-[1.02] transition-all duration-200 disabled:opacity-70 disabled:hover:scale-100"
               >
                 <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
                 {loading ? "Syncing..." : "Sync from GitHub"}
@@ -190,7 +190,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
                     setSortMode((current) => (current === "stars" ? "recent" : "stars"));
                     setCurrentPage(1);
                   }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass text-sm font-medium hover:scale-[1.02] transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-sm glass text-sm font-medium hover:scale-[1.02] transition-all duration-200"
                 >
                   <ArrowUpDown className="w-4 h-4" />
                   Sort: {sortMode === "stars" ? "Stars" : "Recently updated"}
@@ -200,7 +200,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
           )}
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink/50">
           <span>
             {lastSynced ? `Last synced: ${lastSynced}` : "Last synced: never"}
           </span>
@@ -209,7 +209,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
               href={data.profile.htmlUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-blue-500 hover:text-blue-400 transition-colors"
+              className="inline-flex items-center gap-1.5 text-accent hover:text-accent transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               @{data.profile.login}
@@ -248,7 +248,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
               </div>
             </div>
           ) : (
-            <div className="glass rounded-2xl p-6 text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">
+            <div className="glass rounded-sm p-6 text-sm text-ink/60">
               No public repositories found in the current cache.
             </div>
           )}
@@ -260,8 +260,8 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="glass rounded-2xl p-5">
-      <p className="text-xs font-semibold uppercase tracking-widest text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40 mb-2">
+    <div className="glass rounded-sm p-5">
+      <p className="text-xs font-semibold uppercase tracking-widest text-ink/40 mb-2">
         {label}
       </p>
       <p className="text-2xl font-bold gradient-text">{value}</p>
@@ -273,7 +273,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
   const languageColor = repo.language ? languageColors[repo.language] ?? "#94a3b8" : "#94a3b8";
 
   return (
-    <article className="glass-hover hover-glow p-5 sm:p-6 group flex flex-col h-full">
+    <article className="glass-hover p-5 sm:p-6 group flex flex-col h-full">
       <div className="flex items-center justify-between gap-3 mb-3">
         <div className="flex items-center gap-2 min-w-0">
           <span
@@ -281,20 +281,20 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
             style={{ backgroundColor: languageColor }}
             aria-hidden="true"
           />
-          <span className="text-xs font-medium text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 truncate">
+          <span className="text-xs font-medium text-ink/50 truncate">
             {repo.language ?? "Unknown"}
           </span>
         </div>
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+        <span className="text-[10px] font-serif px-2 py-0.5 rounded-md bg-ink/5 border border-ink/10 text-ink/50">
           {formatDistanceToNow(new Date(repo.updatedAt), { addSuffix: true })}
         </span>
       </div>
 
-      <h3 className="font-bold text-base mb-2 group-hover:text-blue-500 transition-colors duration-200 line-clamp-2">
+      <h3 className="font-bold text-base mb-2 group-hover:text-accent transition-colors duration-200 line-clamp-2">
         {repo.name}
       </h3>
 
-      <p className="text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 leading-relaxed mb-4 flex-1 line-clamp-4">
+      <p className="text-sm text-ink/60 leading-relaxed mb-4 flex-1 line-clamp-4">
         {repo.description ?? "No description provided for this repository yet."}
       </p>
 
@@ -303,7 +303,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
           {repo.topics.slice(0, 5).map((topic) => (
             <span
               key={topic}
-              className="px-2 py-0.5 rounded-md text-[10px] font-mono bg-white/5 border border-white/10 text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60"
+              className="px-2 py-0.5 rounded-md text-[10px] font-serif bg-ink/5 border border-ink/10 text-ink/60"
             >
               {topic}
             </span>
@@ -311,7 +311,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
         </div>
       )}
 
-      <div className="flex items-center justify-between gap-3 text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-auto pt-2">
+      <div className="flex items-center justify-between gap-3 text-xs text-ink/50 mt-auto pt-2">
         <div className="flex items-center gap-4">
           <span className="inline-flex items-center gap-1.5">
             <Star className="w-3.5 h-3.5" />
@@ -328,7 +328,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
             href={repo.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass text-xs font-medium hover:scale-105 hover:text-blue-500 transition-all duration-200"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm glass text-xs font-medium hover:scale-105 hover:text-accent transition-all duration-200"
           >
             <Github className="w-3.5 h-3.5" />
             Code
@@ -338,7 +338,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
               href={repo.homepage}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-500/20 to-teal-500/20 border border-blue-500/20 text-xs font-medium text-blue-500 hover:scale-105 transition-all duration-200"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-gradient-to-r from-accent/20 to-accent/20 border border-accent/20 text-xs font-medium text-accent hover:scale-105 transition-all duration-200"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               Demo

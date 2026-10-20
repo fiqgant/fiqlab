@@ -1,0 +1,146 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin.woff2) format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin-ext.woff2) format("woff2");
+      unicode-range: U+0100-02BA, U+1E00-1E9F, U+2020, U+20A0-20AB, U+2C60-2C7F, U+A720-A7FF;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #000000;
+      font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+      color: #00d4ff;
+    }
+    .b3-bg { background: #000000; }
+    .b3-scan {
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 3px, rgba(0,0,0,0.22) 3px 4px),
+        rgba(0, 212, 255, 0.02);
+      pointer-events: none;
+    }
+    .b3-pad { position: absolute; left: 76px; right: 76px; }
+    .b3-pline { font-size: 35px; font-weight: 500; line-height: 1.5; white-space: pre; }
+    .b3-gt { color: #00d4ff; font-weight: 700; }
+    .b3-cmd { color: #00d4ff; }
+    .b3-cur {
+      display: inline-block;
+      width: 20px;
+      height: 34px;
+      background: #00d4ff;
+      vertical-align: -6px;
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+    }
+    .b3-panel {
+      position: absolute;
+      left: 76px;
+      width: 842px;
+      padding: 40px 44px;
+      background: #00080d;
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      border-radius: 3px;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);
+      opacity: 0;
+    }
+    .b3-row {
+      font-size: 28px;
+      line-height: 1.7;
+      white-space: pre;
+      color: #00d4ff;
+      opacity: 0;
+    }
+    .b3-comment { color: #0077cc; }
+    .b3-amber {
+      color: #ffb000;
+      text-shadow: 0 0 10px rgba(255, 176, 0, 0.6), 0 0 20px rgba(255, 176, 0, 0.3);
+    }
+    .b3-head {
+      position: absolute;
+      left: 76px;
+      font-size: 44px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #00d4ff;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="03-iot-edge" data-width="1080" data-height="1920" data-duration="5">
+    <div class="b3-bg clip" data-start="0" data-duration="5" data-track-index="0" id="b3-bg-t0"></div>
+
+    <div class="b3-pad b3-pline clip" data-start="0" data-duration="5" data-track-index="1" id="b3-pad-t1" style="top: 280px;"><span class="b3-gt">&gt;&nbsp;</span><span class="b3-cmd" id="b3-cmd"></span><span class="b3-cur" id="b3-curCmd"></span></div>
+
+    <div class="b3-panel clip" data-start="0" data-duration="5" data-track-index="2" id="b3-panel" style="top: 420px;">
+      <div class="b3-row b3-comment" id="b3-r1"># deploying models at the <span class="b3-amber">edge</span></div>
+      <div class="b3-row" id="b3-r2">-&gt; raspberry pi &middot; esp32 &middot; microcontrollers</div>
+      <div class="b3-row" id="b3-r3">-&gt; drones &mdash; aerial mapping &amp; nav</div>
+      <div class="b3-row" id="b3-r4">-&gt; ground robots &mdash; autonomous navigation</div>
+    </div>
+
+    <div class="b3-head clip" data-start="0" data-duration="5" data-track-index="3" id="b3-head" style="top: 780px;">IOT &amp; EDGE</div>
+
+    <div class="b3-pad b3-pline clip" data-start="0" data-duration="5" data-track-index="4" id="b3-pad-t4" style="top: 900px;"><span class="b3-gt">&gt;&nbsp;</span><span class="b3-cur" id="b3-curIdle" style="opacity: 0;"></span></div>
+
+    <div class="b3-scan clip" data-start="0" data-duration="5" data-track-index="9" id="b3-scan-t9"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    (function () {
+      var DUR = 5;
+      var ENTER = 1.6;
+      var tl = gsap.timeline({ paused: true });
+
+      var cmdEl = document.getElementById("b3-cmd");
+      var curCmd = document.getElementById("b3-curCmd");
+      var curIdle = document.getElementById("b3-curIdle");
+      var CMD = "cat iot/projects.md";
+
+      var d = { i: 0 };
+      tl.to(d, {
+        i: CMD.length, duration: 1.2, ease: "none",
+        onUpdate: function () { cmdEl.textContent = CMD.slice(0, Math.round(d.i)); }
+      }, 0.4);
+
+      tl.fromTo("#b3-panel", { opacity: 0, y: 14, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.34, ease: "power3.out", transformOrigin: "50% 0%" }, 1.6);
+
+      var rows = ["#b3-r1", "#b3-r2", "#b3-r3", "#b3-r4"];
+      for (var k = 0; k < rows.length; k++) {
+        tl.fromTo(rows[k], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.24, ease: "power3.out" }, 1.8 + k * 0.24);
+      }
+
+      tl.fromTo("#b3-head", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 3.4);
+      tl.fromTo("#b3-head",
+        { textShadow: "0 0 0px rgba(0,212,255,0)" },
+        { textShadow: "0 0 12px rgba(0,212,255,0.5), 0 0 24px rgba(0,212,255,0.2)", duration: 0.22, ease: "power2.out" },
+        3.5);
+
+      var CYC = Math.max(1, Math.round(DUR / 0.9));
+      var bd = { p: 0 };
+      tl.to(bd, {
+        p: CYC * Math.PI * 2, duration: DUR, ease: "none",
+        onUpdate: function () {
+          var t = tl.time();
+          var on = Math.sin(bd.p) > 0 ? "1" : "0";
+          curCmd.style.opacity = t < ENTER ? on : "0";
+          curIdle.style.opacity = t >= 4.1 ? on : "0";
+        }
+      }, 0);
+
+      window.__timelines["03-iot-edge"] = tl;
+    })();
+  </script>
+</template>

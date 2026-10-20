@@ -18,7 +18,6 @@ export default function Icon() {
         }}
       >
         <BrandMark
-          idPrefix="favicon-brand"
           style={{ width: "100%", height: "100%" }}
         />
       </div>

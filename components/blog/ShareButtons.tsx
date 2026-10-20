@@ -24,7 +24,7 @@ const shareNetworks = [
   },
   {
     name: "X / Twitter",
-    color: "hover:bg-black/10 hover:border-black/20 hover:text-black dark:hover:text-white",
+    color: "hover:bg-paper/10 hover:border-black/20 hover:text-paper",
     getUrl: ({ url, title, excerpt }: ShareButtonsProps) =>
       `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(`${title}\n\n${excerpt}`)}`,
     icon: (
@@ -76,7 +76,7 @@ export function ShareButtons({ url, title, excerpt }: ShareButtonsProps) {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-semibold uppercase tracking-widest text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40">
+      <span className="text-xs font-semibold uppercase tracking-widest text-ink/40">
         Share
       </span>
       {shareNetworks.map((network) => (
@@ -87,8 +87,8 @@ export function ShareButtons({ url, title, excerpt }: ShareButtonsProps) {
           rel="noopener noreferrer"
           aria-label={`Share on ${network.name}`}
           className={cn(
-            "p-2 glass rounded-xl transition-all duration-200 hover:scale-110",
-            "text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60",
+            "p-2 glass rounded-sm transition-all duration-200 hover:scale-110",
+            "text-ink/60",
             network.color
           )}
         >
@@ -98,7 +98,7 @@ export function ShareButtons({ url, title, excerpt }: ShareButtonsProps) {
       <button
         onClick={copyLink}
         aria-label="Copy link"
-        className="p-2 glass rounded-xl transition-all duration-200 hover:scale-110 text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 hover:bg-blue-500/10 hover:text-blue-500 hover:border-blue-500/20"
+        className="p-2 glass rounded-sm transition-all duration-200 hover:scale-110 text-ink/60 hover:bg-accent/10 hover:text-accent hover:border-accent/20"
       >
         <Link2 className="w-4 h-4" />
       </button>

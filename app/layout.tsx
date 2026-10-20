@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ConditionalShell } from "@/components/ui/ConditionalShell";
@@ -17,6 +17,13 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-mono",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  display: "swap",
+  style: ["normal", "italic"],
+  variable: "--font-serif",
 });
 
 export const metadata: Metadata = {
@@ -78,7 +85,7 @@ export const metadata: Metadata = {
   other: {
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-capable": "yes",
-    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-status-bar-style": "default",
     "apple-mobile-web-app-title": siteName,
   },
 };
@@ -88,8 +95,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#000000" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: light)", color: "#fcfbf7" },
+    { media: "(prefers-color-scheme: dark)", color: "#161618" },
   ],
 };
 
@@ -99,8 +106,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${jetbrainsMono.variable} dark`}>
-      <body className="font-mono antialiased min-h-screen flex flex-col">
+    <html lang="en" suppressHydrationWarning className={`${jetbrainsMono.variable} ${sourceSerif.variable}`}>
+      <body className="font-serif antialiased min-h-screen flex flex-col">
         <Providers>
           <ConditionalShell>{children}</ConditionalShell>
         </Providers>

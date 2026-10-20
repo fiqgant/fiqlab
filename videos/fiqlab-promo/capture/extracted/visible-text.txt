@@ -1,0 +1,64 @@
+SOURCE: fiqlab.dev — content taken from the site's own source repo (data/personal.ts,
+content/blog/*, components/terminal/*, app/globals.css). No live scrape; the brief
+declares design tokens authoritative from source.
+
+=== IDENTITY ===
+Name: Taufiqurrahman
+Role: Researcher
+Institution: Politeknik Wilmar Bisnis Indonesia
+Location: Indonesia
+Tagline: "Always learning, always building."
+Bio: A researcher with a focus on computer vision, deep learning, and IoT
+integration on embedded devices. Actively publishes scientific work in national
+and international journals, and holds several intellectual property rights.
+
+=== SITE URL ===
+fiqlab.dev
+
+=== PILLAR 1 — AI / COMPUTER VISION RESEARCH ===
+Computer Vision — image recognition, object detection, scene understanding with
+  deep neural networks.
+Deep Learning — architectures for classification, detection, segmentation.
+Intelligent System — autonomous systems with real-time decision making.
+
+=== PILLAR 2 — IOT / EDGE PROJECTS ===
+Edge Computing — deploying AI models on embedded devices: Raspberry Pi, ESP32,
+  microcontrollers.
+Drone — UAV systems for aerial inspection, mapping, autonomous navigation.
+Robot — autonomous ground robots for navigation and manipulation.
+
+=== PILLAR 3 — BLOG ARTICLES (real post titles) ===
+- Deploying Computer Vision Models on IoT Edge Devices: Lessons Learned
+- Getting Started with YOLOv8: Real-Time Object Detection for Everyone
+- Detecting Plant Diseases with CNN: From Lab to Field
+- Neural Network Architectures Explained with Diagrams
+- YOLO vs SSD vs Faster R-CNN: A 2026 Performance Comparison
+- The Mac Mini M4 Is the Best AI Server You're Not Running Yet
+
+=== STATS ===
+14+ Publications
+4 Books
+10+ IP Rights
+14+ Community Service
+
+=== TERMINAL MODE (signature site feature) ===
+The site has a real interactive terminal. Real commands:
+  help       this help message
+  whoami     display user info
+  ls [path]  list directory contents
+  cat <file> display file contents
+  blog       list, read, or search blog posts
+  open <page|url|slug>  open internal page, external link, or blog post
+Filesystem: ~/about.txt  ~/contact.txt  ~/tools.txt  ~/blog/  ~/publications/
+whoami output: "Taufiqurrahman <taufiq@wbi.ac.id>" / "Researcher @ Politeknik
+Wilmar Bisnis Indonesia" / "Indonesia" / "Always learning, always building."
+
+=== VISUAL SYSTEM ===
+Background: #000000 (pure black)
+Primary / text: #00d4ff (cyan) with glow: text-shadow 0 0 12px rgba(0,212,255,.5)
+Dim: #0077cc   Secondary accent: #ffb000 (amber)
+Card: #000510 / rgba(0,2,8,0.88), borders rgba(0,212,255,0.15)
+Font: JetBrains Mono, everything
+Effects: CRT scanline overlay (repeating-linear-gradient, 2px), blinking block
+cursor block (blink 1s step-end), "> " terminal prompt prefix, faint fractal-noise
+texture, backdrop-blur glass panels.

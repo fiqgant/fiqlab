@@ -1,0 +1,147 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin.woff2) format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215;
+    }
+    @font-face {
+      font-family: "JetBrains Mono";
+      font-style: normal;
+      font-weight: 100 800;
+      font-display: block;
+      src: url(assets/fonts/jetbrains-mono-latin-ext.woff2) format("woff2");
+      unicode-range: U+0100-02BA, U+1E00-1E9F, U+2020, U+20A0-20AB, U+2C60-2C7F, U+A720-A7FF;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #000000;
+      font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+      color: #00d4ff;
+    }
+    .b5-bg { background: #000000; }
+    .b5-scan {
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 3px, rgba(0,0,0,0.22) 3px 4px),
+        rgba(0, 212, 255, 0.02);
+      pointer-events: none;
+    }
+    .b5-cmdline {
+      position: absolute;
+      left: 76px;
+      right: 76px;
+      font-size: 35px;
+      font-weight: 500;
+      line-height: 1.5;
+      white-space: pre;
+    }
+    .b5-gt { color: #00d4ff; font-weight: 700; }
+    .b5-cmd { color: #00d4ff; }
+    .b5-cur {
+      display: inline-block;
+      width: 20px;
+      height: 34px;
+      background: #00d4ff;
+      vertical-align: -6px;
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+    }
+    .b5-hero {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+    .b5-url {
+      display: inline-block;
+      font-size: 86px;
+      font-weight: 700;
+      line-height: 1;
+      color: #00d4ff;
+      opacity: 0;
+    }
+    .b5-curBig {
+      display: inline-block;
+      width: 34px;
+      height: 84px;
+      background: #00d4ff;
+      vertical-align: -12px;
+      margin-left: 10px;
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+      opacity: 0;
+    }
+    .b5-sub {
+      margin-top: 40px;
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: #0077cc;
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="05-close-url" data-width="1080" data-height="1920" data-duration="5">
+    <div class="b5-bg clip" data-start="0" data-duration="5" data-track-index="0" id="b5-bg-t0"></div>
+
+    <div class="b5-clearwrap clip" data-start="0" data-duration="5" data-track-index="1" id="b5-clearwrap">
+      <div class="b5-cmdline" style="top: 380px;"><span class="b5-gt">&gt;&nbsp;</span><span class="b5-cmd" id="b5-cmd"></span><span class="b5-cur" id="b5-curCmd"></span></div>
+    </div>
+
+    <div class="b5-hero clip" data-start="0" data-duration="5" data-track-index="2" id="b5-hero-t2" style="top: 820px;">
+      <div><span class="b5-url" id="b5-url">fiqlab.dev</span><span class="b5-curBig" id="b5-curBig"></span></div>
+      <div class="b5-sub" id="b5-sub">computer vision &middot; deep learning &middot; IoT</div>
+    </div>
+
+    <div class="b5-scan clip" data-start="0" data-duration="5" data-track-index="9" id="b5-scan-t9"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    (function () {
+      var DUR = 5;
+      var tl = gsap.timeline({ paused: true });
+
+      var cmdEl = document.getElementById("b5-cmd");
+      var curCmd = document.getElementById("b5-curCmd");
+      var curBig = document.getElementById("b5-curBig");
+      var CMD = "open fiqlab.dev";
+
+      var d = { i: 0 };
+      tl.to(d, {
+        i: CMD.length, duration: 1.05, ease: "none",
+        onUpdate: function () { cmdEl.textContent = CMD.slice(0, Math.round(d.i)); }
+      }, 0.4);
+
+      tl.to("#b5-clearwrap", { opacity: 0, duration: 0.12, ease: "none" }, 1.5);
+
+      tl.fromTo("#b5-url",
+        { opacity: 0, scale: 0.96 },
+        { opacity: 1, scale: 1, duration: 0.34, ease: "power3.out", transformOrigin: "50% 50%" },
+        2.0);
+      tl.fromTo("#b5-url",
+        { textShadow: "0 0 0px rgba(0,212,255,0)" },
+        { textShadow: "0 0 12px rgba(0,212,255,0.5), 0 0 24px rgba(0,212,255,0.2)", duration: 0.24, ease: "power2.out" },
+        2.0);
+      tl.fromTo("#b5-sub", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 2.3);
+
+      var CYC = Math.max(1, Math.round(DUR / 0.9));
+      var bd = { p: 0 };
+      tl.to(bd, {
+        p: CYC * Math.PI * 2, duration: DUR, ease: "none",
+        onUpdate: function () {
+          var t = tl.time();
+          var on = Math.sin(bd.p) > 0 ? "1" : "0";
+          curCmd.style.opacity = t < 1.5 ? on : "0";
+          curBig.style.opacity = t >= 2.0 ? on : "0";
+        }
+      }, 0);
+
+      window.__timelines["05-close-url"] = tl;
+    })();
+  </script>
+</template>

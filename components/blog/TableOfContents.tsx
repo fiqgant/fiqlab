@@ -50,8 +50,8 @@ export function TableOfContents() {
   if (headings.length === 0) return null;
 
   return (
-    <nav className="glass rounded-2xl p-4 sticky top-24" aria-label="Table of contents">
-      <h4 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mb-3">
+    <nav className="glass rounded-sm p-4 sticky top-24" aria-label="Table of contents">
+      <h4 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-ink/50 mb-3">
         <List className="w-3.5 h-3.5" />
         Contents
       </h4>
@@ -68,8 +68,8 @@ export function TableOfContents() {
                 "block py-1 text-xs leading-snug transition-all duration-200 rounded px-2",
                 h.level === 3 && "ml-3",
                 activeId === h.id
-                  ? "text-blue-500 bg-blue-500/10 font-medium"
-                  : "text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 hover:text-[#0A0A0A] dark:hover:text-[#FAFAFA]"
+                  ? "text-accent bg-accent/10 font-medium"
+                  : "text-ink/60 hover:text-ink"
               )}
             >
               {h.text}

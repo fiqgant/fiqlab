@@ -117,9 +117,9 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-32">
       <div className="text-center mb-16">
-        <p className="text-sm font-semibold uppercase tracking-widest text-teal-500 mb-3">Research</p>
+        <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-3">Research</p>
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Publications</h1>
-        <p className="text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">
+        <p className="text-ink/60">
           {allPublications.length} publications · {totalCitations}+ total citations
         </p>
 
@@ -131,16 +131,16 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
               disabled={loading}
               className={cn(
                 "inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass text-sm font-semibold transition-all duration-300",
-                "border border-white/10 hover:scale-[1.02] hover:border-blue-500/20",
+                "border border-ink/10 hover:scale-[1.02] hover:border-accent/20",
                 "disabled:cursor-not-allowed disabled:opacity-70"
               )}
             >
-              <RefreshCw className={cn("w-4 h-4 text-blue-500", loading && "animate-spin")} />
+              <RefreshCw className={cn("w-4 h-4 text-accent", loading && "animate-spin")} />
               {loading ? "Syncing from Google Scholar..." : "Sync from Google Scholar"}
             </button>
 
             {lastUpdated && (
-              <p className="text-xs text-[#0A0A0A]/45 dark:text-[#FAFAFA]/45">
+              <p className="text-xs text-ink/45">
                 Last synced: {formatDistanceToNow(new Date(lastUpdated), { addSuffix: true })}
               </p>
             )}
@@ -148,43 +148,43 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
         )}
       </div>
 
-      <div className="glass rounded-2xl p-5 grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12 text-center">
+      <div className="glass rounded-sm p-5 grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12 text-center">
         {scholarData ? (
           <>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.articles.length}</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">Publications</p>
+              <p className="text-xs text-ink/50 mt-0.5">Publications</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.profile.citedBy.all}</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">Citations</p>
+              <p className="text-xs text-ink/50 mt-0.5">Citations</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.profile.hIndex.all}</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">H-Index</p>
+              <p className="text-xs text-ink/50 mt-0.5">H-Index</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.profile.i10Index.all}</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">i10-Index</p>
+              <p className="text-xs text-ink/50 mt-0.5">i10-Index</p>
             </div>
           </>
         ) : (
           <>
             <div>
               <p className="text-2xl font-bold gradient-text">{publications.length}</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">Publications</p>
+              <p className="text-xs text-ink/50 mt-0.5">Publications</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{totalCitations}</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">Citations</p>
+              <p className="text-xs text-ink/50 mt-0.5">Citations</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">8</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">H-Index</p>
+              <p className="text-xs text-ink/50 mt-0.5">H-Index</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">Manual</p>
-              <p className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 mt-0.5">Data Source</p>
+              <p className="text-xs text-ink/50 mt-0.5">Data Source</p>
             </div>
           </>
         )}
@@ -208,8 +208,8 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
           <section key={group.year}>
             <div className="flex items-center gap-4 mb-4">
               <h2 className="text-xl font-bold gradient-text">{group.year}</h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-blue-500/30 to-transparent" />
-              <span className="text-xs text-[#0A0A0A]/40 dark:text-[#FAFAFA]/40">
+              <div className="flex-1 h-px bg-gradient-to-r from-accent/30 to-transparent" />
+              <span className="text-xs text-ink/40">
                 {group.publications.length} paper{group.publications.length > 1 ? "s" : ""}
               </span>
             </div>

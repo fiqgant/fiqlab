@@ -37,13 +37,13 @@ export function PaginationControls({
       : Math.min(safePage * pageSize, totalItems);
 
   return (
-    <div className={cn("glass rounded-2xl p-4 sm:p-5", className)}>
+    <div className={cn("glass rounded-sm p-4 sm:p-5", className)}>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-blue-500 mb-1">
+          <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-1">
             Pagination
           </p>
-          <p className="text-sm text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60">
+          <p className="text-sm text-ink/60">
             {totalItems === 0
               ? `No ${itemLabel} available`
               : pageSize === "all"
@@ -54,7 +54,7 @@ export function PaginationControls({
 
         <div className="flex flex-col gap-3 lg:items-end">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+            <span className="text-xs font-medium text-ink/50">
               Show
             </span>
             {PAGINATION_PAGE_SIZES.map((option) => {
@@ -69,8 +69,8 @@ export function PaginationControls({
                   className={cn(
                     "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors",
                     isActive
-                      ? "border-blue-500/60 text-blue-500 bg-blue-500/10"
-                      : "glass border-white/10 text-[#0A0A0A]/60 dark:text-[#FAFAFA]/60 hover:text-blue-500 hover:border-blue-500/30",
+                      ? "border-accent/60 text-accent bg-accent/10"
+                      : "glass border-ink/10 text-ink/60 hover:text-accent hover:border-accent/30",
                   )}
                 >
                   {label}
@@ -85,13 +85,13 @@ export function PaginationControls({
                 type="button"
                 onClick={() => onPageChange(safePage - 1)}
                 disabled={safePage === 1}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm glass text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
                 Prev
               </button>
 
-              <span className="text-xs text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50 min-w-24 text-center">
+              <span className="text-xs text-ink/50 min-w-24 text-center">
                 Page {safePage} of {totalPages}
               </span>
 
@@ -99,7 +99,7 @@ export function PaginationControls({
                 type="button"
                 onClick={() => onPageChange(safePage + 1)}
                 disabled={safePage === totalPages}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm glass text-xs font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
                 <ChevronRight className="w-3.5 h-3.5" />

@@ -39,23 +39,23 @@ export function CodeBlock({ children, filename, language }: CodeBlockProps) {
   };
 
   return (
-    <div className="relative group my-6 rounded-xl overflow-hidden border border-white/10 bg-[#0d1117]">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/10 bg-white/5">
+    <div className="relative group my-6 rounded-sm overflow-hidden border border-ink/10 bg-paper-2">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-ink/10 bg-ink/5">
         <div className="flex items-center gap-2">
-          <Terminal className="w-3.5 h-3.5 text-white/40" />
+          <Terminal className="w-3.5 h-3.5 text-ink/40" />
           {filename ? (
-            <span className="text-xs text-white/60 font-mono">{filename}</span>
+            <span className="text-xs text-ink/60 font-mono">{filename}</span>
           ) : (
-            <span className="text-xs text-white/40 font-mono uppercase">{lang}</span>
+            <span className="text-xs text-ink/40 font-mono uppercase">{lang}</span>
           )}
         </div>
         <button
           onClick={handleCopy}
           className={cn(
-            "flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs transition-all duration-200",
+            "flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-xs transition-all duration-200",
             copied
-              ? "bg-blue-500/20 text-blue-400"
-              : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white"
+              ? "bg-accent/20 text-accent"
+              : "bg-ink/5 text-ink/50 hover:bg-ink/10 hover:text-ink"
           )}
           aria-label="Copy code"
         >
@@ -73,7 +73,7 @@ export function CodeBlock({ children, filename, language }: CodeBlockProps) {
         </button>
       </div>
 
-      <div className="overflow-x-auto text-[#e6edf3]">
+      <div className="overflow-x-auto text-ink">
         {children}
       </div>
     </div>

@@ -14,10 +14,10 @@ export function BlogCard({ post }: BlogCardProps) {
   return (
     <Link
       href={`/blog/${slug}`}
-      className="group block h-full border border-[#00d4ff]/15 hover:border-[#00d4ff]/50 bg-[#000510] transition-colors duration-200"
+      className="group block h-full border border-ink/15 hover:border-ink/50 bg-paper-2 transition-colors duration-200"
     >
       <article className="h-full overflow-hidden flex flex-col">
-        <div className="relative h-48 overflow-hidden bg-[#000510]">
+        <div className="relative h-48 overflow-hidden bg-paper-2">
           {frontmatter.thumbnail ? (
             <Image
               src={frontmatter.thumbnail}
@@ -28,16 +28,16 @@ export function BlogCard({ post }: BlogCardProps) {
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-4xl font-bold font-mono text-[#003d88] group-hover:text-[#0077cc] transition-colors">
+              <span className="text-4xl font-bold font-serif text-muted group-hover:text-muted transition-colors">
                 {frontmatter.title[0]}
               </span>
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#000510] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-paper-2 via-transparent to-transparent" />
 
           {frontmatter.category && (
             <div className="absolute top-3 left-3">
-              <span className="px-2 py-0.5 text-[11px] font-mono font-semibold text-white bg-black/80 border border-[#ffb000]/30">
+              <span className="px-2 py-0.5 text-[11px] font-serif font-semibold text-ink bg-paper/80 border border-[#ffb000]/30">
                 {frontmatter.category}
               </span>
             </div>
@@ -50,28 +50,28 @@ export function BlogCard({ post }: BlogCardProps) {
               {frontmatter.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="px-2 py-0.5 text-[10px] font-mono font-medium text-[#00d4ff] border border-[#00d4ff]/25 bg-[#00d4ff]/5"
+                  className="px-2 py-0.5 text-[10px] font-serif font-medium text-ink border border-ink/25 bg-ink/5"
                 >
                   [{tag}]
                 </span>
               ))}
               {frontmatter.tags.length > 3 && (
-                <span className="px-2 py-0.5 text-[10px] font-mono text-[#0077cc]">
+                <span className="px-2 py-0.5 text-[10px] font-serif text-muted">
                   +{frontmatter.tags.length - 3}
                 </span>
               )}
             </div>
           )}
 
-          <h3 className="font-bold font-mono text-sm leading-snug mb-2 text-[#00d4ff]/80 group-hover:text-white transition-colors duration-200 line-clamp-2">
+          <h3 className="font-bold font-serif text-sm leading-snug mb-2 text-ink/80 group-hover:text-ink transition-colors duration-200 line-clamp-2">
             {frontmatter.title}
           </h3>
 
-          <p className="text-xs font-mono text-[#0077cc] line-clamp-2 leading-relaxed mb-4 flex-1">
+          <p className="text-xs font-serif text-muted line-clamp-2 leading-relaxed mb-4 flex-1">
             {excerpt}
           </p>
 
-          <div className="flex items-center gap-4 text-[10px] font-mono text-[#003d88] group-hover:text-[#0077cc] transition-colors">
+          <div className="flex items-center gap-4 text-[10px] font-serif text-muted group-hover:text-muted transition-colors">
             <span className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               {formatDate(frontmatter.date)}

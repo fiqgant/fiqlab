@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: Props) {
             <header className="mb-10">
               {/* Thumbnail */}
               {post.frontmatter.thumbnail && (
-                <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden mb-8">
+                <div className="relative h-72 sm:h-96 rounded-sm overflow-hidden mb-8">
                   <Image
                     src={post.frontmatter.thumbnail}
                     alt={post.frontmatter.title}
@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: Props) {
                   {post.frontmatter.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-500 border border-blue-500/20"
+                      className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20"
                     >
                       <Tag className="w-3 h-3" />
                       {tag}
@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: Props) {
               </h1>
 
               {/* Meta */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-[#0A0A0A]/50 dark:text-[#FAFAFA]/50">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-ink/50">
                 <span className="flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
                   {formatDate(post.frontmatter.date)}
@@ -132,7 +132,7 @@ export default async function BlogPostPage({ params }: Props) {
                 </span>
               </div>
 
-              <div className="mt-6 pt-6 border-t border-white/10">
+              <div className="mt-6 pt-6 border-t border-ink/10">
                 <ShareButtons url={url} title={post.frontmatter.title} excerpt={post.excerpt} />
               </div>
             </header>
@@ -143,7 +143,7 @@ export default async function BlogPostPage({ params }: Props) {
             </article>
 
             {/* Footer share */}
-            <div className="mt-12 pt-8 border-t border-white/10">
+            <div className="mt-12 pt-8 border-t border-ink/10">
               <ShareButtons url={url} title={post.frontmatter.title} excerpt={post.excerpt} />
             </div>
           </div>

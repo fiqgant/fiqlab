@@ -54,7 +54,7 @@ const components = {
   // Style the <pre> rendered inside CodeBlock
   pre: ({ children, ...props }: PreProps) => (
     <pre
-      className="p-4 text-sm leading-relaxed font-mono overflow-x-auto"
+      className="p-4 text-sm leading-relaxed font-serif overflow-x-auto"
       {...props}
     >
       {children}
@@ -69,7 +69,7 @@ const components = {
     if (!className) {
       return (
         <code
-          className="text-teal-500 bg-teal-500/10 px-1.5 py-0.5 rounded text-sm font-mono"
+          className="text-accent bg-accent/10 px-1.5 py-0.5 rounded text-sm font-serif"
           {...props}
         >
           {children}
@@ -94,7 +94,7 @@ const components = {
   ),
   blockquote: ({ children, ...props }: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="border-l-4 border-blue-500 pl-4 py-1 my-6 bg-blue-500/5 rounded-r-xl italic text-[#0A0A0A]/70 dark:text-[#FAFAFA]/70"
+      className="border-l-4 border-accent pl-4 py-1 my-6 bg-accent/5 rounded-r-xl italic text-ink/70"
       {...props}
     >
       {children}
@@ -105,7 +105,7 @@ const components = {
       href={href}
       target={href?.startsWith("http") ? "_blank" : undefined}
       rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-      className="text-blue-500 hover:text-blue-400 underline underline-offset-2 transition-colors"
+      className="text-accent hover:text-accent underline underline-offset-2 transition-colors"
       {...props}
     >
       {children}
@@ -116,25 +116,25 @@ const components = {
     <img
       src={src}
       alt={alt}
-      className="rounded-xl my-6 w-full object-cover shadow-lg"
+      className="rounded-sm my-6 w-full object-cover shadow-lg"
       loading="lazy"
       {...props}
     />
   ),
   table: ({ children, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="overflow-x-auto my-6 rounded-xl glass">
+    <div className="overflow-x-auto my-6 rounded-sm glass">
       <table className="w-full text-sm" {...props}>
         {children}
       </table>
     </div>
   ),
   th: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th className="px-4 py-3 text-left font-semibold text-blue-500 border-b border-white/10" {...props}>
+    <th className="px-4 py-3 text-left font-semibold text-accent border-b border-ink/10" {...props}>
       {children}
     </th>
   ),
   td: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <td className="px-4 py-3 border-b border-white/5" {...props}>
+    <td className="px-4 py-3 border-b border-ink/5" {...props}>
       {children}
     </td>
   ),
@@ -146,7 +146,7 @@ interface MDXContentProps {
 
 export function MDXContent({ source }: MDXContentProps) {
   return (
-    <div className="mdx-content space-y-4 text-[#0A0A0A]/80 dark:text-[#FAFAFA]/80 leading-relaxed">
+    <div className="mdx-content space-y-4 text-ink/80 leading-relaxed">
       <MDXRemote
         source={source}
         components={components}
@@ -157,7 +157,7 @@ export function MDXContent({ source }: MDXContentProps) {
               rehypeMermaid,
               rehypeSlug,
               [rehypePrettyCode, {
-                theme: "github-dark",
+                theme: { light: "github-light", dark: "github-dark" },
                 keepBackground: false,
                 filterMetaString: (meta: string) => meta.replace(/\bfilename=/, "title="),
               }],

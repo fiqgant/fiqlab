@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { personal } from "@/data/personal";
-import { getAllPosts } from "@/lib/blog";
-import { HomeClient } from "@/components/home/HomeClient";
+import { HeroUI } from "@/components/hero/HeroUI";
 import {
   absoluteUrl,
   createPageMetadata,
@@ -23,9 +22,7 @@ export const metadata: Metadata = createPageMetadata({
   ],
 });
 
-export default async function HomePage() {
-  const posts = await getAllPosts();
-
+export default function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -68,7 +65,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <HomeClient posts={posts} />
+      <HeroUI />
     </div>
   );
 }

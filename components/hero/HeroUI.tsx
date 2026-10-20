@@ -1,139 +1,111 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { Github, Linkedin, BookOpen, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
+import Link from "next/link";
 import { personal } from "@/data/personal";
 
-interface Props {
-  onToggleMode: () => void;
-}
+const references = [
+  { label: "Google Scholar", href: personal.googleScholar },
+  { label: "SINTA", href: personal.sintaUrl },
+  { label: "GitHub", href: personal.github },
+  { label: "LinkedIn", href: personal.linkedin },
+];
 
-export function HeroUI({ onToggleMode }: Props) {
-  const [minimized, setMinimized] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [toast, setToast] = useState(false);
+const contents = [
+  ["/about", "About"],
+  ["/publications", "Publications"],
+  ["/portfolio", "Projects"],
+  ["/blog", "Writing"],
+  ["/tools", "Tools"],
+  ["/contact", "Contact"],
+];
 
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
-  const handleTerminalClick = () => {
-    if (isMobile) {
-      setToast(true);
-      setTimeout(() => setToast(false), 3000);
-    } else {
-      onToggleMode();
-    }
-  };
-
+export function HeroUI() {
   return (
-    <div className="relative w-full h-screen flex flex-col items-center justify-center px-6 select-none">
-      {toast && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-[#000a14]/90 backdrop-blur-sm border border-[#00d4ff]/30 rounded-sm text-xs font-mono text-[#00d4ff] whitespace-nowrap shadow-[0_0_20px_rgba(0,212,255,0.15)]">
-          Terminal mode is only available on desktop
-        </div>
-      )}
-
-      <button
-        onClick={handleTerminalClick}
-        className="fixed bottom-4 right-4 z-20 flex items-center gap-2 px-3 py-1.5 text-xs font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/60 backdrop-blur-sm transition-all duration-200 rounded-sm"
-      >
-        <span>&gt;_</span>
-        <span>terminal</span>
-      </button>
-
-      {minimized ? (
-        <div
-          onClick={() => setMinimized(false)}
-          className="fixed bottom-4 right-[8.5rem] z-20 flex items-center gap-3 px-4 py-2 border border-[#00d4ff]/30 bg-black/60 backdrop-blur-sm rounded-sm cursor-pointer hover:bg-black/80 transition-all duration-200"
-        >
-          <span className="text-[#00d4ff] font-mono text-sm font-bold">{personal.name}</span>
-          <span className="text-[#0077cc] font-mono text-xs">{personal.role}</span>
-          <ChevronUp size={14} className="text-white ml-2" />
-        </div>
-      ) : (
-        <div className="max-w-2xl w-full space-y-8 text-center relative">
-          <div className="absolute -inset-12 bg-black/20 backdrop-blur-lg rounded-2xl border border-white/5 -z-10" />
-          <button
-            onClick={() => setMinimized(true)}
-            className="absolute -top-3 right-4 z-10 flex items-center justify-center w-6 h-6 text-[#00d4ff]/50 hover:text-white bg-[#000a14]/80 border border-[#00d4ff]/30 rounded-sm transition-all duration-200"
-            title="Minimize"
-          >
-            <ChevronDown size={14} />
-          </button>
-          <div className="space-y-3">
-            <p className="text-[#0077cc] text-sm font-mono tracking-widest uppercase">
-              ~ {personal.location}
-            </p>
-            <h1 className="text-4xl sm:text-5xl font-bold font-mono text-[#00d4ff] text-glow">
-              {personal.name}
-            </h1>
-            <p className="text-lg font-mono text-[#0077cc]">
-              {personal.role}
-            </p>
-            <p className="text-sm font-mono text-[#0077cc]/80">
-              {personal.institution}
-            </p>
-          </div>
-
-          <p className="text-sm sm:text-base font-mono text-[#00d4ff]/70 leading-relaxed max-w-xl mx-auto">
-            {personal.longBio}
+    <div className="w-full min-h-screen px-4 sm:px-6 pt-28 pb-20">
+      <article className="max-w-2xl mx-auto">
+        <header className="text-center space-y-2 hero-item">
+          <p className="font-mono text-xs text-muted">fiqlab.dev · research notebook</p>
+          <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight">{personal.name}</h1>
+          <p className="italic text-muted">
+            {personal.role}, {personal.institution}
           </p>
+          <p className="text-sm text-muted">
+            {personal.location} ·{" "}
+            <a href={`mailto:${personal.email}`} className="font-mono text-accent hover:underline">
+              {personal.email}
+            </a>
+          </p>
+        </header>
 
-          <div className="grid grid-cols-4 gap-4">
-            {personal.stats.map((s) => (
-              <div
-                key={s.label}
-                className="border border-[#00d4ff]/20 bg-black/40 backdrop-blur-sm p-3 space-y-1"
-              >
-                <p className="text-xl font-bold font-mono text-[#00d4ff] text-glow">{s.value}</p>
-                <p className="text-[10px] font-mono text-[#0077cc] uppercase tracking-wider">{s.label}</p>
-              </div>
+        <section className="mt-10 hero-item hero-delay-1">
+          <h2 className="text-center text-sm font-semibold uppercase tracking-[0.2em]">Abstract</h2>
+          <p className="mt-3 text-[1.05rem] leading-relaxed text-justify hyphens-auto">
+            {personal.longBio.replace(/\n/g, " ")}
+          </p>
+          <p className="mt-3 text-sm">
+            <span className="font-semibold italic">Keywords — </span>
+            {personal.researchInterests.map((i) => i.title).join(", ")}
+          </p>
+        </section>
+
+        <figure className="mt-10 hero-item hero-delay-2">
+          <figcaption className="text-sm text-center mb-2">
+            <span className="font-semibold">Table 1.</span> Research output to date.
+          </figcaption>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-y-2 border-ink">
+              <thead>
+                <tr className="border-b border-ink/60">
+                  {personal.stats.map((s) => (
+                    <th key={s.label} className="px-2 py-1.5 font-semibold">{s.label}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {personal.stats.map((s) => (
+                    <td key={s.label} className="py-1.5 text-center font-mono">{s.value}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+
+        <section className="mt-10 hero-item hero-delay-3">
+          <h2 className="text-lg font-semibold">Contents</h2>
+          <ol className="mt-2 space-y-1 text-[0.95rem]">
+            {contents.map(([href, label], i) => (
+              <li key={href} className="flex items-baseline gap-2">
+                <span className="font-mono text-xs text-muted w-5">{i + 1}.</span>
+                <Link href={href} className="hover:text-accent">{label}</Link>
+                <span className="flex-1 border-b border-dotted border-ink/30" />
+                <span className="font-mono text-xs text-muted">{href}</span>
+              </li>
             ))}
-          </div>
+          </ol>
+        </section>
 
-          <div className="flex items-center justify-center gap-4">
-            <SocialLink href={personal.github} label="GitHub">
-              <Github size={16} />
-              <span>GitHub</span>
-            </SocialLink>
-            <SocialLink href={personal.linkedin} label="LinkedIn">
-              <Linkedin size={16} />
-              <span>LinkedIn</span>
-            </SocialLink>
-            <SocialLink href={personal.googleScholar} label="Scholar">
-              <BookOpen size={16} />
-              <span>Scholar</span>
-            </SocialLink>
-            <SocialLink href={personal.sintaUrl} label="SINTA">
-              <ExternalLink size={16} />
-              <span>SINTA</span>
-            </SocialLink>
-          </div>
-        </div>
-      )}
+        <section className="mt-10 hero-item hero-delay-4">
+          <h2 className="text-lg font-semibold">References</h2>
+          <ol className="mt-2 space-y-1 text-sm">
+            {references.map((r, i) => (
+              <li key={r.label} className="flex gap-2">
+                <span className="text-muted">[{i + 1}]</span>
+                <span>
+                  {r.label}.{" "}
+                  <a
+                    href={r.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-xs text-accent break-all hover:underline"
+                  >
+                    {r.href.replace(/^https?:\/\//, "")}
+                  </a>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </article>
     </div>
-  );
-}
-
-function SocialLink({
-  href,
-  label,
-  children,
-}: {
-  href: string;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono border border-[#00d4ff]/30 text-[#00d4ff]/70 hover:text-[#00d4ff] hover:border-[#00d4ff]/60 bg-black/40 backdrop-blur-sm transition-all duration-200"
-    >
-      {children}
-    </a>
   );
 }
