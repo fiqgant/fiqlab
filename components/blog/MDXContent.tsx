@@ -54,7 +54,7 @@ const components = {
   // Style the <pre> rendered inside CodeBlock
   pre: ({ children, ...props }: PreProps) => (
     <pre
-      className="p-4 text-sm leading-relaxed font-serif overflow-x-auto"
+      className="p-4 text-sm leading-relaxed font-mono overflow-x-auto"
       {...props}
     >
       {children}
@@ -65,11 +65,11 @@ const components = {
     className,
     ...props
   }: React.HTMLAttributes<HTMLElement>) => {
-    // Inline code (not inside a code block)
-    if (!className) {
+    // Inline code: rehype-pretty-code marks block code with data-language, not a className
+    if (!className && !("data-language" in props)) {
       return (
         <code
-          className="text-accent bg-accent/10 px-1.5 py-0.5 rounded text-sm font-serif"
+          className="text-accent bg-accent/10 px-1.5 py-0.5 rounded text-sm font-mono"
           {...props}
         >
           {children}
@@ -159,6 +159,7 @@ export function MDXContent({ source }: MDXContentProps) {
               [rehypePrettyCode, {
                 theme: { light: "github-light", dark: "github-dark" },
                 keepBackground: false,
+                defaultLang: { block: "plaintext" },
                 filterMetaString: (meta: string) => meta.replace(/\bfilename=/, "title="),
               }],
             ],

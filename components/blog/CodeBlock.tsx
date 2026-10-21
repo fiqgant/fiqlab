@@ -14,7 +14,7 @@ interface CodeBlockProps {
 export function CodeBlock({ children, filename, language }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
-  const lang = language || "text";
+  const lang = language === "plaintext" ? "text" : language || "text";
 
   const getCodeText = (): string => {
     if (typeof children === "string") return children;
