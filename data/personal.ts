@@ -60,7 +60,7 @@ Beyond research, also engaged in community service and knowledge sharing.`,
     },
   ],
   stats: [
-    { label: "Publications", value: "14+" },
+    { label: "Publications", value: "18+" },
     { label: "Books", value: "4" },
     { label: "IP Rights", value: "10+" },
     { label: "Community Service", value: "14+" },

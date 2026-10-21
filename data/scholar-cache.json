@@ -1,56 +1,74 @@
 {
-  "lastUpdated": "2026-04-11T13:16:52.351Z",
+  "lastUpdated": "2026-10-21T13:02:51.129Z",
   "profile": {
     "name": "Taufiqurrahman",
     "affiliations": "Politeknik Wilmar Bisnis Indonesia",
     "interests": [
+      "Embedded Systems",
       "Artificial Intelligence",
-      "Machine Learning",
-      "Internet of Things",
+      "TinyML",
       "Computer Vision",
-      "Intelligent Systems"
+      "Internet of Things"
     ],
-    "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=h43MGCIAAAAJ&citpid=2",
+    "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=h43MGCIAAAAJ&citpid=3",
     "citedBy": {
-      "all": 28,
-      "recent": 0
+      "all": 49,
+      "recent": 49
     },
     "hIndex": {
-      "all": 3,
-      "recent": 0
+      "all": 5,
+      "recent": 5
     },
     "i10Index": {
-      "all": 0,
-      "recent": 0
+      "all": 1,
+      "recent": 1
     }
   },
   "articles": [
-    {
-      "title": "Performance Analysis of Smart Technology with Face Detection using YOLOv3 and InsightFace for Student Attendance Monitoring",
-      "authors": "M Fikry, Taufiqurrahman, M Ula, Fadlisyah, Nurdin, M Yani, AA Pohan",
-      "publication": "International Journal of Intelligent Systems and Applications in Engineering …, 2024",
-      "year": "2024",
-      "citedBy": 7,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:5nxA0vEk-isC",
-      "citationId": "h43MGCIAAAAJ:5nxA0vEk-isC"
-    },
     {
       "title": "Evaluasi Performa Yolov8 Dalam Deteksi Objek Di Depan Kendaraan Dengan Variasi Kondisi Lingkungan",
       "authors": "T Taufiqurrahman, AP Hadi, RE Siregar",
       "publication": "Jurnal Minfo Polgan 13 (2), 1755-1773, 2024",
       "year": "2024",
-      "citedBy": 5,
+      "citedBy": 13,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:8k81kl-MbHgC",
       "citationId": "h43MGCIAAAAJ:8k81kl-MbHgC"
+    },
+    {
+      "title": "Performance Analysis of Smart Technology with Face Detection using YOLOv3 and InsightFace for Student Attendance Monitoring",
+      "authors": "M Fikry, Taufiqurrahman, M Ula, Fadlisyah, Nurdin, M Yani, AA Pohan",
+      "publication": "International Journal of Intelligent Systems and Applications in Engineering …, 2024",
+      "year": "2024",
+      "citedBy": 9,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:5nxA0vEk-isC",
+      "citationId": "h43MGCIAAAAJ:5nxA0vEk-isC"
     },
     {
       "title": "Buku Ajar Pengantar Teknologi Informasi",
       "authors": "SY Padang, IR Mukhlis, N Dwiyani, JD Susanto, Taufiqurrahman",
       "publication": "",
       "year": "2025",
-      "citedBy": 3,
+      "citedBy": 6,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:aqlVkmm33-oC",
       "citationId": "h43MGCIAAAAJ:aqlVkmm33-oC"
+    },
+    {
+      "title": "Navigasi Realtime Menggunakan Incremental GPS Path Logging Algorithm dan Visualisasi Interaktif Berbasis Web: Pengembangan Sistem Pelacakan Posisi dan Arah Pengguna Berbasis …",
+      "authors": "T Taufiqurrahman, SE Simatupang, R Ramadhansyah, IC Sari, I Rafli",
+      "publication": "Jurnal Minfo Polgan 14 (1), 1340-1354, 2025",
+      "year": "2025",
+      "citedBy": 5,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:kNdYIx-mwKoC",
+      "citationId": "h43MGCIAAAAJ:kNdYIx-mwKoC"
+    },
+    {
+      "title": "Integrasi Model Deep Learning Efficientnet-B0 Untuk Deteksi Penyakit Daun Tomat Pada Aplikasi Seluler Berbasis Flutter",
+      "authors": "T Taufiqurrahman, IC Sari, MK Manurung",
+      "publication": "Djtechno: Jurnal Teknologi Informasi 5 (2), 332-346, 2024",
+      "year": "2024",
+      "citedBy": 5,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:0EnyYjriUFMC",
+      "citationId": "h43MGCIAAAAJ:0EnyYjriUFMC"
     },
     {
       "title": "Signifikansi Agresivitas Pajak Ditilik dari Aspek Keberlanjutan Perusahaan",
@@ -62,15 +80,6 @@
       "citationId": "h43MGCIAAAAJ:Zph67rFs4hoC"
     },
     {
-      "title": "Integrasi Model Deep Learning Efficientnet-B0 Untuk Deteksi Penyakit Daun Tomat Pada Aplikasi Seluler Berbasis Flutter",
-      "authors": "T Taufiqurrahman, IC Sari, MK Manurung",
-      "publication": "Djtechno: Jurnal Teknologi Informasi 5 (2), 332-346, 2024",
-      "year": "2024",
-      "citedBy": 3,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:0EnyYjriUFMC",
-      "citationId": "h43MGCIAAAAJ:0EnyYjriUFMC"
-    },
-    {
       "title": "Analysis of Model-Free Reinforcement Learning Algorithm for Target Tracking",
       "authors": "M Fikry, RT Adek, Z Zulfhazli, S Hartanto, T Taufiqurrahman, DI Rinawati",
       "publication": "Journal of Computer Engineering, Electronics and Information Technology 1 (1 …, 2022",
@@ -78,6 +87,15 @@
       "citedBy": 3,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:u-x6o8ySG0sC",
       "citationId": "h43MGCIAAAAJ:u-x6o8ySG0sC"
+    },
+    {
+      "title": "Optimasi Kinerja Tim Pengembangan Perangkat Lunak melalui Kepemimpinan Tanpa Keahlian Koding",
+      "authors": "IC Sari, T Taufiqurrahman, A Fitri",
+      "publication": "Jurnal Warta Dharmawangsa 18 (1), 266-272, 2024",
+      "year": "2024",
+      "citedBy": 2,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:9yKSN-GCB0IC",
+      "citationId": "h43MGCIAAAAJ:9yKSN-GCB0IC"
     },
     {
       "title": "Analysis of dimensional reduction effect on K-Nearest Neighbor classification method",
@@ -89,22 +107,13 @@
       "citationId": "h43MGCIAAAAJ:u5HHmVD_uO8C"
     },
     {
-      "title": "Navigasi Realtime Menggunakan Incremental GPS Path Logging Algorithm dan Visualisasi Interaktif Berbasis Web: Pengembangan Sistem Pelacakan Posisi dan Arah Pengguna Berbasis …",
-      "authors": "T Taufiqurrahman, SE Simatupang, R Ramadhansyah, IC Sari, I Rafli",
-      "publication": "Jurnal Minfo Polgan 14 (1), 1340-1354, 2025",
+      "title": "Meningkatkan Kesadaran Keberlanjutan Lingkungan Melalui Pendekatan Gamifikasi Pada Anak Sekolah Dasar",
+      "authors": "D Juhandi, AW Pasaribu, M Riyadi, RR Fajar, A Kamila",
+      "publication": "Jurnal Pengabdian Masyarakat Aufa (JPMA) 7 (2), 2025",
       "year": "2025",
       "citedBy": 1,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:kNdYIx-mwKoC",
-      "citationId": "h43MGCIAAAAJ:kNdYIx-mwKoC"
-    },
-    {
-      "title": "Optimasi Kinerja Tim Pengembangan Perangkat Lunak melalui Kepemimpinan Tanpa Keahlian Koding",
-      "authors": "IC Sari, T Taufiqurrahman, A Fitri",
-      "publication": "Warta Dharmawangsa 18 (1), 266-272, 2024",
-      "year": "2024",
-      "citedBy": 1,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:9yKSN-GCB0IC",
-      "citationId": "h43MGCIAAAAJ:9yKSN-GCB0IC"
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:lSLTfruPkqcC",
+      "citationId": "h43MGCIAAAAJ:lSLTfruPkqcC"
     },
     {
       "title": "Implementasi BTS7960 sebagai Electronic Speed Controller Mandiri Tanpa Mikrokontroler",
@@ -143,31 +152,13 @@
       "citationId": "h43MGCIAAAAJ:4TOpqqG69KYC"
     },
     {
-      "title": "Integrasi Arsip Musik Batak sebagai Inovasi Strategis dalam Pengelolaan Konvensi dan Acara Berbasis Budaya",
-      "authors": "RF Tamba, Taufiqurrahman, JF Siahaan, NS Nabilla",
-      "publication": "Jurnal SEMAR (Jurnal Ilmu Pengetahuan, Teknologi, dan Seni bagi Masyarakat …, 2025",
-      "year": "2025",
-      "citedBy": 0,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:mVmsd5A6BfQC",
-      "citationId": "h43MGCIAAAAJ:mVmsd5A6BfQC"
-    },
-    {
       "title": "Enhancing Drone-Based Multi-Object Tracking Through YOLOv10 and BoostTrack Integration",
       "authors": "Taufiqurrahman",
-      "publication": "Journal of Intelligent Computing, Systems, and Applications (JICSA) 1 (01), 1–19, 2025",
+      "publication": "Journal of Intelligent Computing, Systems, and Applications (JICSA) 1 (01), 1-19, 2025",
       "year": "2025",
       "citedBy": 0,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:ULOm3_A8WrAC",
-      "citationId": "h43MGCIAAAAJ:ULOm3_A8WrAC"
-    },
-    {
-      "title": "Meningkatkan Kesadaran Keberlanjutan Lingkungan Melalui Pendekatan Gamifikasi Pada Anak Sekolah Dasar",
-      "authors": "D Juhandi, AW Pasaribu, M Riyadi, RR Fajar, A Kamila",
-      "publication": "Jurnal Pengabdian Masyarakat Aufa (JPMA) 7 (2), 2025",
-      "year": "2025",
-      "citedBy": 0,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:YOwf2qJgpHMC",
-      "citationId": "h43MGCIAAAAJ:YOwf2qJgpHMC"
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:vV6vV6tmYwMC",
+      "citationId": "h43MGCIAAAAJ:vV6vV6tmYwMC"
     },
     {
       "title": "The Menu Clustering At Doktor Kopi Using K-Means Algorithm To Increase Sales",
@@ -186,6 +177,15 @@
       "citedBy": 0,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:3fE2CSJIrl8C",
       "citationId": "h43MGCIAAAAJ:3fE2CSJIrl8C"
+    },
+    {
+      "title": "Linear Discriminant Analysis (LDA) pada Algoritma K-Nearest Neighbour (KNN) untuk Reduksi Atribut",
+      "authors": "EB Nababan, S Efendi",
+      "publication": "Universitas Sumatera Utara, 2021",
+      "year": "2021",
+      "citedBy": 0,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:35N4QoGY0k4C",
+      "citationId": "h43MGCIAAAAJ:35N4QoGY0k4C"
     }
   ]
 }

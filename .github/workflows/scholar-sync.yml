@@ -6,6 +6,9 @@ on:
     - cron: "0 0 * * 0"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     name: Sync Google Scholar Data
@@ -26,47 +29,27 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Fetch Scholar data
+      # Reuse lib/ fetchers so the cache schema always matches what the pages read.
+      - name: Sync Scholar + GitHub caches
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          GOOGLE_SCHOLAR_AUTHOR_ID: ${{ secrets.GOOGLE_SCHOLAR_AUTHOR_ID }}
+          GH_USERNAME: ${{ github.repository_owner }}
         run: |
-          http_code=$(curl -s -w "%{http_code}" \
-            "https://serpapi.com/search.json?engine=google_scholar_author&author_id=${{ secrets.GOOGLE_SCHOLAR_AUTHOR_ID }}&api_key=${{ secrets.SERPAPI_KEY }}" \
-            -o /tmp/scholar_raw.json)
-
-          if [ "$http_code" -ge 400 ]; then
-            echo "SerpApi request failed with HTTP $http_code"
-            cat /tmp/scholar_raw.json
-            exit 1
-          fi
-
-          if grep -q '"error"' /tmp/scholar_raw.json; then
-            echo "SerpApi returned an error payload:"
-            cat /tmp/scholar_raw.json
-            exit 1
-          fi
-
-          node -e "
-            const raw = JSON.parse(require('fs').readFileSync('/tmp/scholar_raw.json', 'utf8'));
-            const articles = (raw.articles || []).map(a => ({
-              title: a.title,
-              link: a.link,
-              authors: a.authors,
-              publication: a.publication,
-              citedBy: a.cited_by?.value ?? 0,
-              year: a.year,
-              citationId: a.citation_id,
-            }));
-            const cache = {
-              fetchedAt: new Date().toISOString(),
-              authorId: '${{ secrets.GOOGLE_SCHOLAR_AUTHOR_ID }}',
-              articles,
-            };
-            require('fs').writeFileSync('data/scholar-cache.json', JSON.stringify(cache, null, 2));
-            console.log('Synced ' + articles.length + ' articles');
-          "
+          node --experimental-strip-types --no-warnings --input-type=module -e '
+            const s = await import("./lib/scholar.ts");
+            const g = await import("./lib/github.ts");
+            const sc = await s.fetchScholarData(process.env.GOOGLE_SCHOLAR_AUTHOR_ID, process.env.SERPAPI_KEY);
+            await s.saveScholarCache(sc);
+            console.log(`Synced ${sc.articles.length} articles`);
+            const gh = await g.fetchGitHubData(process.env.GH_USERNAME);
+            await g.saveGitHubCache(gh);
+            console.log(`Synced ${gh.repos.length} repos`);
+          '
 
       - name: Commit updated cache
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: sync scholar cache [skip ci]"
-          file_pattern: data/scholar-cache.json
+          commit_message: "chore: sync scholar + github cache [skip ci]"
+          file_pattern: data/scholar-cache.json data/github-cache.json
           commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

@@ -73,10 +73,12 @@ function getMetricEntry(row: unknown, preferredKey: string): JsonRecord | null {
 
 function getMetricValues(row: unknown, preferredKey: string) {
   const entry = getMetricEntry(row, preferredKey);
+  // Scholar rolls the window yearly (since_2019 → since_2021 → ...), so match any.
+  const recentKey = entry ? Object.keys(entry).find((key) => /^since_?\d{4}$/.test(key)) : undefined;
 
   return {
     all: toNumberValue(entry?.all),
-    recent: toNumberValue(entry?.since_2020 ?? entry?.since_2019 ?? entry?.since2020 ?? entry?.since2019),
+    recent: toNumberValue(recentKey ? entry?.[recentKey] : undefined),
   };
 }
 
