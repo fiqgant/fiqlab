@@ -51,7 +51,7 @@ export function TableOfContents() {
 
   return (
     <nav className="glass rounded-sm p-4 sticky top-24" aria-label="Table of contents">
-      <h4 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-ink/50 mb-3">
+      <h4 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-ink/70 mb-3">
         <List className="w-3.5 h-3.5" />
         Contents
       </h4>
@@ -69,7 +69,7 @@ export function TableOfContents() {
                 h.level === 3 && "ml-3",
                 activeId === h.id
                   ? "text-accent bg-accent/10 font-medium"
-                  : "text-ink/60 hover:text-ink"
+                  : "text-ink/70 hover:text-ink"
               )}
             >
               {h.text}

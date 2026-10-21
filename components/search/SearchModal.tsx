@@ -135,14 +135,14 @@ export function SearchModal() {
       <div className="relative w-full max-w-4xl glass rounded-sm shadow-2xl overflow-hidden animate-slide-up">
         {/* Search input */}
         <div className="flex items-center gap-3 px-4 py-4 border-b border-ink/10">
-          <Search className="w-5 h-5 text-ink/40 flex-shrink-0" />
+          <Search className="w-5 h-5 text-ink/70 flex-shrink-0" />
           <input
             ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKey}
             placeholder="Search posts and publications..."
-            className="flex-1 bg-transparent text-base outline-none placeholder:text-ink/40"
+            className="flex-1 bg-transparent text-base outline-none placeholder:text-ink/70"
             aria-label="Search"
           />
           {query && (
@@ -158,7 +158,7 @@ export function SearchModal() {
 
         {/* Results */}
         {results.length === 0 && query ? (
-          <div className="p-8 text-center text-ink/50">
+          <div className="p-8 text-center text-ink/70">
             No results for &ldquo;{query}&rdquo;
           </div>
         ) : (
@@ -170,7 +170,7 @@ export function SearchModal() {
 
               return (
                 <div key={type} className="mb-1">
-                  <div className="px-4 py-1.5 text-[10px] uppercase tracking-widest font-semibold text-ink/40">
+                  <div className="px-4 py-1.5 text-[10px] uppercase tracking-widest font-semibold text-ink/70">
                     {cfg.label}
                   </div>
                   {items.map((item) => {
@@ -191,7 +191,7 @@ export function SearchModal() {
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium truncate">{item.title}</p>
                           {item.excerpt && (
-                            <p className="text-xs text-ink/50 line-clamp-1 mt-0.5">
+                            <p className="text-xs text-ink/70 line-clamp-1 mt-0.5">
                               {item.excerpt}
                             </p>
                           )}
@@ -221,7 +221,7 @@ export function SearchModal() {
         )}
 
         {/* Footer hint */}
-        <div className="px-4 py-2 border-t border-ink/5 flex items-center gap-4 text-[10px] text-ink/40">
+        <div className="px-4 py-2 border-t border-ink/5 flex items-center gap-4 text-[10px] text-ink/70">
           <span>
             <kbd className="font-serif">↑↓</kbd> navigate
           </span>

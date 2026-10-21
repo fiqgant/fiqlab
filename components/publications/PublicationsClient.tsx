@@ -119,7 +119,7 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
       <div className="text-center mb-16">
         <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-3">Research</p>
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 gradient-text">Publications</h1>
-        <p className="text-ink/60">
+        <p className="text-ink/70">
           {allPublications.length} publications · {totalCitations}+ total citations
         </p>
 
@@ -140,7 +140,7 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
             </button>
 
             {lastUpdated && (
-              <p className="text-xs text-ink/45">
+              <p className="text-xs text-ink/70">
                 Last synced: {formatDistanceToNow(new Date(lastUpdated), { addSuffix: true })}
               </p>
             )}
@@ -153,38 +153,38 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
           <>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.articles.length}</p>
-              <p className="text-xs text-ink/50 mt-0.5">Publications</p>
+              <p className="text-xs text-ink/70 mt-0.5">Publications</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.profile.citedBy.all}</p>
-              <p className="text-xs text-ink/50 mt-0.5">Citations</p>
+              <p className="text-xs text-ink/70 mt-0.5">Citations</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.profile.hIndex.all}</p>
-              <p className="text-xs text-ink/50 mt-0.5">H-Index</p>
+              <p className="text-xs text-ink/70 mt-0.5">H-Index</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{scholarData.profile.i10Index.all}</p>
-              <p className="text-xs text-ink/50 mt-0.5">i10-Index</p>
+              <p className="text-xs text-ink/70 mt-0.5">i10-Index</p>
             </div>
           </>
         ) : (
           <>
             <div>
               <p className="text-2xl font-bold gradient-text">{publications.length}</p>
-              <p className="text-xs text-ink/50 mt-0.5">Publications</p>
+              <p className="text-xs text-ink/70 mt-0.5">Publications</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">{totalCitations}</p>
-              <p className="text-xs text-ink/50 mt-0.5">Citations</p>
+              <p className="text-xs text-ink/70 mt-0.5">Citations</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">8</p>
-              <p className="text-xs text-ink/50 mt-0.5">H-Index</p>
+              <p className="text-xs text-ink/70 mt-0.5">H-Index</p>
             </div>
             <div>
               <p className="text-2xl font-bold gradient-text">Manual</p>
-              <p className="text-xs text-ink/50 mt-0.5">Data Source</p>
+              <p className="text-xs text-ink/70 mt-0.5">Data Source</p>
             </div>
           </>
         )}
@@ -209,7 +209,7 @@ export function PublicationsClient({ initialData }: PublicationsClientProps) {
             <div className="flex items-center gap-4 mb-4">
               <h2 className="text-xl font-bold gradient-text">{group.year}</h2>
               <div className="flex-1 h-px bg-gradient-to-r from-accent/30 to-transparent" />
-              <span className="text-xs text-ink/40">
+              <span className="text-xs text-ink/70">
                 {group.publications.length} paper{group.publications.length > 1 ? "s" : ""}
               </span>
             </div>

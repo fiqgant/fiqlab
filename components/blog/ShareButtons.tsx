@@ -76,7 +76,7 @@ export function ShareButtons({ url, title, excerpt }: ShareButtonsProps) {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-semibold uppercase tracking-widest text-ink/40">
+      <span className="text-xs font-semibold uppercase tracking-widest text-ink/70">
         Share
       </span>
       {shareNetworks.map((network) => (
@@ -88,7 +88,7 @@ export function ShareButtons({ url, title, excerpt }: ShareButtonsProps) {
           aria-label={`Share on ${network.name}`}
           className={cn(
             "p-2 glass rounded-sm transition-all duration-200 hover:scale-110",
-            "text-ink/60",
+            "text-ink/70",
             network.color
           )}
         >
@@ -98,7 +98,7 @@ export function ShareButtons({ url, title, excerpt }: ShareButtonsProps) {
       <button
         onClick={copyLink}
         aria-label="Copy link"
-        className="p-2 glass rounded-sm transition-all duration-200 hover:scale-110 text-ink/60 hover:bg-accent/10 hover:text-accent hover:border-accent/20"
+        className="p-2 glass rounded-sm transition-all duration-200 hover:scale-110 text-ink/70 hover:bg-accent/10 hover:text-accent hover:border-accent/20"
       >
         <Link2 className="w-4 h-4" />
       </button>

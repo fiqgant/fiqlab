@@ -63,9 +63,9 @@ export function BlogCard({ post }: BlogCardProps) {
             </div>
           )}
 
-          <h3 className="font-bold font-serif text-sm leading-snug mb-2 text-ink/80 group-hover:text-ink transition-colors duration-200 line-clamp-2">
+          <h2 className="font-bold font-serif text-sm leading-snug mb-2 text-ink/80 group-hover:text-ink transition-colors duration-200 line-clamp-2">
             {frontmatter.title}
-          </h3>
+          </h2>
 
           <p className="text-xs font-serif text-muted line-clamp-2 leading-relaxed mb-4 flex-1">
             {excerpt}

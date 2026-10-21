@@ -50,7 +50,7 @@ export function BlogList({ posts, allTags }: BlogListProps) {
             className={`px-3 py-1 rounded-full text-xs font-medium glass border transition-colors cursor-pointer ${
               activeTag === null
                 ? "border-accent/60 text-accent bg-accent/10"
-                : "border-ink/10 text-ink/60 hover:text-accent hover:border-accent/30"
+                : "border-ink/10 text-ink/70 hover:text-accent hover:border-accent/30"
             }`}
           >
             All
@@ -62,7 +62,7 @@ export function BlogList({ posts, allTags }: BlogListProps) {
               className={`px-3 py-1 rounded-full text-xs font-medium glass border transition-colors cursor-pointer ${
                 activeTag === tag
                   ? "border-accent/60 text-accent bg-accent/10"
-                  : "border-ink/10 text-ink/60 hover:text-accent hover:border-accent/30"
+                  : "border-ink/10 text-ink/70 hover:text-accent hover:border-accent/30"
               }`}
             >
               {tag}
@@ -73,7 +73,7 @@ export function BlogList({ posts, allTags }: BlogListProps) {
 
       {filtered.length === 0 ? (
         <div className="text-center py-24">
-          <p className="text-ink/50">
+          <p className="text-ink/70">
             No posts found for <span className="text-accent">#{activeTag}</span>.
           </p>
         </div>

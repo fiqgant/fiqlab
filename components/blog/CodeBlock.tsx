@@ -42,11 +42,11 @@ export function CodeBlock({ children, filename, language }: CodeBlockProps) {
     <div className="relative group my-6 rounded-sm overflow-hidden border border-ink/10 bg-paper-2">
       <div className="flex items-center justify-between px-4 py-2.5 border-b border-ink/10 bg-ink/5">
         <div className="flex items-center gap-2">
-          <Terminal className="w-3.5 h-3.5 text-ink/40" />
+          <Terminal className="w-3.5 h-3.5 text-ink/70" />
           {filename ? (
-            <span className="text-xs text-ink/60 font-mono">{filename}</span>
+            <span className="text-xs text-ink/70 font-mono">{filename}</span>
           ) : (
-            <span className="text-xs text-ink/40 font-mono uppercase">{lang}</span>
+            <span className="text-xs text-ink/70 font-mono uppercase">{lang}</span>
           )}
         </div>
         <button
@@ -55,7 +55,7 @@ export function CodeBlock({ children, filename, language }: CodeBlockProps) {
             "flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-xs transition-all duration-200",
             copied
               ? "bg-accent/20 text-accent"
-              : "bg-ink/5 text-ink/50 hover:bg-ink/10 hover:text-ink"
+              : "bg-ink/5 text-ink/70 hover:bg-ink/10 hover:text-ink"
           )}
           aria-label="Copy code"
         >

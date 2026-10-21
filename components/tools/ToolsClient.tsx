@@ -76,7 +76,7 @@ function ToolIcon({ name, level, iconName, url }: { name: string; level: SkillLe
         <Icon
           className={cn(
             "w-7 h-7 transition-all duration-300",
-            hovered ? cfg.iconColor : "text-ink/50"
+            hovered ? cfg.iconColor : "text-ink/70"
           )}
         />
 
@@ -150,7 +150,7 @@ export function ToolsClient() {
               "px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300",
               activeTab === i
                 ? `bg-gradient-to-r ${s.color} text-ink shadow-lg shadow-blue-500/20`
-                : "glass text-ink/60 hover:text-ink"
+                : "glass text-ink/70 hover:text-ink"
             )}
           >
             {s.label}
@@ -167,7 +167,7 @@ export function ToolsClient() {
         ].map((stat) => (
           <div key={stat.label} className="glass rounded-sm p-5 text-center">
             <p className="text-3xl font-bold gradient-text">{stat.value}</p>
-            <p className="text-xs text-ink/50 mt-1">{stat.label}</p>
+            <p className="text-xs text-ink/70 mt-1">{stat.label}</p>
           </div>
         ))}
       </div>
@@ -180,7 +180,7 @@ export function ToolsClient() {
             "px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200",
             activeCategory === null
               ? "border-accent/60 text-accent bg-accent/10"
-              : "border-ink/10 text-ink/50 hover:border-ink/30 hover:text-ink/80"
+              : "border-ink/10 text-ink/70 hover:border-ink/30 hover:text-ink/80"
           )}
         >
           All
@@ -193,7 +193,7 @@ export function ToolsClient() {
               "px-3 py-1 rounded-full text-xs font-medium border transition-all duration-200",
               activeCategory === cat.category
                 ? "border-accent/60 text-accent bg-accent/10"
-                : "border-ink/10 text-ink/50 hover:border-ink/30 hover:text-ink/80"
+                : "border-ink/10 text-ink/70 hover:border-ink/30 hover:text-ink/80"
             )}
           >
             {cat.category}
@@ -219,7 +219,7 @@ export function ToolsClient() {
         {Object.entries(levelConfig).map(([, cfg]) => (
           <div key={cfg.label} className="flex items-center gap-2">
             <span className={cn("w-2 h-2 rounded-full", cfg.dot)} />
-            <span className="text-xs text-ink/60">{cfg.label}</span>
+            <span className="text-xs text-ink/70">{cfg.label}</span>
           </div>
         ))}
       </div>

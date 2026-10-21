@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: Props) {
               </h1>
 
               {/* Meta */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-ink/50">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-ink/70">
                 <span className="flex items-center gap-1.5">
                   <Calendar className="w-4 h-4" />
                   {formatDate(post.frontmatter.date)}

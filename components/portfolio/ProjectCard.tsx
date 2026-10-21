@@ -26,13 +26,13 @@ export function ProjectCard({ project }: { project: Project }) {
             {project.title}
           </h3>
         </div>
-        <span className="flex items-center gap-1 text-xs text-ink/40 flex-shrink-0">
+        <span className="flex items-center gap-1 text-xs text-ink/70 flex-shrink-0">
           <Calendar className="w-3 h-3" />
           {project.year}
         </span>
       </div>
 
-      <p className="text-sm text-ink/60 leading-relaxed mb-4 flex-1">
+      <p className="text-sm text-ink/70 leading-relaxed mb-4 flex-1">
         {project.longDescription || project.description}
       </p>
 
@@ -40,7 +40,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {project.tech.map((tech) => (
           <span
             key={tech}
-            className="px-2 py-0.5 rounded-md text-[10px] font-serif bg-ink/5 border border-ink/10 text-ink/60"
+            className="px-2 py-0.5 rounded-md text-[10px] font-serif bg-ink/5 border border-ink/10 text-ink/70"
           >
             {tech}
           </span>

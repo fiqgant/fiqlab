@@ -43,7 +43,7 @@ export function PaginationControls({
           <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-1">
             Pagination
           </p>
-          <p className="text-sm text-ink/60">
+          <p className="text-sm text-ink/70">
             {totalItems === 0
               ? `No ${itemLabel} available`
               : pageSize === "all"
@@ -54,7 +54,7 @@ export function PaginationControls({
 
         <div className="flex flex-col gap-3 lg:items-end">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-ink/50">
+            <span className="text-xs font-medium text-ink/70">
               Show
             </span>
             {PAGINATION_PAGE_SIZES.map((option) => {
@@ -70,7 +70,7 @@ export function PaginationControls({
                     "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors",
                     isActive
                       ? "border-accent/60 text-accent bg-accent/10"
-                      : "glass border-ink/10 text-ink/60 hover:text-accent hover:border-accent/30",
+                      : "glass border-ink/10 text-ink/70 hover:text-accent hover:border-accent/30",
                   )}
                 >
                   {label}
@@ -91,7 +91,7 @@ export function PaginationControls({
                 Prev
               </button>
 
-              <span className="text-xs text-ink/50 min-w-24 text-center">
+              <span className="text-xs text-ink/70 min-w-24 text-center">
                 Page {safePage} of {totalPages}
               </span>
 

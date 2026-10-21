@@ -141,12 +141,11 @@
   }
 
   @keyframes heroFadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(8px); }
+    to { transform: translateY(0); }
   }
 
   .hero-item {
-    opacity: 0;
     animation: heroFadeUp 0.5s ease-out forwards;
   }
 
@@ -157,6 +156,6 @@
   .hero-delay-5 { animation-delay: 0.25s; }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-item { animation: none; opacity: 1; }
+    .hero-item { animation: none; }
   }
 }

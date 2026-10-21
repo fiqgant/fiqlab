@@ -164,7 +164,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
               {data ? "GitHub Repos" : "Sync GitHub Projects"}
             </h2>
-            <p className="text-sm sm:text-base text-ink/60 max-w-2xl">
+            <p className="text-sm sm:text-base text-ink/70 max-w-2xl">
               {data
                 ? "Refresh your public repositories on demand and showcase your latest open-source work."
                 : "No GitHub cache yet. Sync once to fetch public repositories and replace the manual fallback with live repo cards."}
@@ -200,7 +200,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
           )}
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink/50">
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink/70">
           <span>
             {lastSynced ? `Last synced: ${lastSynced}` : "Last synced: never"}
           </span>
@@ -248,7 +248,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
               </div>
             </div>
           ) : (
-            <div className="glass rounded-sm p-6 text-sm text-ink/60">
+            <div className="glass rounded-sm p-6 text-sm text-ink/70">
               No public repositories found in the current cache.
             </div>
           )}
@@ -261,7 +261,7 @@ export function PortfolioClient({ initialData }: PortfolioClientProps) {
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="glass rounded-sm p-5">
-      <p className="text-xs font-semibold uppercase tracking-widest text-ink/40 mb-2">
+      <p className="text-xs font-semibold uppercase tracking-widest text-ink/70 mb-2">
         {label}
       </p>
       <p className="text-2xl font-bold gradient-text">{value}</p>
@@ -281,11 +281,11 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
             style={{ backgroundColor: languageColor }}
             aria-hidden="true"
           />
-          <span className="text-xs font-medium text-ink/50 truncate">
+          <span className="text-xs font-medium text-ink/70 truncate">
             {repo.language ?? "Unknown"}
           </span>
         </div>
-        <span className="text-[10px] font-serif px-2 py-0.5 rounded-md bg-ink/5 border border-ink/10 text-ink/50">
+        <span className="text-[10px] font-serif px-2 py-0.5 rounded-md bg-ink/5 border border-ink/10 text-ink/70">
           {formatDistanceToNow(new Date(repo.updatedAt), { addSuffix: true })}
         </span>
       </div>
@@ -294,7 +294,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
         {repo.name}
       </h3>
 
-      <p className="text-sm text-ink/60 leading-relaxed mb-4 flex-1 line-clamp-4">
+      <p className="text-sm text-ink/70 leading-relaxed mb-4 flex-1 line-clamp-4">
         {repo.description ?? "No description provided for this repository yet."}
       </p>
 
@@ -303,7 +303,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
           {repo.topics.slice(0, 5).map((topic) => (
             <span
               key={topic}
-              className="px-2 py-0.5 rounded-md text-[10px] font-serif bg-ink/5 border border-ink/10 text-ink/60"
+              className="px-2 py-0.5 rounded-md text-[10px] font-serif bg-ink/5 border border-ink/10 text-ink/70"
             >
               {topic}
             </span>
@@ -311,7 +311,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
         </div>
       )}
 
-      <div className="flex items-center justify-between gap-3 text-xs text-ink/50 mt-auto pt-2">
+      <div className="flex items-center justify-between gap-3 text-xs text-ink/70 mt-auto pt-2">
         <div className="flex items-center gap-4">
           <span className="inline-flex items-center gap-1.5">
             <Star className="w-3.5 h-3.5" />

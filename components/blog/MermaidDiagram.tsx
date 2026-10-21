@@ -54,7 +54,7 @@ export function MermaidDiagram({ code }: MermaidDiagramProps) {
     return (
       <div className="my-6 rounded-sm border border-red-500/30 bg-red-500/5 p-4">
         <p className="text-xs text-red-400 font-serif">{error}</p>
-        <pre className="mt-2 text-xs text-ink/40 overflow-x-auto">{code}</pre>
+        <pre className="mt-2 text-xs text-ink/70 overflow-x-auto">{code}</pre>
       </div>
     );
   }

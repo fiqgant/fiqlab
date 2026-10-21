@@ -6,7 +6,7 @@ export default function Loading() {
           <div className="absolute inset-0 rounded-full border-2 border-accent/20 animate-ping" />
           <div className="absolute inset-2 rounded-full bg-gradient-to-br from-accent to-accent animate-pulse" />
         </div>
-        <p className="text-sm text-ink/40 animate-pulse">
+        <p className="text-sm text-ink/70 animate-pulse">
           Loading...
         </p>
       </div>

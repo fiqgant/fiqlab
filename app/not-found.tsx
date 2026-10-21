@@ -9,7 +9,7 @@ export default function NotFound() {
           <Ghost className="w-8 h-8 text-accent" />
         </div>
         <h1 className="text-5xl font-bold gradient-text mb-2">404</h1>
-        <p className="text-ink/60 mb-8">
+        <p className="text-ink/70 mb-8">
           This page seems to have wandered off into the latent space.
         </p>
         <Link

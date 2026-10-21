@@ -55,7 +55,7 @@ export function ContactForm() {
   const inputClass = cn(
     "w-full rounded-sm px-4 py-3 text-sm",
     "bg-ink/5 border border-ink/10",
-    "placeholder:text-ink/40",
+    "placeholder:text-ink/70",
     "focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/30",
     "transition-all duration-200",
     "hover:bg-ink/10 hover:border-ink/20"
@@ -65,7 +65,7 @@ export function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="name" className="block text-xs font-semibold text-ink/60 mb-1.5">
+          <label htmlFor="name" className="block text-xs font-semibold text-ink/70 mb-1.5">
             Name <span className="text-accent">*</span>
           </label>
           <input
@@ -80,7 +80,7 @@ export function ContactForm() {
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-xs font-semibold text-ink/60 mb-1.5">
+          <label htmlFor="email" className="block text-xs font-semibold text-ink/70 mb-1.5">
             Email <span className="text-accent">*</span>
           </label>
           <input
@@ -97,7 +97,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="subject" className="block text-xs font-semibold text-ink/60 mb-1.5">
+        <label htmlFor="subject" className="block text-xs font-semibold text-ink/70 mb-1.5">
           Subject <span className="text-accent">*</span>
         </label>
         <input
@@ -113,7 +113,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-xs font-semibold text-ink/60 mb-1.5">
+        <label htmlFor="message" className="block text-xs font-semibold text-ink/70 mb-1.5">
           Message <span className="text-accent">*</span>
         </label>
         <textarea
@@ -152,7 +152,7 @@ export function ContactForm() {
         )}
       </button>
 
-      <p className="text-[10px] text-center text-ink/40">
+      <p className="text-[10px] text-center text-ink/70">
         I typically respond within 24–48 hours.
       </p>
     </form>

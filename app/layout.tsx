@@ -16,6 +16,7 @@ import {
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-mono",
 });
 
