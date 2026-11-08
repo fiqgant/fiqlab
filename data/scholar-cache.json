@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-01T05:31:00.319Z",
+  "lastUpdated": "2026-11-08T05:33:00.324Z",
   "profile": {
     "name": "Taufiqurrahman",
     "affiliations": "Politeknik Wilmar Bisnis Indonesia",
@@ -12,16 +12,16 @@
     ],
     "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=h43MGCIAAAAJ&citpid=3",
     "citedBy": {
-      "all": 50,
-      "recent": 50
+      "all": 51,
+      "recent": 51
     },
     "hIndex": {
       "all": 5,
       "recent": 5
     },
     "i10Index": {
-      "all": 1,
-      "recent": 1
+      "all": 2,
+      "recent": 2
     }
   },
   "articles": [
@@ -39,7 +39,7 @@
       "authors": "M Fikry, Taufiqurrahman, M Ula, Fadlisyah, Nurdin, M Yani, AA Pohan",
       "publication": "International Journal of Intelligent Systems and Applications in Engineering …, 2024",
       "year": "2024",
-      "citedBy": 9,
+      "citedBy": 10,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:5nxA0vEk-isC",
       "citationId": "h43MGCIAAAAJ:5nxA0vEk-isC"
     },
