@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-11-15T05:52:55.830Z",
+  "lastUpdated": "2026-11-22T06:06:04.839Z",
   "profile": {
     "name": "Taufiqurrahman",
     "affiliations": "Politeknik Wilmar Bisnis Indonesia",
@@ -12,8 +12,8 @@
     ],
     "thumbnail": "https://scholar.googleusercontent.com/citations?view_op=view_photo&user=h43MGCIAAAAJ&citpid=3",
     "citedBy": {
-      "all": 51,
-      "recent": 51
+      "all": 52,
+      "recent": 52
     },
     "hIndex": {
       "all": 5,
@@ -107,6 +107,15 @@
       "citationId": "h43MGCIAAAAJ:u5HHmVD_uO8C"
     },
     {
+      "title": "Improving YOLO-Based Traffic-Sign Detection on GTSDB via F1-Guided Thresholding and Confusion-Aware Analysis",
+      "authors": "T Taufiqurrahman, NS Damanik, I Rafli",
+      "publication": "Jurnal Nasional Pendidikan Teknik Informatika: JANAPATI 14 (3), 571-583, 2025",
+      "year": "2025",
+      "citedBy": 1,
+      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:4DMP91E08xMC",
+      "citationId": "h43MGCIAAAAJ:4DMP91E08xMC"
+    },
+    {
       "title": "Meningkatkan Kesadaran Keberlanjutan Lingkungan Melalui Pendekatan Gamifikasi Pada Anak Sekolah Dasar",
       "authors": "D Juhandi, AW Pasaribu, M Riyadi, RR Fajar, A Kamila",
       "publication": "Jurnal Pengabdian Masyarakat Aufa (JPMA) 7 (2), 2025",
@@ -123,15 +132,6 @@
       "citedBy": 0,
       "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:9ZlFYXVOiuMC",
       "citationId": "h43MGCIAAAAJ:9ZlFYXVOiuMC"
-    },
-    {
-      "title": "Improving YOLO-Based Traffic-Sign Detection on GTSDB via F1-Guided Thresholding and Confusion-Aware Analysis",
-      "authors": "T Taufiqurrahman, NS Damanik, I Rafli",
-      "publication": "Jurnal Nasional Pendidikan Teknik Informatika: JANAPATI 14 (3), 571-583, 2025",
-      "year": "2025",
-      "citedBy": 0,
-      "link": "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=h43MGCIAAAAJ&pagesize=100&citation_for_view=h43MGCIAAAAJ:4DMP91E08xMC",
-      "citationId": "h43MGCIAAAAJ:4DMP91E08xMC"
     },
     {
       "title": "Artificial Intelligence: Konsep Dasar dan Kajian Praktis",
